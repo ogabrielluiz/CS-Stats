@@ -53,7 +53,8 @@ public class Controller implements Initializable {
     private ChoiceBox<Integer> choiceBox_posicao;
 
     @FXML
-    private TableView tb_info_equipe;
+    private TableView<Equipe> tb_info_equipe;
+
     @FXML
     private TableColumn<Equipe, String> coluna_equipe;
 
@@ -69,28 +70,35 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Equipe, Integer> coluna_derrotas;
 
-    private ObservableList<Equipe> table_equipes(){
-        return FXCollections.observableArrayList(
-                new Equipe(equipe_selecionada, posicao_selecionada,
+    public  ObservableList<Equipe> table_equipes(){
+        ObservableList<Equipe> equipe = FXCollections.observableArrayList();
+        equipe.add(new Equipe(equipe_selecionada, choiceBox_posicao.getValue(),
                 Integer.parseInt(textField_vitorias.getText()),
                 Integer.parseInt(textField_empates.getText()),
                 Integer.parseInt(textField_derrotas.getText())));
+
+        return equipe;
+        
     }
-
-
 
 
     //Popula a lista de equipes
     @FXML
     private void btn_adicionar_equipe_em_tableView(){
 
-        coluna_equipe.setCellValueFactory(new PropertyValueFactory<Equipe, String>("nome"));
-        coluna_classificacao.setCellValueFactory(new PropertyValueFactory<Equipe, Integer>("classificacao"));
-        coluna_vitorias.setCellValueFactory(new PropertyValueFactory<Equipe, Integer>("vitorias"));
-        coluna_empates.setCellValueFactory(new PropertyValueFactory<Equipe, Integer>("empates"));
-        coluna_derrotas.setCellValueFactory(new PropertyValueFactory<Equipe, Integer>("derrotas"));
 
-        tb_info_equipe.setItems(table_equipes());
+        ObservableList<Equipe> data = table_equipes();
+        System.out.println(table_equipes());
+        System.out.println(choiceBox_posicao.getValue());
+        System.out.println(textField_derrotas.getText());
+        System.out.println(textField_empates.getText());
+        System.out.println(textField_vitorias.getText());
+
+        tb_info_equipe.setItems(data);
+
+
+
+
     }
 
     @FXML
@@ -108,9 +116,7 @@ public class Controller implements Initializable {
         }
         @FXML
         private Integer handleChoiceBoxAction(){
-
-            posicao_selecionada = choiceBox_posicao.getValue();
-            return posicao_selecionada;
+                return 0;
         }
 
         private final String url = "jdbc:postgresql://localhost/APS";
@@ -149,7 +155,11 @@ public class Controller implements Initializable {
         // Popula a lista de números
         choiceBox_posicao.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
 
-
+        coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
+        coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
+        coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
+        coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
 
 
 
