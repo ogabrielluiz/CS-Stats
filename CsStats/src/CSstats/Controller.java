@@ -53,29 +53,29 @@ public class Controller implements Initializable {
     private ChoiceBox<Integer> choiceBox_posicao;
 
     @FXML
-    private TableView<Equipe> tb_info_equipe;
+    private TableView<CSstats.TbEquipesEntity> tb_info_equipe;
 
     @FXML
-    private TableColumn<Equipe, String> coluna_equipe;
+    private TableColumn<CSstats.TbEquipesEntity, String> coluna_equipe;
 
     @FXML
-    private TableColumn<Equipe, Integer> coluna_classificacao;
+    private TableColumn<CSstats.TbEquipesEntity, Integer> coluna_classificacao;
 
     @FXML
-    private TableColumn<Equipe, Integer> coluna_vitorias;
+    private TableColumn<CSstats.TbEquipesEntity, Integer> coluna_vitorias;
 
     @FXML
-    private TableColumn<Equipe, Integer> coluna_empates;
+    private TableColumn<CSstats.TbEquipesEntity, Integer> coluna_empates;
 
     @FXML
-    private TableColumn<Equipe, Integer> coluna_derrotas;
+    private TableColumn<CSstats.TbEquipesEntity, Integer> coluna_derrotas;
 
-    public  ObservableList<Equipe> table_equipes(){
-        ObservableList<Equipe> equipe = FXCollections.observableArrayList();
-        equipe.add(new Equipe(equipe_selecionada, choiceBox_posicao.getValue(),
-                Integer.parseInt(textField_vitorias.getText()),
-                Integer.parseInt(textField_empates.getText()),
-                Integer.parseInt(textField_derrotas.getText())));
+    @FXML TextField origem_equipe;
+    @FXML TextField nm_equipe;
+
+    public  ObservableList<CSstats.TbEquipesEntity> table_equipes(){
+        ObservableList<CSstats.TbEquipesEntity> equipe = FXCollections.observableArrayList();
+        equipe.add(new CSstats.TbEquipesEntity(nm_equipe.getText(), imagem_equipe, origem_equipe.getText());
 
         return equipe;
         

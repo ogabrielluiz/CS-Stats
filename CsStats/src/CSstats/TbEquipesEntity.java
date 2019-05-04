@@ -81,4 +81,10 @@ public class TbEquipesEntity {
         result = 31 * result + Arrays.hashCode(imagem);
         return result;
     }
+
+    public TbEquipesEntity(String nome,byte[] imagem, String origem){
+        this.nome = nome;
+        this.imagem = imagem;
+        this.origem = origem;
+    }
 }
