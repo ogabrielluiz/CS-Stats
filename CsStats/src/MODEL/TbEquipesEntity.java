@@ -13,6 +13,8 @@ public class TbEquipesEntity {
     private String origem;
     private Boolean ativo;
 
+    public TbEquipesEntity(){}
+
     @Id
     @Column(name = "id_equipe", nullable = false)
     public int getIdEquipe() {
