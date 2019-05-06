@@ -12,9 +12,11 @@ import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 
 import javafx.scene.image.ImageView;
-import java.io.File;
+
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ResourceBundle;
 
@@ -128,34 +130,48 @@ public class Controller implements Initializable {
     @FXML
     private void btn_adicionar_jogador_tableView(){}
 
-    @FXML void btn_selecionar_imagem_equipe() throws MalformedURLException {
+    @FXML
+    private Label fileSselected;
+
+        @FXML void btn_selecionar_imagem_camp() throws MalformedURLException, FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files",
                 "*.bmp", "*.png", "*.jpg");
         File selectedFile;
         selectedFile = fileChooser.showOpenDialog(btn_inserir_imagem_camp.getScene().getWindow());
-        imageFile = selectedFile.toURI().toURL().toString();
-        Image image = new Image(imageFile);
-        imageView_camp.setImage(image);
-        imageView_camp.setCache(true);
+
+        if (selectedFile == null) {
+            selectedFile = new File("path/to/default/file");
         }
 
 
-    @FXML
-    private Label fileSselected;
+        Image image = new Image(selectedFile.getAbsoluteFile().toURI().toString(),imageView_camp.getFitWidth(),imageView_camp   .getFitHeight(),true,true);
+        imageView_camp.setImage(image);
+        imageView_camp.setCache(true);
+        imageView_camp.setPreserveRatio(true);
+        FileInputStream fis = new FileInputStream(selectedFile);
+        }
 
-    private String imageFile;
-    @FXML void btn_selecionar_imagem_camp() throws MalformedURLException {
+
+
+    @FXML void btn_selecionar_imagem_equipe() throws MalformedURLException, FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files",
                 "*.bmp", "*.png", "*.jpg");
         fileChooser.getExtensionFilters().add(extFilter);
         File selectedFile;
         selectedFile = fileChooser.showOpenDialog(btn_inserir_imagem_camp.getScene().getWindow());
-        imageFile = selectedFile.toURI().toURL().toString();
-        Image image = new Image(imageFile);
+        if (selectedFile == null) {
+            selectedFile = new File("path/to/default/file");
+        }
+
+
+        Image image = new Image(selectedFile.getAbsoluteFile().toURI().toString(),
+                imageView_equipe.getFitWidth(),imageView_equipe.getFitHeight(),true,true);
         imageView_equipe.setImage(image);
         imageView_equipe.setCache(true);
+        imageView_equipe.setPreserveRatio(true);
+        FileInputStream fis = new FileInputStream(selectedFile);
     }
 
 
