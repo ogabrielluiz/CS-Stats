@@ -5,13 +5,14 @@
  */
 package DAO;
 
-import csstats.*;
+
+import MODEL.TbCampeonatoEntity;
 
 public class TbCampeonatoDao {
 
     DaoConecta dao = new DaoConecta();
 
-    public void salvar(CSstats.TbCampeonatoEntity c) {
+    public void salvar(TbCampeonatoEntity c) {
         dao.abreConexao();
         dao.em.persist(c);
         dao.fecharConexao();

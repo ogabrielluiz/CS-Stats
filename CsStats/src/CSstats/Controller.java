@@ -1,13 +1,19 @@
 package CSstats;
 
 
+import MODEL.TbEquipesEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 
+import javafx.scene.image.ImageView;
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -37,6 +43,20 @@ public class Controller implements Initializable {
     private Integer posicao_selecionada;
 
     @FXML
+    private Tab tab_edicao_equipe;
+
+    @FXML
+    private ImageView imageView_equipe;
+
+    @FXML
+    private ImageView imageView_camp;
+
+    @FXML
+    private Button btn_inserir_imagem_equipe;
+    @FXML
+    private Button btn_inserir_imagem_camp;
+
+    @FXML
     private TextField textField_vitorias;
 
     @FXML
@@ -53,41 +73,42 @@ public class Controller implements Initializable {
     private ChoiceBox<Integer> choiceBox_posicao;
 
     @FXML
-    private TableView<CSstats.TbEquipesEntity> tb_info_equipe;
+    private TableView<TbEquipesEntity> tb_info_equipe;
 
     @FXML
-    private TableColumn<CSstats.TbEquipesEntity, String> coluna_equipe;
+    private TableColumn<TbEquipesEntity, String> coluna_equipe;
 
     @FXML
-    private TableColumn<CSstats.TbEquipesEntity, Integer> coluna_classificacao;
+    private TableColumn<TbEquipesEntity, Integer> coluna_classificacao;
 
     @FXML
-    private TableColumn<CSstats.TbEquipesEntity, Integer> coluna_vitorias;
+    private TableColumn<TbEquipesEntity, Integer> coluna_vitorias;
 
     @FXML
-    private TableColumn<CSstats.TbEquipesEntity, Integer> coluna_empates;
+    private TableColumn<TbEquipesEntity, Integer> coluna_empates;
 
     @FXML
-    private TableColumn<CSstats.TbEquipesEntity, Integer> coluna_derrotas;
+    private TableColumn<TbEquipesEntity, Integer> coluna_derrotas;
 
     @FXML TextField origem_equipe;
     @FXML TextField nm_equipe;
 
-    public  ObservableList<CSstats.TbEquipesEntity> table_equipes(){
-        ObservableList<CSstats.TbEquipesEntity> equipe = FXCollections.observableArrayList();
-        equipe.add(new CSstats.TbEquipesEntity(nm_equipe.getText(), imagem_equipe, origem_equipe.getText());
+    public  ObservableList<TbEquipesEntity> table_equipes(){
+        ObservableList<TbEquipesEntity> equipe = FXCollections.observableArrayList();
+        equipe.add(new TbEquipesEntity(nm_equipe.getText(), imagem_e, origem_equipe.getText()));
 
         return equipe;
         
     }
 
+    private byte[] imagem_e;
 
     //Popula a lista de equipes
     @FXML
     private void btn_adicionar_equipe_em_tableView(){
 
 
-        ObservableList<Equipe> data = table_equipes();
+        ObservableList<TbEquipesEntity> data = table_equipes();
         System.out.println(table_equipes());
         System.out.println(choiceBox_posicao.getValue());
         System.out.println(textField_derrotas.getText());
@@ -107,47 +128,76 @@ public class Controller implements Initializable {
     @FXML
     private void btn_adicionar_jogador_tableView(){}
 
+    @FXML void btn_selecionar_imagem_equipe() throws MalformedURLException {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files",
+                "*.bmp", "*.png", "*.jpg");
+        File selectedFile;
+        selectedFile = fileChooser.showOpenDialog(btn_inserir_imagem_camp.getScene().getWindow());
+        imageFile = selectedFile.toURI().toURL().toString();
+        Image image = new Image(imageFile);
+        imageView_camp.setImage(image);
+        imageView_camp.setCache(true);
+        }
 
 
     @FXML
-        private String handleComboBoxAction(){
-            equipe_selecionada = comboBox_equipes.getSelectionModel().getSelectedItem();
-            return equipe_selecionada;
-        }
-        @FXML
-        private Integer handleChoiceBoxAction(){
-                return 0;
-        }
+    private Label fileSselected;
 
-        private final String url = "jdbc:postgresql://localhost/APS";
-        private final String user = "postgres";
-        private final String password = "postgres";
+    private String imageFile;
+    @FXML void btn_selecionar_imagem_camp() throws MalformedURLException {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files",
+                "*.bmp", "*.png", "*.jpg");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File selectedFile;
+        selectedFile = fileChooser.showOpenDialog(btn_inserir_imagem_camp.getScene().getWindow());
+        imageFile = selectedFile.toURI().toURL().toString();
+        Image image = new Image(imageFile);
+        imageView_equipe.setImage(image);
+        imageView_equipe.setCache(true);
+    }
 
 
-        public Connection connect() throws SQLException {
-            return DriverManager.getConnection(url, user, password);
-        }
+    @FXML
+    private String handleComboBoxAction(){
+        equipe_selecionada = comboBox_equipes.getSelectionModel().getSelectedItem();
+        return equipe_selecionada;
+    }
+    @FXML
+    private Integer handleChoiceBoxAction(){
+            return 0;
+    }
 
-        public void insert_campeonato_equipes_status(){
-        }
+    private final String url = "jdbc:postgresql://localhost/APS";
+    private final String user = "postgres";
+    private final String password = "postgres";
 
-        public void popula_box_edicao_camp(){
-            String query = "SELECT id_equipe, nome FROM tb_equipes";
 
-            try (Connection conn = connect();
-                 Statement statement = conn.createStatement();
-                 ResultSet lista_de_equipes = statement.executeQuery(query)) {
+    public Connection connect() throws SQLException {
+        return DriverManager.getConnection(url, user, password);
+    }
 
-                while (lista_de_equipes.next()) {
-                    comboBox_equipes.getItems().addAll(lista_de_equipes.getString("nome"));
-                }
+    public void insert_campeonato_equipes_status(){
+    }
 
-                statement.close();
-                lista_de_equipes.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+    public void popula_box_edicao_camp(){
+        String query = "SELECT id_equipe, nome FROM tb_equipes";
+
+        try (Connection conn = connect();
+             Statement statement = conn.createStatement();
+             ResultSet lista_de_equipes = statement.executeQuery(query)) {
+
+            while (lista_de_equipes.next()) {
+                comboBox_equipes.getItems().addAll(lista_de_equipes.getString("nome"));
             }
+
+            statement.close();
+            lista_de_equipes.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
+    }
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -160,6 +210,8 @@ public class Controller implements Initializable {
         coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
         coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
         coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
+
+
 
 
 

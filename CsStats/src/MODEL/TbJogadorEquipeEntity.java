@@ -1,4 +1,4 @@
-package CSstats;
+package MODEL;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

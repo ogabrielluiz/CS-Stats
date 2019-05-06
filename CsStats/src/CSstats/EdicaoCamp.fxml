@@ -96,7 +96,7 @@
                                     <Insets left="5.0" top="25.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <ImageView fitHeight="197.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                              <ImageView fx:id="imageView_camp" fitHeight="197.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
                                     <Insets top="40.0" />
                                  </GridPane.margin>
@@ -121,7 +121,7 @@
                                     <Insets left="5.0" top="145.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="btn_inserir_imagem" mnemonicParsing="false" text="Inserir imagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                              <Button fx:id="btn_inserir_imagem_camp" mnemonicParsing="false" onAction="#btn_selecionar_imagem_camp" text="Inserir imagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="45.0" left="10.0" />
                                  </GridPane.margin>
@@ -234,6 +234,11 @@
                                     </TableView>
                                  </content>
                               </ScrollPane>
+                              <Label fx:id="fileSelected" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                                 <GridPane.margin>
+                                    <Insets bottom="50.0" right="70.0" />
+                                 </GridPane.margin>
+                              </Label>
                            </children>
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />
@@ -244,7 +249,7 @@
                         </GridPane>
                      </content>
                   </Tab>
-                  <Tab text="Edição - Equipe">
+                  <Tab fx:id="tab_edicao_equipe" text="Edição - Equipe">
                      <content>
                         <GridPane alignment="TOP_CENTER" prefHeight="683.0" prefWidth="1113.0">
                            <children>
@@ -278,7 +283,7 @@
                                     <Insets left="5.0" top="25.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <ImageView fx:id="imagem_equipe" fitHeight="197.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                              <ImageView fx:id="imageView_equipe" fitHeight="197.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
                                     <Insets top="40.0" />
                                  </GridPane.margin>
@@ -303,7 +308,7 @@
                                     <Insets left="5.0" top="145.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="btn_inserir_imagem" mnemonicParsing="false" text="Inserir imagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                              <Button fx:id="btn_inserir_imagem_equipe" mnemonicParsing="false" onAction="#btn_selecionar_imagem_equipe" text="Inserir imagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="45.0" left="10.0" />
                                  </GridPane.margin>
@@ -369,8 +374,8 @@
                            </cursor>
                            <rowConstraints>
                               <RowConstraints />
-                              <RowConstraints maxHeight="538.0" minHeight="10.0" prefHeight="357.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="392.0" minHeight="10.0" prefHeight="326.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="538.0" minHeight="10.0" prefHeight="370.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="392.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="392.0" minHeight="10.0" prefHeight="326.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>

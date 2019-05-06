@@ -1,4 +1,4 @@
-package CSstats;
+package MODEL;
 
 import javax.persistence.*;
 import java.util.Arrays;
