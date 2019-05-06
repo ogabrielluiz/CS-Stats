@@ -2,29 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd209e2f-4780-46c8-b869-2178c69be6e6" name="Usual" comment="Criada DAO de uma tabela">
-      <change afterPath="$PROJECT_DIR$/src/DAO/TbCampeonatoEquipesStatusDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/APS2019-1/csstats/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/APS2019-1/csstats/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CSstats/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSstats/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CSstats/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSstats/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ImagensCampeonatos/BLAST.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ImagensEquipes/FURIA.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ImagensEquipes/MIBR.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ImagensEquipes/NIP.png" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DAO/TbEquipesDAO.java" afterDir="false" />
     </list>
-    <list id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Mudanças nas pastas">
-      <change afterPath="$PROJECT_DIR$/../.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/libraries/JPA_2_1_2_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Java_EE_6_Java_EE_6.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CsStats.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ImagensCampeonatos/BLAST.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ImagensEquipes/FURIA.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ImagensEquipes/MIBR.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ImagensEquipes/NIP.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MODEL.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MODEL/src/META-INF/persistence.xml" afterDir="false" />
-    </list>
+    <list id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Mudanças nas pastas" />
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -159,20 +139,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../MODEL/src/META-INF/persistence.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+            <state relative-caret-position="60">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DAO/TbEquipesDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#648#649#0" expanded="true" />
+                <element signature="e#726#727#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="44" />
+            <state relative-caret-position="150">
+              <caret line="11" column="34" lean-forward="true" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -201,6 +195,7 @@
       <find>choi</find>
       <find>botao</find>
       <find>inserir</find>
+      <find>TbCampeonatoEquipesStatusEntity</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -209,6 +204,7 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -239,6 +235,8 @@
         <option value="$PROJECT_DIR$/src/CSstats/Main.java" />
         <option value="$PROJECT_DIR$/src/CSstats/Controller.java" />
         <option value="$PROJECT_DIR$/src/DAO/TbCampeonatoEquipesStatusDAO.java" />
+        <option value="$PROJECT_DIR$/src/DAO/TbEquipesDAO.java" />
+        <option value="$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java" />
       </list>
     </option>
   </component>
@@ -258,7 +256,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -294,6 +291,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -327,6 +325,9 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="DAO" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\GoogleDrive\Estudos\APS2019-1" />
       <recent name="E:\GoogleDrive\Estudos\APS2019-1\src\sample" />
@@ -472,7 +473,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11386000" />
+    <option name="totallyTimeSpent" value="11755000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -507,7 +508,7 @@
       <window_info anchor="bottom" id="Problems" order="9" />
       <window_info anchor="bottom" id="Changes" order="10" />
       <window_info anchor="bottom" id="Profiler" order="11" />
-      <window_info anchor="bottom" id="Event Log" order="12" weight="0.32936078" />
+      <window_info anchor="bottom" id="Event Log" order="12" weight="0.32899022" />
       <window_info active="true" anchor="bottom" id="Messages" order="13" visible="true" weight="0.32736155" />
       <window_info anchor="bottom" id="Terminal" order="14" weight="0.32899022" />
       <window_info anchor="bottom" id="Java Enterprise" order="15" />
@@ -529,6 +530,32 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
@@ -627,13 +654,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../.idea/libraries/Java_EE_6_Java_EE_6.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -651,8 +671,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../MODEL/src/META-INF/persistence.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DAO/TbEquipesDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#648#649#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="11" column="34" lean-forward="true" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
         </state>
       </provider>
     </entry>
