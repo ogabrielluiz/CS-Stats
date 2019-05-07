@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_equipes", schema = "public", catalog = "APS")
-public class TbEquipesEntity {
+public class TbEquipesEntity implements IEntity  {
     private int idEquipe;
     private String nome;
     private byte[] imagem;

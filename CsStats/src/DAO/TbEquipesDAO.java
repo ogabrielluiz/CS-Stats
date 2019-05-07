@@ -10,7 +10,7 @@ import MODEL.TbEquipesEntity;
 
 import java.util.List;
 
-public class TbEquipesDAO {
+public class TbEquipesDAO implements IDAO {
 
     DaoConecta em = new DaoConecta();
 

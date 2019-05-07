@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_campeonato", schema = "public", catalog = "APS")
-public class TbCampeonatoEntity {
+public class TbCampeonatoEntity implements IEntity {
     private int idCampeonato;
     private String nome;
     private Date dtInicio;

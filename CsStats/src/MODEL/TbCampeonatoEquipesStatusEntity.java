@@ -6,7 +6,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_campeonato_equipes_status", schema = "public", catalog = "APS")
 @IdClass(TbCampeonatoEquipesStatusEntityPK.class)
-public class TbCampeonatoEquipesStatusEntity {
+public class TbCampeonatoEquipesStatusEntity implements IEntity {
     private int idCampeonato;
     private int idEquipe;
     private Integer classificacao;
