@@ -74,8 +74,8 @@ public class TbCampeonatoEntity implements IEntity {
         return valor;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setValor(long valor) {
+        this.valor = BigInteger.valueOf(valor);
     }
 
     @Basic

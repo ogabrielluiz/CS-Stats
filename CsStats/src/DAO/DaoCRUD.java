@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DaoCRUD {
 
-    private DaoConecta em = new DaoConecta();
+    private static DaoConecta em = new DaoConecta();
 
     public static void insert(IEntity entidade) {
         em.abreConexao();

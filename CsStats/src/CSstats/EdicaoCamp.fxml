@@ -60,34 +60,34 @@
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label text="Data de início" GridPane.rowIndex="1">
+                              <Label text="Data de início" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets left="5.0" top="50.0" />
+                                    <Insets left="5.0" top="125.0" />
                                  </GridPane.margin>
                               </Label>
-                              <DatePicker fx:id="data_termino" GridPane.rowIndex="1">
+                              <DatePicker fx:id="data_termino" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets left="5.0" top="190.0" />
+                                    <Insets left="5.0" top="195.0" />
                                  </GridPane.margin>
                               </DatePicker>
-                              <DatePicker fx:id="data_inicio" GridPane.rowIndex="1">
+                              <DatePicker fx:id="data_inicio" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets left="5.0" top="95.0" />
+                                    <Insets left="5.0" top="145.0" />
                                  </GridPane.margin>
                               </DatePicker>
-                              <Label text="Data de término" GridPane.rowIndex="1">
+                              <Label text="Data de término" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets left="5.0" top="150.0" />
+                                    <Insets left="5.0" top="175.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TextField fx:id="premiacao" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                              <TextField fx:id="valor" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets left="5.0" top="115.0" />
+                                    <Insets left="5.0" top="85.0" />
                                  </GridPane.margin>
                               </TextField>
                               <Label text="Prêmio" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets left="5.0" top="95.0" />
+                                    <Insets left="5.0" top="65.0" />
                                  </GridPane.margin>
                               </Label>
                               <Label text="Logo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
@@ -101,26 +101,6 @@
                                     <Insets top="40.0" />
                                  </GridPane.margin>
                               </ImageView>
-                              <Button fx:id="btn_aplicar_nome" mnemonicParsing="false" text="Aplicar" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets left="5.0" top="55.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" text="Cancelar" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets left="65.0" top="55.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" text="Cancelar" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets left="65.0" top="145.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="btn_aplicar_premio" mnemonicParsing="false" text="Aplicar" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets left="5.0" top="145.0" />
-                                 </GridPane.margin>
-                              </Button>
                               <Button fx:id="btn_inserir_imagem_camp" mnemonicParsing="false" onAction="#btn_selecionar_imagem_camp" text="Inserir imagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="45.0" left="10.0" />
@@ -176,14 +156,9 @@
                                     <Insets bottom="35.0" left="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="btn_aplicar_datas_camp" mnemonicParsing="false" text="Aplicar" GridPane.rowIndex="1">
+                              <Button fx:id="btn_atualizar_camp" mnemonicParsing="false" prefWidth="200.0" text="Atualizar Campeonato" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets left="5.0" top="250.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="btn_cancelar_data" mnemonicParsing="false" text="Cancelar" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="65.0" top="250.0" />
+                                    <Insets top="330.0" />
                                  </GridPane.margin>
                               </Button>
                               <TextField fx:id="textField_derrotas" maxWidth="30.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
@@ -239,6 +214,26 @@
                                     <Insets bottom="50.0" right="70.0" />
                                  </GridPane.margin>
                               </Label>
+                              <Button fx:id="btn_inserir_camp" minWidth="-Infinity" mnemonicParsing="false" onAction="#handle_inserir_camp" prefWidth="200.0" text="Inserir Campeonato" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets top="300.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Label text="Localização" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets top="225.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <TextField fx:id="localizacao" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets top="245.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Button fx:id="btn_atualizar_camp1" minWidth="-Infinity" mnemonicParsing="false" prefWidth="200.0" text="Remover Campeonato" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets top="10.0" />
+                                 </GridPane.margin>
+                              </Button>
                            </children>
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />

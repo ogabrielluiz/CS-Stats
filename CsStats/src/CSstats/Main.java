@@ -22,7 +22,7 @@ public class Main extends Application {
 
 
         Scene scene = new Scene(root, 1366,768);
-        scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
+        //scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

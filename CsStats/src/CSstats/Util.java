@@ -15,8 +15,7 @@ import java.time.ZoneId;
 public class Util {
 
     public static Date localDate_to_SQLdate(LocalDate local_date){
-        Instant instant = Instant.from(local_date.atStartOfDay(ZoneId.systemDefault()));
-        Date date = (Date) Date.from(instant);
+        Date date = Date.valueOf(local_date);
         return date;
     }
 
@@ -24,7 +23,7 @@ public class Util {
 
         BufferedImage bufferedImage = ImageIO.read(new File(String.valueOf(imagefile)));
         ByteArrayOutputStream byteOutpout = new ByteArrayOutputStream();
-        ImageIO.write(bufferedImage, "jpg", byteOutpout );
+        ImageIO.write(bufferedImage, "png", byteOutpout );
         byte [] bytes = byteOutpout.toByteArray();
 
 

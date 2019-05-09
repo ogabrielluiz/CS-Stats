@@ -86,6 +86,9 @@ public class Controller implements Initializable {
     @FXML
     public DatePicker data_termino;
 
+    @FXML
+    public TextField localizacao;
+
 
     @FXML
     private ComboBox<String> comboBox_equipes;
@@ -152,21 +155,23 @@ public class Controller implements Initializable {
     @FXML
     private void btn_adicionar_jogador_tableView(){}
 
-    public void btn_inserir_camp() throws IOException {
+    @FXML
+    public void handle_inserir_camp() throws IOException {
         String nome = nm_campeonato.getText();
         String premiacao = valor.getText();
         Date data_i = Util.localDate_to_SQLdate(data_inicio.getValue());
         Date data_t = Util.localDate_to_SQLdate(data_termino.getValue());
-        String local =  ;
+        String local = localizacao.getText() ;
         byte[] imagem = Util.image_to_bytea(imagefile_camp);
 
         TbCampeonatoEntity camp = new TbCampeonatoEntity();
 
         camp.setNome(nome);
-        camp.setValor(Double.parseDouble(premiacao));
+        camp.setValor(Long.parseLong(premiacao));
         camp.setDtInicio(data_i);
         camp.setDtFim(data_t);
         camp.setImagem(imagem);
+        camp.setLocalizacao(local);
 
         insert(camp);
 
@@ -222,15 +227,6 @@ public class Controller implements Initializable {
         imagefile_equipe = selectedFile;
         return imagefile_equipe;
 
-    }
-
-
-        Image image = new Image(selectedFile.getAbsoluteFile().toURI().toString(),
-                imageView_equipe.getFitWidth(),imageView_equipe.getFitHeight(),true,true);
-        imageView_equipe.setImage(image);
-        imageView_equipe.setCache(true);
-        imageView_equipe.setPreserveRatio(true);
-        FileInputStream fis = new FileInputStream(selectedFile);
     }
 
 
