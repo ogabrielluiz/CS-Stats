@@ -8,7 +8,7 @@ package DAO;
 
 import MODEL.TbCampeonatoEntity;
 
-public class TbCampeonatoDao {
+public class TbCampeonatoDao implements IDAO {
 
     DaoConecta dao = new DaoConecta();
 

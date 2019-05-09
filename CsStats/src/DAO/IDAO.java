@@ -20,7 +20,11 @@ public interface IDAO {
         em.fecharConexao();
     }
 
-    default IEntity get(int id){
+    default IEntity getById(int id){
+        return DaoConecta.em.find(IEntity.class, id);
+    }
+
+    default IEntity getById(int id){
         return DaoConecta.em.find(IEntity.class, id);
     }
 

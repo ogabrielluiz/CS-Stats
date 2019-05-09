@@ -10,7 +10,7 @@ import MODEL.TbCampeonatoEquipesStatusEntity;
 
 import java.util.List;
 
-public class TbCampeonatoEquipesStatusDAO {
+public class TbCampeonatoEquipesStatusDAO implements IDAO {
 
     DaoConecta em = new DaoConecta();
 
@@ -26,7 +26,7 @@ public class TbCampeonatoEquipesStatusDAO {
         em.fecharConexao();
     }
 
-    public TbCampeonatoEquipesStatusEntity get(int id){
+    public TbCampeonatoEquipesStatusEntity getById(int id){
         return (TbCampeonatoEquipesStatusEntity) em.em.find(TbCampeonatoEquipesStatusEntity.class, id);
     }
 

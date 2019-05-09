@@ -26,7 +26,7 @@ public class TbEquipesDAO implements IDAO {
         em.fecharConexao();
     }
 
-    public TbEquipesEntity get(int id){
+    public TbEquipesEntity getById(int id){
         return (TbEquipesEntity) em.em.find(TbEquipesEntity.class, id);
     }
 
