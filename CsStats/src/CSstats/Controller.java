@@ -1,6 +1,8 @@
 package CSstats;
 
 
+import DAO.DaoCRUD;
+import MODEL.TbCampeonatoEntity;
 import MODEL.TbEquipesEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,12 +16,15 @@ import javafx.stage.FileChooser;
 import javafx.scene.image.ImageView;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import static DAO.DaoCRUD.insert;
 
 
 public class Controller implements Initializable {
@@ -57,6 +62,8 @@ public class Controller implements Initializable {
     private Button btn_inserir_imagem_equipe;
     @FXML
     private Button btn_inserir_imagem_camp;
+    @FXML
+    private Button btn_inserir_camp;
 
     @FXML
     private TextField textField_vitorias;
@@ -66,6 +73,18 @@ public class Controller implements Initializable {
 
     @FXML
     private TextField textField_derrotas;
+
+    @FXML
+    private TextField nm_campeonato;
+
+    @FXML
+    private TextField valor;
+
+    @FXML
+    public DatePicker data_inicio;
+
+    @FXML
+    public DatePicker data_termino;
 
 
     @FXML
@@ -94,6 +113,9 @@ public class Controller implements Initializable {
 
     @FXML TextField origem_equipe;
     @FXML TextField nm_equipe;
+
+    private File imagefile_camp;
+    private File imagefile_equipe;
 
     public  ObservableList<TbEquipesEntity> table_equipes(){
         ObservableList<TbEquipesEntity> equipe = FXCollections.observableArrayList();
@@ -130,10 +152,31 @@ public class Controller implements Initializable {
     @FXML
     private void btn_adicionar_jogador_tableView(){}
 
+    public void btn_inserir_camp() throws IOException {
+        String nome = nm_campeonato.getText();
+        String premiacao = valor.getText();
+        Date data_i = Util.localDate_to_SQLdate(data_inicio.getValue());
+        Date data_t = Util.localDate_to_SQLdate(data_termino.getValue());
+        String local =  ;
+        byte[] imagem = Util.image_to_bytea(imagefile_camp);
+
+        TbCampeonatoEntity camp = new TbCampeonatoEntity();
+
+        camp.setNome(nome);
+        camp.setValor(Double.parseDouble(premiacao));
+        camp.setDtInicio(data_i);
+        camp.setDtFim(data_t);
+        camp.setImagem(imagem);
+
+        insert(camp);
+
+    }
+
+
     @FXML
     private Label fileSselected;
 
-        @FXML void btn_selecionar_imagem_camp() throws MalformedURLException, FileNotFoundException {
+        @FXML File btn_selecionar_imagem_camp() throws MalformedURLException, FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files",
                 "*.bmp", "*.png", "*.jpg");
@@ -145,25 +188,41 @@ public class Controller implements Initializable {
         }
 
 
-        Image image = new Image(selectedFile.getAbsoluteFile().toURI().toString(),imageView_camp.getFitWidth(),imageView_camp   .getFitHeight(),true,true);
-        imageView_camp.setImage(image);
+        Image image_camp = new Image(selectedFile.getAbsoluteFile().toURI().toString(),
+                imageView_camp.getFitWidth(),imageView_camp   .getFitHeight(),true,true);
+        imageView_camp.setImage(image_camp);
         imageView_camp.setCache(true);
         imageView_camp.setPreserveRatio(true);
         FileInputStream fis = new FileInputStream(selectedFile);
+        imagefile_camp = selectedFile;
+        return imagefile_camp;
         }
 
 
 
-    @FXML void btn_selecionar_imagem_equipe() throws MalformedURLException, FileNotFoundException {
+    @FXML File btn_selecionar_imagem_equipe() throws MalformedURLException, FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files",
                 "*.bmp", "*.png", "*.jpg");
         fileChooser.getExtensionFilters().add(extFilter);
         File selectedFile;
         selectedFile = fileChooser.showOpenDialog(btn_inserir_imagem_camp.getScene().getWindow());
+
         if (selectedFile == null) {
             selectedFile = new File("path/to/default/file");
         }
+
+
+        Image image_equipe = new Image(selectedFile.getAbsoluteFile().toURI().toString(),imageView_camp.getFitWidth(),imageView_camp   .getFitHeight(),true,true);
+        imageView_equipe.setImage(image_equipe);
+        imageView_equipe.setCache(true);
+        imageView_equipe.setPreserveRatio(true);
+        FileInputStream fis = new FileInputStream(selectedFile);
+
+        imagefile_equipe = selectedFile;
+        return imagefile_equipe;
+
+    }
 
 
         Image image = new Image(selectedFile.getAbsoluteFile().toURI().toString(),

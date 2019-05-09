@@ -28,6 +28,8 @@ public interface IDAO {
         return DaoConecta.em.find(IEntity.class, nome);
     }
 
+
+
     default void remove(int id) {
         Object entidade = getById(id);
         if (entidade != null) {

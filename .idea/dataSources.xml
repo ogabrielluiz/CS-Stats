@@ -7,5 +7,15 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/APS</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="CsStatsPU/EclipseLink" uuid="ba4dcf81-9bc8-42a9-bcab-6176aeb3bf8a">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>EclipseLink
+
+/home/futurinho/IdeaProjects/CS-Stats/CsStats/src/META-INF/persistence.xml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/APS</jdbc-url>
+    </data-source>
   </component>
 </project>
