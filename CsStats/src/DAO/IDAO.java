@@ -24,12 +24,12 @@ public interface IDAO {
         return DaoConecta.em.find(IEntity.class, id);
     }
 
-    default IEntity getById(int id){
-        return DaoConecta.em.find(IEntity.class, id);
+    default IEntity getByNome(String nome){
+        return DaoConecta.em.find(IEntity.class, nome);
     }
 
     default void remove(int id) {
-        Object entidade = get(id);
+        Object entidade = getById(id);
         if (entidade != null) {
             em.abreConexao();
             em.em.remove(entidade);

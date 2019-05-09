@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CS-Stats.iml" filepath="$PROJECT_DIR$/.idea/CS-Stats.iml" />
       <module fileurl="file://$PROJECT_DIR$/CsStats/CsStats.iml" filepath="$PROJECT_DIR$/CsStats/CsStats.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CsStats/MODEL.iml" filepath="$PROJECT_DIR$/CsStats/MODEL.iml" />
     </modules>
   </component>
 </project>
