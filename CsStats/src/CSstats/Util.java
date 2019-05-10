@@ -1,5 +1,6 @@
 package CSstats;
 
+import MODEL.IEntity;
 import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
@@ -30,4 +31,5 @@ public class Util {
         return bytes;
 
     }
+
 }

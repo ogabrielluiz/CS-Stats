@@ -2,6 +2,7 @@ package CSstats;
 
 
 import DAO.DaoCRUD;
+import DAO.DaoConecta;
 import MODEL.IEntity;
 import MODEL.TbCampeonatoEntity;
 import MODEL.TbEquipesEntity;
@@ -16,6 +17,7 @@ import javafx.stage.FileChooser;
 
 import javafx.scene.image.ImageView;
 
+import javax.persistence.TypedQuery;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
@@ -28,7 +30,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static DAO.DaoCRUD.insert;
+import static DAO.DaoCRUD.*;
 
 
 public class Controller implements Initializable {
@@ -121,6 +123,9 @@ public class Controller implements Initializable {
     @FXML TextField origem_equipe;
     @FXML TextField nm_equipe;
 
+    @FXML Label except_equipe_image;
+    @FXML Label except_camp_image;
+
     private File imagefile_camp;
     private File imagefile_equipe;
 
@@ -160,13 +165,19 @@ public class Controller implements Initializable {
     private void btn_adicionar_jogador_tableView(){}
 
     @FXML
-    public void handle_inserir_camp() throws IOException {
+    public void handle_inserir_camp() {
         String nome = nm_campeonato.getText();
         String premiacao = valor.getText();
         Date data_i = Util.localDate_to_SQLdate(data_inicio.getValue());
         Date data_t = Util.localDate_to_SQLdate(data_termino.getValue());
         String local = localizacao.getText() ;
-        byte[] imagem = Util.image_to_bytea(imagefile_camp);
+        byte[] imagem = new byte[0];
+        try {
+            imagem = Util.image_to_bytea(imagefile_camp);
+            except_camp_image.setText("");
+        } catch (IOException e) {
+            except_camp_image.setText("Escolha um arquivo de imagem.");
+        }
 
         TbCampeonatoEntity camp = new TbCampeonatoEntity();
 
@@ -179,6 +190,25 @@ public class Controller implements Initializable {
 
         insert(camp);
 
+    }
+
+    @FXML
+    public void handle_inserir_equipe(){
+        String nome = nm_equipe.getText();
+        String origem = origem_equipe.getText();
+        byte[] imagem = new byte[0];
+        try {
+            imagem = Util.image_to_bytea(imagefile_equipe);
+            except_equipe_image.setText("");
+        } catch (IOException e) {
+            except_equipe_image.setText("Escolha um arquivo de imagem.");
+        }
+
+        TbEquipesEntity equipe = new TbEquipesEntity();
+        equipe.setNome(nome);
+        equipe.setOrigem(origem);
+        equipe.setImagem(imagem);
+        insert(equipe);
     }
 
 
@@ -244,24 +274,29 @@ public class Controller implements Initializable {
             return 0;
     }
 
-    private final String url = "jdbc:postgresql://localhost/aps";
-    private final String user = "postgres";
-    private final String password = "postgres";
-
-
-    public Connection connect() throws SQLException {
-        return DriverManager.getConnection(url, user, password);
-    }
-
     public void insert_campeonato_equipes_status(){
     }
 
+    @FXML
     public void popula_box_edicao_camp(){
 
 
-        List<IEntity> lista_equipes = DaoCRUD.list_names_from("tb_equipes");
-        ObservableList<IEntity> lista_de_equipes = FXCollections.observableList(lista_equipes);
-        comboBox_equipes.add(lista_de_equipes);
+        try{
+            TypedQuery<TbEquipesEntity> query =
+                    DaoConecta.em.createQuery("SELECT c.nome FROM TbEquipesEntity as c", TbEquipesEntity.class);
+            List<TbEquipesEntity> resultado = query.getResultList();
+
+            for(TbEquipesEntity e: resultado){
+                if(e != null){
+                comboBox_equipes.getItems().addAll(e.getNome());
+                }
+            }
+
+        } catch(NullPointerException e){
+            comboBox_equipes.getItems().clear();
+            System.out.println("Não consegui nada.");
+        }
+
 
     }
 

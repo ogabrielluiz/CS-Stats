@@ -140,7 +140,7 @@
                                     <Insets left="5.0" />
                                  </opaqueInsets>
                               </ChoiceBox>
-                              <ComboBox fx:id="comboBox_equipes" onAction="#handleComboBoxAction" prefWidth="150.0" promptText="Escolha a equipe" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                              <ComboBox fx:id="comboBox_equipes" onAction="#handleComboBoxAction" onShowing="#popula_box_edicao_camp" prefWidth="150.0" promptText="Escolha a equipe" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="80.0" left="5.0" />
                                  </GridPane.margin>
@@ -209,7 +209,7 @@
                                     </TableView>
                                  </content>
                               </ScrollPane>
-                              <Label fx:id="fileSelected" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                              <Label fx:id="except_camp_image" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="50.0" right="70.0" />
                                  </GridPane.margin>
@@ -283,27 +283,12 @@
                                     <Insets top="40.0" />
                                  </GridPane.margin>
                               </ImageView>
-                              <Button fx:id="btn_aplicar_nm_equipe" mnemonicParsing="false" text="Aplicar" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets left="5.0" top="55.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="cancelar_nm_equipe" mnemonicParsing="false" text="Cancelar" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets left="65.0" top="55.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="cancelar_origem" mnemonicParsing="false" text="Cancelar" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <GridPane.margin>
-                                    <Insets left="65.0" top="145.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="btn_aplicar_origem" mnemonicParsing="false" text="Aplicar" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                              <Button fx:id="btn_inserir_equipe" mnemonicParsing="false" onAction="#handle_inserir_equipe" text="Inserir Equipe" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
                                     <Insets left="5.0" top="145.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="btn_inserir_imagem_equipe" mnemonicParsing="false" onAction="#btn_selecionar_imagem_equipe" text="Inserir imagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                              <Button fx:id="btn_inserir_imagem_equipe" mnemonicParsing="false" onAction="#btn_selecionar_imagem_equipe" text="Selecionar imagem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="45.0" left="10.0" />
                                  </GridPane.margin>
@@ -357,6 +342,11 @@
                                     <Insets bottom="30.0" left="5.0" right="210.0" top="85.0" />
                                  </GridPane.margin>
                               </TextField>
+                              <Label fx:id="except_equipe_image" prefHeight="86.0" prefWidth="131.0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets top="60.0" />
+                                 </GridPane.margin>
+                              </Label>
                            </children>
                            <columnConstraints>
                               <ColumnConstraints maxWidth="214.0" minWidth="10.0" prefWidth="211.0" />

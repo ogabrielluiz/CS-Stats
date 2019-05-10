@@ -13,6 +13,7 @@ public class TbJogadorEquipeEntity implements IEntity  {
     private Boolean ativo;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.TABLE)
     @Column(name = "id_jogador", nullable = false)
     public int getIdJogador() {
         return idJogador;

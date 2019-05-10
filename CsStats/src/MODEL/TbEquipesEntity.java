@@ -16,6 +16,7 @@ public class TbEquipesEntity implements IEntity  {
     public TbEquipesEntity(){}
 
     @Id
+    @GeneratedValue(strategy=GenerationType.TABLE)
     @Column(name = "id_equipe", nullable = false)
     public int getIdEquipe() {
         return idEquipe;

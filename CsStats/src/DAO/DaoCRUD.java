@@ -1,7 +1,9 @@
 package DAO;
 
 import MODEL.IEntity;
+import MODEL.TbEquipesEntity;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.Collection;
 import java.util.List;
@@ -39,8 +41,8 @@ public class DaoCRUD {
         }
     }
 
-    public static List<IEntity> list_names_from(String nome_tabela){
-        TypedQuery<IEntity> query = DaoConecta.em.createQuery(
+    public static List list_names_from(String nome_tabela){
+        Query query = DaoConecta.em.createQuery(
                 "SELECT" + "a" + "FROM " + nome_tabela + "a", IEntity.class
         );
 
