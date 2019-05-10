@@ -2,6 +2,8 @@ package DAO;
 
 import MODEL.IEntity;
 
+import javax.persistence.TypedQuery;
+import java.util.Collection;
 import java.util.List;
 
 public class DaoCRUD {
@@ -37,9 +39,12 @@ public class DaoCRUD {
         }
     }
 
-    public List list(){
-        return DaoConecta.em.createQuery("SELECT e FROM " +
-                IEntity.class.getSimpleName()  + " e").getResultList();
+    public static List<IEntity> list_names_from(String nome_tabela){
+        TypedQuery<IEntity> query = DaoConecta.em.createQuery(
+                "SELECT" + "a" + "FROM " + nome_tabela + "a", IEntity.class
+        );
+
+        return query.getResultList();
     }
 
 }

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="eclipselink">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/CsStats/lib/eclipselink" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/CsStats/lib/eclipselink" recursive="false" />
+  </library>
+</component>

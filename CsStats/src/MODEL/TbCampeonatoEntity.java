@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_campeonato", schema = "public", catalog = "APS")
+@Table(name = "tb_campeonato", schema = "public", catalog = "aps")
 public class TbCampeonatoEntity implements IEntity {
     private int idCampeonato;
     private String nome;
@@ -19,6 +19,7 @@ public class TbCampeonatoEntity implements IEntity {
     private Boolean ativo;
 
     @Id
+    @GeneratedValue
     @Column(name = "id_campeonato", nullable = false)
     public int getIdCampeonato() {
         return idCampeonato;
@@ -74,8 +75,8 @@ public class TbCampeonatoEntity implements IEntity {
         return valor;
     }
 
-    public void setValor(long valor) {
-        this.valor = BigInteger.valueOf(valor);
+    public void setValor(BigInteger valor) {
+        this.valor = valor;
     }
 
     @Basic
@@ -118,5 +119,11 @@ public class TbCampeonatoEntity implements IEntity {
         int result = Objects.hash(idCampeonato, nome, dtInicio, dtFim, valor, localizacao, ativo);
         result = 31 * result + Arrays.hashCode(imagem);
         return result;
+
+    }
+
+    @Override
+    public String toString(){
+        return this.nome;
     }
 }

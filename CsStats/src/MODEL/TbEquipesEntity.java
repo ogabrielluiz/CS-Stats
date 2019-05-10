@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_equipes", schema = "public", catalog = "APS")
+@Table(name = "tb_equipes", schema = "public", catalog = "aps")
 public class TbEquipesEntity implements IEntity  {
     private int idEquipe;
     private String nome;
@@ -88,5 +88,10 @@ public class TbEquipesEntity implements IEntity  {
         this.nome = nome;
         this.imagem = imagem;
         this.origem = origem;
+    }
+
+    @Override
+    public String toString(){
+        return this.nome;
     }
 }

@@ -7,13 +7,11 @@
       <class>MODEL.TbEquipesEntity</class>
       <class>MODEL.TbJogadorEquipeEntity</class>
       <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/APS"/>
-      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/aps"/>
+      <property name="javax.persistence.jdbc.user" value="aps"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="postgres"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
-          <property name="eclipselink.jdbc.url" value="jdbc:postgresql://localhost:5432/APS"/>
-          <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="aps"/>
+
       </properties>
   </persistence-unit>
 </persistence>

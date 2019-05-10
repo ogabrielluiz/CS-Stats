@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_jogador_equipe", schema = "public", catalog = "APS")
+@Table(name = "tb_jogador_equipe", schema = "public", catalog = "aps")
 public class TbJogadorEquipeEntity implements IEntity  {
     private int idJogador;
     private int idEquipe;
@@ -77,5 +77,10 @@ public class TbJogadorEquipeEntity implements IEntity  {
     @Override
     public int hashCode() {
         return Objects.hash(idJogador, idEquipe, nome, condenome, ativo);
+    }
+
+    @Override
+    public String toString(){
+        return this.nome;
     }
 }

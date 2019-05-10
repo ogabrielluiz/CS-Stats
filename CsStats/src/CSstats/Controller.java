@@ -2,6 +2,7 @@ package CSstats;
 
 
 import DAO.DaoCRUD;
+import MODEL.IEntity;
 import MODEL.TbCampeonatoEntity;
 import MODEL.TbEquipesEntity;
 import javafx.collections.FXCollections;
@@ -22,6 +23,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static DAO.DaoCRUD.insert;
@@ -167,7 +171,7 @@ public class Controller implements Initializable {
         TbCampeonatoEntity camp = new TbCampeonatoEntity();
 
         camp.setNome(nome);
-        camp.setValor(Long.parseLong(premiacao));
+        camp.setValor(BigInteger.valueOf(Long.parseLong(premiacao)));
         camp.setDtInicio(data_i);
         camp.setDtFim(data_t);
         camp.setImagem(imagem);
@@ -240,7 +244,7 @@ public class Controller implements Initializable {
             return 0;
     }
 
-    private final String url = "jdbc:postgresql://localhost/APS";
+    private final String url = "jdbc:postgresql://localhost/aps";
     private final String user = "postgres";
     private final String password = "postgres";
 
@@ -253,21 +257,12 @@ public class Controller implements Initializable {
     }
 
     public void popula_box_edicao_camp(){
-        String query = "SELECT id_equipe, nome FROM tb_equipes";
 
-        try (Connection conn = connect();
-             Statement statement = conn.createStatement();
-             ResultSet lista_de_equipes = statement.executeQuery(query)) {
 
-            while (lista_de_equipes.next()) {
-                comboBox_equipes.getItems().addAll(lista_de_equipes.getString("nome"));
-            }
+        List<IEntity> lista_equipes = DaoCRUD.list_names_from("tb_equipes");
+        ObservableList<IEntity> lista_de_equipes = FXCollections.observableList(lista_equipes);
+        comboBox_equipes.add(lista_de_equipes);
 
-            statement.close();
-            lista_de_equipes.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 
 
