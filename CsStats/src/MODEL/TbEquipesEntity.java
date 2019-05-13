@@ -1,10 +1,20 @@
 package MODEL;
 
+import DAO.DaoConecta;
+
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
+import static DAO.DaoConecta.*;
+
 @Entity
+@NamedQuery(name="Equipe.getNomes", query="SELECT e.nome FROM TbEquipesEntity AS e")
 @Table(name = "tb_equipes", schema = "public", catalog = "aps")
 public class TbEquipesEntity implements IEntity  {
     private int idEquipe;
@@ -27,7 +37,7 @@ public class TbEquipesEntity implements IEntity  {
     }
 
     @Basic
-    @Column(name = "nome", nullable = true, length = 60)
+    @Column(name = "nome", nullable = false, length = 60)
     public String getNome() {
         return nome;
     }
@@ -47,7 +57,7 @@ public class TbEquipesEntity implements IEntity  {
     }
 
     @Basic
-    @Column(name = "origem", nullable = true, length = 60)
+    @Column(name = "origem", nullable = false, length = 60)
     public String getOrigem() {
         return origem;
     }
@@ -95,4 +105,29 @@ public class TbEquipesEntity implements IEntity  {
     public String toString(){
         return this.nome;
     }
+
+
+    public static List<TbEquipesEntity> getAll(){
+        TypedQuery<TbEquipesEntity> query = DaoConecta.em.createQuery(
+                "SELECT c FROM " + IEntity.class.getSimpleName() + "c", TbEquipesEntity.class
+        );
+
+        return query.getResultList();
+    }
+
+    public TbEquipesEntity getByNome(String text){
+        abreConexao();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery q = cb.createQuery(TbEquipesEntity.class);
+
+        Root<TbEquipesEntity> c = q.from(TbEquipesEntity.class);
+        ParameterExpression<String> p = cb.parameter(String.class);
+        q.select(c).where(cb.equal(c.get("nome"), p));
+
+        TypedQuery<TbEquipesEntity> query = DaoConecta.em.createQuery(q);
+        query.setParameter(p, text);
+
+        return query.getSingleResult();
+    }
 }
+

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+
 @Table(name = "tb_jogador_equipe", schema = "public", catalog = "aps")
 public class TbJogadorEquipeEntity implements IEntity  {
     private int idJogador;

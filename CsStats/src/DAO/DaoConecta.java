@@ -9,18 +9,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import static javax.persistence.Persistence.createEntityManagerFactory;
+
 public class DaoConecta {
 
     public static EntityManager em;
-    private static EntityManagerFactory emf;
+    public static EntityManagerFactory emf;
 
-    public void abreConexao() {
-        emf = Persistence.createEntityManagerFactory("CsStatsPU");
+    public static void abreConexao() {
+        emf = createEntityManagerFactory("CsStatsPU");
         em = emf.createEntityManager();
         em.getTransaction().begin();
     }
 
-    public void fecharConexao() {
+    public static void fecharConexao() {
         em.getTransaction().commit();
         em.close();
         emf.close();

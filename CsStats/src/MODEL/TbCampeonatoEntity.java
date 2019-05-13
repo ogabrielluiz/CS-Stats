@@ -1,10 +1,21 @@
 package MODEL;
 
+import DAO.DaoConecta;
+
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+
+import static DAO.DaoConecta.*;
+import static DAO.DaoConecta.em;
 
 @Entity
 @Table(name = "tb_campeonato", schema = "public", catalog = "aps")
@@ -125,5 +136,20 @@ public class TbCampeonatoEntity implements IEntity {
     @Override
     public String toString(){
         return this.nome;
+    }
+
+    public TbCampeonatoEntity getByNome(String text){
+        abreConexao();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery q = cb.createQuery(TbCampeonatoEntity.class);
+
+        Root<TbCampeonatoEntity> c = q.from(TbCampeonatoEntity.class);
+        ParameterExpression<String> p = cb.parameter(String.class);
+        q.select(c).where(cb.equal(c.get("nome"), p));
+
+        TypedQuery<TbCampeonatoEntity> query = DaoConecta.em.createQuery(q);
+        query.setParameter(p, text);
+
+        return query.getSingleResult();
     }
 }

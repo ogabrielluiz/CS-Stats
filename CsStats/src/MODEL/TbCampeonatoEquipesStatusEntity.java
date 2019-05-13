@@ -15,6 +15,17 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
     private Integer qtdEmpates;
     private Integer qtdDerrotas;
 
+    public TbCampeonatoEquipesStatusEntity(){};
+
+    public TbCampeonatoEquipesStatusEntity(Integer id_camp, Integer id_equipe, Integer classificacao, Integer vitorias, Integer empates, Integer derrotas) {
+        this.idCampeonato = idCampeonato;
+        this.idEquipe = idEquipe;
+        this.classificacao = this.classificacao;
+        this.qtdVitorias = qtdVitorias;
+        this.qtdEmpates = qtdEmpates;
+        this.qtdDerrotas = qtdDerrotas;
+    }
+
     @Id
     @Column(name = "id_campeonato", nullable = false)
     public int getIdCampeonato() {

@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.regex.Pattern;
 
 public class Util {
 
@@ -30,6 +31,12 @@ public class Util {
 
         return bytes;
 
+    }
+
+    public static boolean is_not_empty(String s){
+
+        final boolean b = Pattern.compile("\\w").matcher(s).find();
+        return b;
     }
 
 }

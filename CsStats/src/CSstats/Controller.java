@@ -3,9 +3,10 @@ package CSstats;
 
 import DAO.DaoCRUD;
 import DAO.DaoConecta;
-import MODEL.IEntity;
 import MODEL.TbCampeonatoEntity;
+import MODEL.TbCampeonatoEquipesStatusEntity;
 import MODEL.TbEquipesEntity;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,20 +18,24 @@ import javafx.stage.FileChooser;
 
 import javafx.scene.image.ImageView;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
+import static CSstats.Util.is_not_empty;
 import static DAO.DaoCRUD.*;
+import static DAO.DaoConecta.*;
+import static DAO.DaoConecta.fecharConexao;
 
 
 public class Controller implements Initializable {
@@ -101,24 +106,32 @@ public class Controller implements Initializable {
 
     @FXML
     private ChoiceBox<Integer> choiceBox_posicao;
+    @FXML
+    private ChoiceBox<Integer> vitorias_ChB;
+    @FXML
+    private ChoiceBox<Integer> empates_ChB;
+    @FXML
+    private ChoiceBox<Integer> derrotas_ChB;
 
     @FXML
-    private TableView<TbEquipesEntity> tb_info_equipe;
+    private TableView<TableViewCamp> tb_info_equipe = new TableView<>();
 
     @FXML
-    private TableColumn<TbEquipesEntity, String> coluna_equipe;
+    private TableColumn<TableViewCamp, String> coluna_equipe = new TableColumn<>("nome");
 
     @FXML
-    private TableColumn<TbEquipesEntity, Integer> coluna_classificacao;
+    private TableColumn<TableViewCamp, Number> coluna_classificacao = new TableColumn<>("classificacao");
 
     @FXML
-    private TableColumn<TbEquipesEntity, Integer> coluna_vitorias;
+    private TableColumn<TableViewCamp, Number> coluna_vitorias = new TableColumn<>("vitorias");
 
     @FXML
-    private TableColumn<TbEquipesEntity, Integer> coluna_empates;
+    private TableColumn<TableViewCamp, Number> coluna_empates = new TableColumn<>("empates");
 
     @FXML
-    private TableColumn<TbEquipesEntity, Integer> coluna_derrotas;
+    private TableColumn<TableViewCamp, Number> coluna_derrotas = new TableColumn<>("derrotas");
+
+
 
     @FXML TextField origem_equipe;
     @FXML TextField nm_equipe;
@@ -129,45 +142,53 @@ public class Controller implements Initializable {
     private File imagefile_camp;
     private File imagefile_equipe;
 
-    public  ObservableList<TbEquipesEntity> table_equipes(){
-        ObservableList<TbEquipesEntity> equipe = FXCollections.observableArrayList();
-        equipe.add(new TbEquipesEntity(nm_equipe.getText(), imagem_e, origem_equipe.getText()));
-
-        return equipe;
-        
-    }
 
     private byte[] imagem_e;
 
     //Popula a lista de equipes
     @FXML
     private void btn_adicionar_equipe_em_tableView(){
+        String nome = comboBox_equipes.getSelectionModel().getSelectedItem();
+        Integer classificacao = choiceBox_posicao.getValue();
+        Integer vitorias = vitorias_ChB.getValue();
+        Integer empates = empates_ChB.getValue();
+        Integer derrotas = derrotas_ChB.getValue();
 
 
-        ObservableList<TbEquipesEntity> data = table_equipes();
-        System.out.println(table_equipes());
-        System.out.println(choiceBox_posicao.getValue());
-        System.out.println(textField_derrotas.getText());
-        System.out.println(textField_empates.getText());
-        System.out.println(textField_vitorias.getText());
+
+        ObservableList<TableViewCamp> data = FXCollections.observableArrayList(new TableViewCamp(nome,classificacao,
+                vitorias,empates,derrotas));
 
         tb_info_equipe.setItems(data);
+        tb_info_equipe.setVisible(true);
 
-
-
+//        comboBox_equipes.getItems().clear();
+//        choiceBox_posicao.getItems().clear();
+//        vitorias_ChB.getItems().clear();
+//        empates_ChB.getItems().clear();
+//        derrotas_ChB.getItems().clear();
 
     }
 
     @FXML
-    private void btn_remover_de_tableView(){}
+    private void btn_remover_de_tableView(){
+        ObservableList<TableViewCamp> equipeSelecionada, todasEquipes;
+
+        todasEquipes = tb_info_equipe.getItems();
+        equipeSelecionada = tb_info_equipe.getSelectionModel().getSelectedItems();
+
+        equipeSelecionada.forEach(todasEquipes::remove);
+    }
 
     @FXML
     private void btn_adicionar_jogador_tableView(){}
 
     @FXML
-    public void handle_inserir_camp() {
+    public void handle_inserir_camp() throws NullPointerException {
+
         String nome = nm_campeonato.getText();
         String premiacao = valor.getText();
+
         Date data_i = Util.localDate_to_SQLdate(data_inicio.getValue());
         Date data_t = Util.localDate_to_SQLdate(data_termino.getValue());
         String local = localizacao.getText() ;
@@ -193,7 +214,8 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void handle_inserir_equipe(){
+    public void handle_inserir_equipe() throws NullPointerException{
+
         String nome = nm_equipe.getText();
         String origem = origem_equipe.getText();
         byte[] imagem = new byte[0];
@@ -201,14 +223,17 @@ public class Controller implements Initializable {
             imagem = Util.image_to_bytea(imagefile_equipe);
             except_equipe_image.setText("");
         } catch (IOException e) {
-            except_equipe_image.setText("Escolha um arquivo de imagem.");
+            except_equipe_image.setText("Nenhuma imagem selecionada.");
         }
 
-        TbEquipesEntity equipe = new TbEquipesEntity();
-        equipe.setNome(nome);
-        equipe.setOrigem(origem);
-        equipe.setImagem(imagem);
-        insert(equipe);
+
+            TbEquipesEntity equipe = new TbEquipesEntity();
+            equipe.setNome(nome);
+            equipe.setOrigem(origem);
+            equipe.setImagem(imagem);
+        if(is_not_empty(nome) && is_not_empty(origem)) {
+            insert(equipe);
+        }
     }
 
 
@@ -222,19 +247,23 @@ public class Controller implements Initializable {
         File selectedFile;
         selectedFile = fileChooser.showOpenDialog(btn_inserir_imagem_camp.getScene().getWindow());
 
-        if (selectedFile == null) {
-            selectedFile = new File("path/to/default/file");
+        if (selectedFile != null) {
+            except_camp_image.setText("");
         }
 
+        try {
+            Image image_camp = new Image(selectedFile.getAbsoluteFile().toURI().toString(),
+                    imageView_camp.getFitWidth(), imageView_camp.getFitHeight(), true, true);
+            imageView_camp.setImage(image_camp);
+            imageView_camp.setCache(true);
+            imageView_camp.setPreserveRatio(true);
+            FileInputStream fis = new FileInputStream(selectedFile);
+            imagefile_camp = selectedFile;
 
-        Image image_camp = new Image(selectedFile.getAbsoluteFile().toURI().toString(),
-                imageView_camp.getFitWidth(),imageView_camp   .getFitHeight(),true,true);
-        imageView_camp.setImage(image_camp);
-        imageView_camp.setCache(true);
-        imageView_camp.setPreserveRatio(true);
-        FileInputStream fis = new FileInputStream(selectedFile);
-        imagefile_camp = selectedFile;
-        return imagefile_camp;
+        }catch (NullPointerException npe){
+            except_camp_image.setText("Nenhuma imagem selecionada");
+        }
+            return imagefile_camp;
         }
 
 
@@ -248,8 +277,10 @@ public class Controller implements Initializable {
         selectedFile = fileChooser.showOpenDialog(btn_inserir_imagem_camp.getScene().getWindow());
 
         if (selectedFile == null) {
-            selectedFile = new File("path/to/default/file");
-        }
+            except_equipe_image.setText("Escolha um arquivo de imagem.");
+        } else
+            except_equipe_image.setText("");
+
 
 
         Image image_equipe = new Image(selectedFile.getAbsoluteFile().toURI().toString(),imageView_camp.getFitWidth(),imageView_camp   .getFitHeight(),true,true);
@@ -266,7 +297,7 @@ public class Controller implements Initializable {
 
     @FXML
     private String handleComboBoxAction(){
-        equipe_selecionada = comboBox_equipes.getSelectionModel().getSelectedItem();
+        //equipe_selecionada = comboBox_equipes.getSelectionModel().getSelectedItem();
         return equipe_selecionada;
     }
     @FXML
@@ -280,37 +311,47 @@ public class Controller implements Initializable {
     @FXML
     public void popula_box_edicao_camp(){
 
-
         try{
-            TypedQuery<TbEquipesEntity> query =
-                    DaoConecta.em.createQuery("SELECT c.nome FROM TbEquipesEntity as c", TbEquipesEntity.class);
-            List<TbEquipesEntity> resultado = query.getResultList();
+            comboBox_equipes.getItems().clear();
+            abreConexao();
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(TbEquipesEntity.class));
+            Query q = em.createQuery(cq);
 
-            for(TbEquipesEntity e: resultado){
-                if(e != null){
-                comboBox_equipes.getItems().addAll(e.getNome());
-                }
+            List<TbEquipesEntity> list_equipes = q.getResultList();
+
+            for(TbEquipesEntity t : list_equipes) {
+                comboBox_equipes.getItems().addAll(t.getNome());
             }
 
-        } catch(NullPointerException e){
-            comboBox_equipes.getItems().clear();
-            System.out.println("Não consegui nada.");
-        }
+            fecharConexao();
 
+        } catch(NullPointerException err){
+            System.out.println("ComboBox Camp: Nenhuma equipe na lista");
+        }
 
     }
 
 
     public void initialize(URL location, ResourceBundle resources) {
-        popula_box_edicao_camp();
-        // Popula a lista de números
-        choiceBox_posicao.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
+
 
         coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
         coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
         coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
         coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
         coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
+
+
+        // Popula a lista de números
+        choiceBox_posicao.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
+        vitorias_ChB.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
+        empates_ChB.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
+        derrotas_ChB.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
+
+
+
+
 
 
 
