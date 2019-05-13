@@ -3,6 +3,7 @@ package CSstats;
 
 import DAO.DaoCRUD;
 import DAO.DaoConecta;
+import MODEL.IEntity;
 import MODEL.TbCampeonatoEntity;
 import MODEL.TbCampeonatoEquipesStatusEntity;
 import MODEL.TbEquipesEntity;
@@ -27,11 +28,14 @@ import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import static CSstats.Util.bytea_to_image;
 import static CSstats.Util.is_not_empty;
 import static DAO.DaoCRUD.*;
 import static DAO.DaoConecta.*;
@@ -59,6 +63,16 @@ public class Controller implements Initializable {
 
     private String equipe_selecionada;
     private Integer posicao_selecionada;
+
+    @FXML TabPane tabPane;
+    @FXML Tab tab_vis_campeonato;
+        @FXML Label nm_campeonato_lb;
+        @FXML Label valor_lb;
+        @FXML Label data_inicio_lb;
+        @FXML Label data_termino_lb;
+        @FXML Label localizacao_lb;
+        @FXML ImageView vis_imageView_camp;
+
 
     @FXML
     private Tab tab_edicao_equipe;
@@ -332,31 +346,90 @@ public class Controller implements Initializable {
 
     }
 
+    // VISUALIZAÇÃO
+
+    @FXML TableView<TbCampeonatoEntity> tableView_lista_campeonatos = new TableView<>();
+    @FXML TableColumn<TbCampeonatoEquipesStatusEntity, String> vis_nome_camp_coluna;
+    @FXML TableColumn<TbCampeonatoEquipesStatusEntity, Number> vis_premio_campeonatos_coluna;
+    @FXML TableColumn<TbCampeonatoEquipesStatusEntity, LocalDate> vis_data_inicio_coluna;
+    @FXML TableColumn<TbCampeonatoEquipesStatusEntity, LocalDate> vis_data_termino_coluna;
+
+    @FXML public void popula_tableview_lista_campeonatos(){
+
+        List<TbCampeonatoEntity> list_campeonatos = new ArrayList<>();
+
+        try{
+            comboBox_equipes.getItems().clear();
+            abreConexao();
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(TbCampeonatoEntity.class));
+            Query q = em.createQuery(cq);
+
+            list_campeonatos = q.getResultList();
+
+            fecharConexao();
+
+        } catch(NullPointerException err){
+            System.out.println("TableView Camp: Retorno nulo.");
+        }
+        ObservableList<TbCampeonatoEntity> campeonatoEntities = FXCollections.observableArrayList();
+
+        for (TbCampeonatoEntity e: list_campeonatos
+             ) {
+            campeonatoEntities.add(e);
+        }
+        tableView_lista_campeonatos.setItems(campeonatoEntities);
+    }
+
+
+
+
 
     public void initialize(URL location, ResourceBundle resources) {
+        tableView_lista_campeonatos.setRowFactory(tv -> {
+                    TableRow<TbCampeonatoEntity> row = new TableRow<>();
+                    row.setOnMouseClicked(event -> {
+                        if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                            TbCampeonatoEntity rowData = row.getItem();
+                            nm_campeonato_lb.setText(rowData.getNome());
+                            valor_lb.setText(rowData.getValor().toString());
+                            data_inicio_lb.setText(rowData.getDtInicio().toString());
+                            data_termino_lb.setText(rowData.getDtFim().toString());
+                            try {
+                                vis_imageView_camp.setImage(bytea_to_image(rowData.getImagem()));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            localizacao_lb.setText(rowData.getLocalizacao());
+                            tabPane.getSelectionModel().select(tab_vis_campeonato);
+
+                        }
+                    }
+                    );
+                    return row;
+        }
+        );
 
 
-        coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
-        coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
-        coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
-        coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
+
+            coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
+            coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
+            coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
+            coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
+
+            vis_nome_camp_coluna.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            vis_premio_campeonatos_coluna.setCellValueFactory(new PropertyValueFactory<>("valor"));
+            vis_data_inicio_coluna.setCellValueFactory(new PropertyValueFactory<>("dtInicio"));
+            vis_data_termino_coluna.setCellValueFactory(new PropertyValueFactory<>("dtFim"));
 
 
-        // Popula a lista de números
-        choiceBox_posicao.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
-        vitorias_ChB.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
-        empates_ChB.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
-        derrotas_ChB.setItems(FXCollections.observableArrayList(1,2,3,4,5,6,7,8,9,10));
-
-
-
-
-
-
-
-
-
+            popula_tableview_lista_campeonatos();
+            // Popula a lista de números
+            choiceBox_posicao.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+            vitorias_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+            empates_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+            derrotas_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 
     }
 }

@@ -29,6 +29,17 @@ public class TbCampeonatoEntity implements IEntity {
     private String localizacao;
     private Boolean ativo;
 
+    public TbCampeonatoEntity(String nome, Date dtInicio, Date dtFim, BigInteger valor) {
+        this.nome = nome;
+        this.dtInicio = dtInicio;
+        this.dtFim = dtFim;
+        this.valor = valor;
+    }
+
+    public TbCampeonatoEntity() {
+
+    }
+
     @Id
     //@GeneratedValue(strategy=GenerationType.TABLE)
     @Column(name = "id_campeonato", nullable = false)
