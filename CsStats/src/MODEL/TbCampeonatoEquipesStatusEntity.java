@@ -11,6 +11,7 @@ import java.util.Objects;
 
 import static DAO.DaoConecta.abreConexao;
 import static DAO.DaoConecta.fecharConexao;
+import static MODEL.TbEquipesEntity.getByNome;
 
 
 @Entity
@@ -23,6 +24,7 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
     private Integer qtdVitorias;
     private Integer qtdEmpates;
     private Integer qtdDerrotas;
+    private String nome;
 
     public TbCampeonatoEquipesStatusEntity(){};
 
@@ -33,6 +35,17 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
         this.qtdVitorias = qtdVitorias;
         this.qtdEmpates = qtdEmpates;
         this.qtdDerrotas = qtdDerrotas;
+    }
+
+    public TbCampeonatoEquipesStatusEntity(String nome, Integer classificacao, Integer vitorias, Integer empates, Integer derrotas) {
+
+        TbEquipesEntity equipesEntity = getByNome(nome);
+        this.idEquipe = equipesEntity.getIdEquipe();
+        this.nome = nome;
+        this.classificacao = classificacao;
+        this.qtdVitorias = vitorias;
+        this.qtdEmpates = empates;
+        this.qtdDerrotas = derrotas;
     }
 
     @Id

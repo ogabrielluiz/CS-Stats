@@ -1,6 +1,9 @@
 package CSstats;
 
 import MODEL.IEntity;
+import MODEL.TbCampeonatoEntity;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import org.postgresql.util.Base64;
@@ -54,6 +57,12 @@ public class Util {
 
         final boolean b = Pattern.compile("\\w").matcher(s).find();
         return b;
+    }
+
+    public static ObservableList<TbCampeonatoEntity> add_camp_into_obsList(TbCampeonatoEntity obj){
+        ObservableList<TbCampeonatoEntity> obList = FXCollections.observableArrayList();
+        obList.add(obj);
+        return obList;
     }
 
 }

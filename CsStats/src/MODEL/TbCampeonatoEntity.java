@@ -150,7 +150,7 @@ public class TbCampeonatoEntity implements IEntity {
         return this.nome;
     }
 
-    public TbCampeonatoEntity getByNome(String text){
+    public static TbCampeonatoEntity getByNome(String text){
         abreConexao();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery q = cb.createQuery(TbCampeonatoEntity.class);

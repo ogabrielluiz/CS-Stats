@@ -12,9 +12,9 @@
 
 <TabPane fx:id="superior_tabPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CSstats.Controller">
    <tabs>
-      <Tab fx:id="tab_vis_lista_equipes" text="Visualização">
+      <Tab fx:id="visualizacao_tab" text="Visualização">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane fx:id="visualizacao_aPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <TabPane fx:id="inferior_tabPane" prefHeight="715.0" prefWidth="1236.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
@@ -106,7 +106,7 @@
                                           <Insets top="40.0" />
                                        </GridPane.margin>
                                     </ImageView>
-                                    <Button fx:id="btn_editar_camp" mnemonicParsing="false" prefHeight="68.0" prefWidth="114.0" text="Editar Campeonato" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                    <Button fx:id="btn_editar_camp" mnemonicParsing="false" onAction="#handle_btn_editar_camp" prefHeight="68.0" prefWidth="114.0" text="Editar Campeonato" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets left="25.0" />
                                        </GridPane.margin>
@@ -236,11 +236,11 @@
             </AnchorPane>
         </content>
       </Tab>
-      <Tab text="Edição">
+      <Tab fx:id="edicao_tab" text="Edição">
          <content>
-            <TabPane>
+            <TabPane fx:id="edicao_tabPane">
                <tabs>
-                  <Tab fx:id="imagem_campeonato" text="Edição - Campeonato">
+                  <Tab fx:id="edicao_campeonato_tab" text="Edição - Campeonato">
                      <content>
                         <GridPane alignment="TOP_CENTER" prefHeight="683.0">
                           <columnConstraints>
@@ -358,9 +358,9 @@
                                     <Insets bottom="35.0" left="5.0" />
                                  </GridPane.margin>
                               </Button>
-                              <Button fx:id="btn_atualizar_camp" mnemonicParsing="false" prefWidth="200.0" text="Atualizar Campeonato" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                              <Button fx:id="btn_atualizar_camp" mnemonicParsing="false" onAction="#handle_btn_atualizar_camp" prefWidth="200.0" text="Atualizar Campeonato" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets top="330.0" />
+                                    <Insets left="5.0" top="330.0" />
                                  </GridPane.margin>
                               </Button>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Vitórias" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="SOMETIMES">
@@ -403,22 +403,22 @@
                               </Label>
                               <Button fx:id="btn_inserir_camp" minWidth="-Infinity" mnemonicParsing="false" onAction="#handle_inserir_camp" prefWidth="200.0" text="Inserir Campeonato" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets top="300.0" />
+                                    <Insets left="5.0" top="300.0" />
                                  </GridPane.margin>
                               </Button>
                               <Label text="Localização" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets top="225.0" />
+                                    <Insets left="5.0" top="225.0" />
                                  </GridPane.margin>
                               </Label>
                               <TextField fx:id="localizacao" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets top="245.0" />
+                                    <Insets left="5.0" top="245.0" />
                                  </GridPane.margin>
                               </TextField>
                               <Button fx:id="btn_atualizar_camp1" minWidth="-Infinity" mnemonicParsing="false" prefWidth="200.0" text="Remover Campeonato" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets top="10.0" />
+                                    <Insets left="5.0" top="10.0" />
                                  </GridPane.margin>
                               </Button>
                               <ChoiceBox fx:id="derrotas_ChB" maxWidth="30.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">

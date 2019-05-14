@@ -119,7 +119,7 @@ public class TbEquipesEntity implements IEntity  {
         return query.getResultList();
     }
 
-    public TbEquipesEntity getByNome(String text){
+    public static TbEquipesEntity getByNome(String text){
         abreConexao();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery q = cb.createQuery(TbEquipesEntity.class);

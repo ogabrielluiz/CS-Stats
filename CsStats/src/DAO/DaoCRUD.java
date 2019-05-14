@@ -22,7 +22,7 @@ public class DaoCRUD {
         fecharConexao();
     }
 
-    public void update(IEntity entidade){
+    public static void update(IEntity entidade){
         abreConexao();
         DaoConecta.em.merge(entidade);
         fecharConexao();
