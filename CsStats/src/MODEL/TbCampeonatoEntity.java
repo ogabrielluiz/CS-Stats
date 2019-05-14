@@ -29,6 +29,7 @@ public class TbCampeonatoEntity implements IEntity {
     private String localizacao;
     private Boolean ativo;
 
+
     public TbCampeonatoEntity(String nome, Date dtInicio, Date dtFim, BigInteger valor) {
         this.nome = nome;
         this.dtInicio = dtInicio;

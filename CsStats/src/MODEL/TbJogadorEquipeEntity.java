@@ -1,7 +1,16 @@
 package MODEL;
 
+import DAO.DaoConecta;
+
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Objects;
+
+import static DAO.DaoConecta.abreConexao;
+import static DAO.DaoConecta.fecharConexao;
 
 @Entity
 
@@ -84,5 +93,17 @@ public class TbJogadorEquipeEntity implements IEntity  {
     @Override
     public String toString(){
         return this.nome;
+    }
+
+    public static List<TbJogadorEquipeEntity> getById(int id){
+        abreConexao();
+        CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
+        CriteriaQuery cq = builder.createQuery(TbJogadorEquipeEntity.class);
+        Root<IEntity> root = cq.from(TbJogadorEquipeEntity.class);
+        cq.select(cq.from(TbJogadorEquipeEntity.class)).where(builder.equal( root.get("idEquipe"), id));
+        Query q = DaoConecta.em.createQuery(cq);
+        List<TbJogadorEquipeEntity> result = q.getResultList();
+        fecharConexao();
+        return (List<TbJogadorEquipeEntity>) result;
     }
 }

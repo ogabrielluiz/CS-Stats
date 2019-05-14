@@ -28,7 +28,7 @@ public class DaoCRUD {
         fecharConexao();
     }
 
-    public IEntity getById(int id){
+    public static IEntity getById(int id){
         abreConexao();
         IEntity e = DaoConecta.em.find(IEntity.class, id);
         fecharConexao();

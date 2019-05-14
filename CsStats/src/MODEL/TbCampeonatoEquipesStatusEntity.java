@@ -1,7 +1,16 @@
 package MODEL;
 
+import DAO.DaoConecta;
+
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Objects;
+
+import static DAO.DaoConecta.abreConexao;
+import static DAO.DaoConecta.fecharConexao;
 
 
 @Entity
@@ -102,5 +111,17 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
     @Override
     public int hashCode() {
         return Objects.hash(idCampeonato, idEquipe, classificacao, qtdVitorias, qtdEmpates, qtdDerrotas);
+    }
+
+    public static List<TbCampeonatoEquipesStatusEntity> getById(int id){
+        abreConexao();
+        CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
+        CriteriaQuery cq = builder.createQuery(TbCampeonatoEquipesStatusEntity.class);
+        Root<IEntity> root = cq.from(TbCampeonatoEquipesStatusEntity.class);
+        cq.select(cq.from(TbCampeonatoEquipesStatusEntity.class)).where(builder.equal( root.get("idCampeonato"), id));
+        Query q = DaoConecta.em.createQuery(cq);
+        List<TbCampeonatoEquipesStatusEntity> result = q.getResultList();
+        fecharConexao();
+        return (List<TbCampeonatoEquipesStatusEntity>) result;
     }
 }

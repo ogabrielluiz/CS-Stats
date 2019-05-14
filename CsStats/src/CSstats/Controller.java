@@ -3,10 +3,7 @@ package CSstats;
 
 import DAO.DaoCRUD;
 import DAO.DaoConecta;
-import MODEL.IEntity;
-import MODEL.TbCampeonatoEntity;
-import MODEL.TbCampeonatoEquipesStatusEntity;
-import MODEL.TbEquipesEntity;
+import MODEL.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +20,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
@@ -64,7 +62,9 @@ public class Controller implements Initializable {
     private String equipe_selecionada;
     private Integer posicao_selecionada;
 
-    @FXML TabPane tabPane;
+    @FXML TabPane superior_tabPane;
+    @FXML TabPane inferior_tabPane;
+
     @FXML Tab tab_vis_campeonato;
         @FXML Label nm_campeonato_lb;
         @FXML Label valor_lb;
@@ -72,6 +72,26 @@ public class Controller implements Initializable {
         @FXML Label data_termino_lb;
         @FXML Label localizacao_lb;
         @FXML ImageView vis_imageView_camp;
+        @FXML TableView<TbCampeonatoEquipesStatusEntity> vis_tb_info_equipe;
+        @FXML TableColumn<TbCampeonatoEquipesStatusEntity, String> vis_coluna_equipe;
+        @FXML TableColumn<TbCampeonatoEquipesStatusEntity, Number> vis_coluna_classificacao;
+        @FXML TableColumn<TbCampeonatoEquipesStatusEntity, Number> vis_coluna_vitorias;
+        @FXML TableColumn<TbCampeonatoEquipesStatusEntity, Number> vis_coluna_empates;
+        @FXML TableColumn<TbCampeonatoEquipesStatusEntity, Number> vis_coluna_derrotas;
+
+    @FXML Tab tab_vis_equipe;
+        @FXML Label vis_nm_equipe;
+        @FXML Label vis_origem;
+        @FXML Label vis_except_equipe_image;
+        @FXML ImageView vis_imageView_equipe;
+        @FXML TableView<TableViewEquipe> tableView_lista_equipes;
+            @FXML TableColumn<TableViewEquipe, String> vis_coluna_nm_equipe;
+            @FXML TableColumn<TableViewEquipe, String> vis_coluna_origem_equipe;
+            @FXML TableColumn<TableViewEquipe, String> vis_coluna_integrantes;
+        @FXML TableView<TbJogadorEquipeEntity> vis_tb_info_integrantes;
+            @FXML TableColumn<TableViewEquipe, String> vis_coluna_nm_jogador;
+            @FXML TableColumn<TableViewEquipe, String> vis_coluna_codenome;
+
 
 
     @FXML
@@ -359,7 +379,6 @@ public class Controller implements Initializable {
         List<TbCampeonatoEntity> list_campeonatos = new ArrayList<>();
 
         try{
-            comboBox_equipes.getItems().clear();
             abreConexao();
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(TbCampeonatoEntity.class));
@@ -381,6 +400,39 @@ public class Controller implements Initializable {
         tableView_lista_campeonatos.setItems(campeonatoEntities);
     }
 
+    @FXML public void popula_tableview_lista_equipes(){
+
+        List<TbEquipesEntity> list_equipes = new ArrayList<>();
+        ObservableList<TableViewEquipe> equipeEntities = FXCollections.observableArrayList();
+
+        try{
+
+            abreConexao();
+            CriteriaBuilder builder = em.getCriteriaBuilder();
+            CriteriaQuery cq = builder.createQuery();
+            Root<IEntity> root = cq.from(TbEquipesEntity.class);
+            cq.select(cq.from(TbEquipesEntity.class));
+            Query q = em.createQuery(cq);
+            list_equipes = q.getResultList();
+            fecharConexao();
+            for (TbEquipesEntity e : list_equipes) {
+
+                equipeEntities.add(
+                        new TableViewEquipe(
+                                e.getNome(),
+                                e.getOrigem(),
+                                TableViewEquipe.getIntegrantesbyId( e.getIdEquipe() ) ));
+            }
+
+
+
+        } catch(NullPointerException err){
+            System.out.println("TableView Equipe: Retorno nulo.");
+        }
+
+        tableView_lista_equipes.setItems(equipeEntities);
+    }
+
 
 
 
@@ -390,6 +442,10 @@ public class Controller implements Initializable {
                     TableRow<TbCampeonatoEntity> row = new TableRow<>();
                     row.setOnMouseClicked(event -> {
                         if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                            tab_vis_campeonato.setDisable(false);
+
+                            inferior_tabPane.getSelectionModel().select(tab_vis_campeonato);
+
                             TbCampeonatoEntity rowData = row.getItem();
                             nm_campeonato_lb.setText(rowData.getNome());
                             valor_lb.setText(rowData.getValor().toString());
@@ -400,8 +456,21 @@ public class Controller implements Initializable {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                            tab_vis_campeonato.setText( rowData.getNome() );
+                            ObservableList<TbCampeonatoEquipesStatusEntity> info_camp = FXCollections.observableArrayList();
+
+                            List<TbCampeonatoEquipesStatusEntity> results = TbCampeonatoEquipesStatusEntity
+                                    .getById( rowData.getIdCampeonato() );
+                            for (TbCampeonatoEquipesStatusEntity e: results
+                                 ) {
+                                info_camp.add(e);
+                            }
+
+                            vis_tb_info_equipe.setItems( info_camp );
+
                             localizacao_lb.setText(rowData.getLocalizacao());
-                            tabPane.getSelectionModel().select(tab_vis_campeonato);
+
+
 
                         }
                     }
@@ -410,26 +479,83 @@ public class Controller implements Initializable {
         }
         );
 
+        tableView_lista_equipes.setRowFactory(tv -> {
+                    TableRow<TableViewEquipe> row = new TableRow<>();
+                    row.setOnMouseClicked(event -> {
+                                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                                    tab_vis_equipe.setDisable(false);
+
+                                    inferior_tabPane.getSelectionModel().select(tab_vis_equipe);
+
+                                    TableViewEquipe rowData = row.getItem();
+                                    vis_nm_equipe.setText(rowData.getNome());
+                                    vis_origem.setText(rowData.getOrigem());
+
+                                    TbEquipesEntity newData = new TbEquipesEntity();
+
+                                    TbEquipesEntity byNome = newData.getByNome( rowData.getNome() );
 
 
-            coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
-            coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
-            coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
-            coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
+                                    try {
+                                        vis_imageView_equipe.setImage(bytea_to_image(byNome.getImagem()));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    tab_vis_equipe.setText( byNome.getNome() );
+                                    ObservableList<TbJogadorEquipeEntity> info_equipe = FXCollections.observableArrayList();
 
-            vis_nome_camp_coluna.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            vis_premio_campeonatos_coluna.setCellValueFactory(new PropertyValueFactory<>("valor"));
-            vis_data_inicio_coluna.setCellValueFactory(new PropertyValueFactory<>("dtInicio"));
-            vis_data_termino_coluna.setCellValueFactory(new PropertyValueFactory<>("dtFim"));
+                                    List<TbJogadorEquipeEntity> results = TbJogadorEquipeEntity
+                                            .getById( byNome.getIdEquipe() );
+                                    for (TbJogadorEquipeEntity e: results
+                                    ) {
+                                        info_equipe.add(e);
+                                    }
+
+                                    vis_tb_info_integrantes.setItems( info_equipe );
 
 
-            popula_tableview_lista_campeonatos();
-            // Popula a lista de números
-            choiceBox_posicao.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-            vitorias_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-            empates_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-            derrotas_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+
+                                }
+                            }
+                    );
+                    return row;
+                }
+        );
+
+
+
+        coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
+        coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
+        coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
+        coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
+
+        vis_coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        vis_coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
+        vis_coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
+        vis_coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
+        vis_coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
+
+        vis_nome_camp_coluna.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        vis_premio_campeonatos_coluna.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        vis_data_inicio_coluna.setCellValueFactory(new PropertyValueFactory<>("dtInicio"));
+        vis_data_termino_coluna.setCellValueFactory(new PropertyValueFactory<>("dtFim"));
+
+
+        vis_coluna_nm_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        vis_coluna_origem_equipe.setCellValueFactory(new PropertyValueFactory<>("origem"));
+        vis_coluna_integrantes.setCellValueFactory(new PropertyValueFactory<>("integrantes"));
+
+        vis_coluna_nm_jogador.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        vis_coluna_codenome.setCellValueFactory(new PropertyValueFactory<>("codenome"));
+
+        popula_tableview_lista_equipes();
+        popula_tableview_lista_campeonatos();
+        // Popula a lista de números
+        choiceBox_posicao.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        vitorias_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        empates_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        derrotas_ChB.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 
     }
 }

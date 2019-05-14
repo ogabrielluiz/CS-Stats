@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +23,9 @@ public class TbEquipesEntity implements IEntity  {
     private byte[] imagem;
     private String origem;
     private Boolean ativo;
+
+
+
 
     public TbEquipesEntity(){}
 
