@@ -1,7 +1,6 @@
 package CSstats;
 
 
-import DAO.DaoConecta;
 import MODEL.*;
 
 import javafx.collections.FXCollections;
@@ -32,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static CSstats.TableViewEquipe.getIntegrantesbyId;
 import static CSstats.Util.*;
 import static DAO.DaoCRUD.*;
 import static DAO.DaoConecta.*;
@@ -98,6 +98,10 @@ public class Controller implements Initializable {
     @FXML TabPane edicao_tabPane;
         @FXML Tab edicao_campeonato_tab;
 
+    @FXML TableView<TbJogadorEquipeEntity> tb_equipe_jogador;
+    @FXML TableColumn<TbJogadorEquipeEntity, String> coluna_nm_jogador;
+    @FXML TableColumn<TbJogadorEquipeEntity, String> coluna_codenome;
+
 
 
     @FXML
@@ -124,6 +128,9 @@ public class Controller implements Initializable {
 
     @FXML
     private TextField textField_derrotas;
+
+    @FXML TextField textField_codenome_jogador;
+    @FXML TextField textField_nome_jogador;
 
     @FXML
     private TextField nm_campeonato;
@@ -154,22 +161,22 @@ public class Controller implements Initializable {
     private ChoiceBox<Integer> derrotas_ChB;
 
     @FXML
-    private TableView<TbCampeonatoEquipesStatusEntity> tb_info_equipe = new TableView<>();
+    private TableView<TbCampeonatoEquipesStatusEntity> tb_info_equipe;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, String> coluna_equipe = new TableColumn<>("nome");
+    private TableColumn<TbCampeonatoEquipesStatusEntity, String> coluna_equipe;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_classificacao = new TableColumn<>("classificacao");
+    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_classificacao;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_vitorias = new TableColumn<>("vitorias");
+    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_vitorias;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_empates = new TableColumn<>("empates");
+    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_empates;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_derrotas = new TableColumn<>("derrotas");
+    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_derrotas;
 
 
 
@@ -196,18 +203,21 @@ public class Controller implements Initializable {
 
 
 
-        ObservableList<TbCampeonatoEquipesStatusEntity> data =
-                FXCollections.observableArrayList(new TbCampeonatoEquipesStatusEntity(nome,classificacao,
-                vitorias,empates,derrotas));
+//        ObservableList<TbCampeonatoEquipesStatusEntity> data =
+//                FXCollections.observableArrayList(new TbCampeonatoEquipesStatusEntity(nome,classificacao,
+//                vitorias,empates,derrotas));
 
-        tb_info_equipe.setItems(data);
-        tb_info_equipe.setVisible(true);
+        TbCampeonatoEquipesStatusEntity data = new TbCampeonatoEquipesStatusEntity(nome,classificacao,
+                vitorias,empates,derrotas);
 
-//        comboBox_equipes.getItems().clear();
-//        choiceBox_posicao.getItems().clear();
-//        vitorias_ChB.getItems().clear();
-//        empates_ChB.getItems().clear();
-//        derrotas_ChB.getItems().clear();
+        tb_info_equipe.getItems().add(data);
+
+
+        comboBox_equipes.getItems().clear();
+        choiceBox_posicao.getItems().clear();
+        vitorias_ChB.getItems().clear();
+        empates_ChB.getItems().clear();
+        derrotas_ChB.getItems().clear();
 
     }
 
@@ -222,7 +232,13 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void btn_adicionar_jogador_tableView(){}
+    private void btn_adicionar_jogador_tableView(){
+        TbJogadorEquipeEntity jogadorEquipeEntity = new TbJogadorEquipeEntity();
+        jogadorEquipeEntity.setNome( textField_nome_jogador.getText() );
+        jogadorEquipeEntity.setCodenome( textField_codenome_jogador.getText() );
+
+        tb_equipe_jogador.getItems().add(jogadorEquipeEntity);
+    }
 
     @FXML
     public void handle_inserir_camp() throws NullPointerException {
@@ -380,6 +396,7 @@ public class Controller implements Initializable {
     @FXML TableColumn<MODEL.TbCampeonatoEquipesStatusEntity, Number> vis_premio_campeonatos_coluna;
     @FXML TableColumn<MODEL.TbCampeonatoEquipesStatusEntity, LocalDate> vis_data_inicio_coluna;
     @FXML TableColumn<MODEL.TbCampeonatoEquipesStatusEntity, LocalDate> vis_data_termino_coluna;
+    @FXML TableColumn<MODEL.TbCampeonatoEquipesStatusEntity, String> vis_local_coluna;
 
     @FXML public void popula_tableview_lista_campeonatos(){
 
@@ -424,13 +441,16 @@ public class Controller implements Initializable {
             Query q = em.createQuery(cq);
             list_equipes = q.getResultList();
             fecharConexao();
-            for (TbEquipesEntity e : list_equipes) {
 
+            String integrantes;
+            for (TbEquipesEntity e : list_equipes) {
+                integrantes = getIntegrantesbyId( e.getIdEquipe() ) ;
                 equipeEntities.add(
                         new TableViewEquipe(
                                 e.getNome(),
                                 e.getOrigem(),
-                                TableViewEquipe.getIntegrantesbyId( e.getIdEquipe() ) ));
+                                integrantes
+                                ));
             }
 
 
@@ -439,11 +459,11 @@ public class Controller implements Initializable {
             System.out.println("TableView Equipe: Retorno nulo.");
         }
 
-        tableView_lista_equipes.setItems(equipeEntities);
+        //tableView_lista_equipes.setItems(equipeEntities);
+        tableView_lista_equipes.getItems().addAll( equipeEntities );
     }
 
-    @FXML Label data_inicio_registrada_lb;
-    @FXML Label data_termino_registrada_lb;
+
     @FXML public void handle_btn_editar_camp(){
 
         TbCampeonatoEntity campeonatoEntity;
@@ -471,6 +491,32 @@ public class Controller implements Initializable {
 
         superior_tabPane.getSelectionModel().select( edicao_tab );
         edicao_tabPane.getSelectionModel().select(edicao_campeonato_tab);
+    }
+
+    @FXML public void handle_btn_editar_equipe(){
+
+        TbEquipesEntity equipeEntity;
+
+        equipeEntity = TbEquipesEntity.getByNome( vis_nm_equipe.getText() );
+
+        nm_equipe.setText(vis_nm_equipe.getText());
+        origem_equipe.setText( vis_origem.getText() );
+
+        imageView_equipe.setImage( vis_imageView_equipe.getImage() );
+
+        Integer id_equipe = equipeEntity.getIdEquipe();
+        List<TbJogadorEquipeEntity> results = TbJogadorEquipeEntity
+                .getByTeamId( id_equipe );
+        ObservableList<TbJogadorEquipeEntity> info_equipe = FXCollections.observableArrayList();
+
+        for (TbJogadorEquipeEntity e: results
+        ) {
+            info_equipe.add(e);
+        }
+        vis_tb_info_integrantes.getItems().addAll(info_equipe);
+
+        superior_tabPane.getSelectionModel().select( edicao_tab );
+        edicao_tabPane.getSelectionModel().select(tab_edicao_equipe);
     }
 
     @FXML public void handle_btn_atualizar_camp() throws IOException {
@@ -514,12 +560,6 @@ public class Controller implements Initializable {
 
     }
 
-
-
-
-
-
-
     public void initialize(URL location, ResourceBundle resources) {
         tableView_lista_campeonatos.setRowFactory(tv -> {
                     TableRow<TbCampeonatoEntity> row = new TableRow<>();
@@ -546,6 +586,7 @@ public class Controller implements Initializable {
                                     .getById( rowData.getIdCampeonato() );
                             for (MODEL.TbCampeonatoEquipesStatusEntity e: results
                                  ) {
+
                                 info_camp.add(e);
                             }
 
@@ -588,14 +629,14 @@ public class Controller implements Initializable {
                                     ObservableList<TbJogadorEquipeEntity> info_equipe = FXCollections.observableArrayList();
 
                                     List<TbJogadorEquipeEntity> results = TbJogadorEquipeEntity
-                                            .getById( byNome.getIdEquipe() );
+                                            .getByTeamId( byNome.getIdEquipe() );
                                     for (TbJogadorEquipeEntity e: results
                                     ) {
 
                                         info_equipe.add(e);
                                     }
 
-                                    vis_tb_info_integrantes.setItems( info_equipe );
+                                    vis_tb_info_integrantes.getItems().addAll(info_equipe);
                                     vis_tb_info_integrantes.refresh();
 
 
@@ -610,6 +651,7 @@ public class Controller implements Initializable {
 
 
         coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
         coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
         coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
         coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
@@ -625,6 +667,7 @@ public class Controller implements Initializable {
         vis_premio_campeonatos_coluna.setCellValueFactory(new PropertyValueFactory<>("valor"));
         vis_data_inicio_coluna.setCellValueFactory(new PropertyValueFactory<>("dtInicio"));
         vis_data_termino_coluna.setCellValueFactory(new PropertyValueFactory<>("dtFim"));
+        vis_local_coluna.setCellValueFactory(new PropertyValueFactory<>("localizacao"));
 
 
         vis_coluna_nm_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -633,6 +676,9 @@ public class Controller implements Initializable {
 
         vis_coluna_nm_jogador.setCellValueFactory(new PropertyValueFactory<>("nome"));
         vis_coluna_codenome.setCellValueFactory(new PropertyValueFactory<>("codenome"));
+
+        coluna_nm_jogador.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        coluna_codenome.setCellValueFactory(new PropertyValueFactory<>("codenome"));
 
         popula_tableview_lista_equipes();
         popula_tableview_lista_campeonatos();

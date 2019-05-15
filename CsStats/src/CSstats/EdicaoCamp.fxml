@@ -30,6 +30,7 @@
                                               <TableColumn fx:id="vis_premio_campeonatos_coluna" editable="false" minWidth="0.0" prefWidth="194.0" text="Prêmio" />
                                                 <TableColumn fx:id="vis_data_inicio_coluna" editable="false" minWidth="0.0" prefWidth="176.0" text="Data Início" />
                                                 <TableColumn fx:id="vis_data_termino_coluna" editable="false" minWidth="89.0" prefWidth="220.0" text="Data Término" />
+                                                <TableColumn fx:id="vis_local_coluna" editable="false" minWidth="89.0" prefWidth="220.0" text="Localização" />
                                             </columns>
                                           </TableView>
                                        </children>
@@ -201,7 +202,7 @@
                                           <Insets top="40.0" />
                                        </GridPane.margin>
                                     </ImageView>
-                                    <Button fx:id="btn_editar_equipe" mnemonicParsing="false" prefHeight="68.0" prefWidth="114.0" text="Editar Equipe" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                                    <Button fx:id="btn_editar_equipe" mnemonicParsing="false" onAction="#handle_btn_editar_equipe" prefHeight="68.0" prefWidth="114.0" text="Editar Equipe" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                                        <GridPane.margin>
                                           <Insets bottom="15.0" right="5.0" />
                                        </GridPane.margin>

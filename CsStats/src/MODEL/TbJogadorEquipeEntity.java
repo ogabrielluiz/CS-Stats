@@ -19,7 +19,7 @@ public class TbJogadorEquipeEntity implements IEntity  {
     private int idJogador;
     private int idEquipe;
     private String nome;
-    private String condenome;
+    private String codenome;
     private Boolean ativo;
 
     @Id
@@ -54,13 +54,13 @@ public class TbJogadorEquipeEntity implements IEntity  {
     }
 
     @Basic
-    @Column(name = "condenome", nullable = true, length = 60)
-    public String getCondenome() {
-        return condenome;
+    @Column(name = "codenome", nullable = true, length = 60)
+    public String getCodenome() {
+        return codenome;
     }
 
-    public void setCondenome(String condenome) {
-        this.condenome = condenome;
+    public void setCodenome(String condenome) {
+        this.codenome = condenome;
     }
 
     @Basic
@@ -81,13 +81,13 @@ public class TbJogadorEquipeEntity implements IEntity  {
         return idJogador == that.idJogador &&
                 idEquipe == that.idEquipe &&
                 Objects.equals(nome, that.nome) &&
-                Objects.equals(condenome, that.condenome) &&
+                Objects.equals( codenome, that.codenome ) &&
                 Objects.equals(ativo, that.ativo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idJogador, idEquipe, nome, condenome, ativo);
+        return Objects.hash(idJogador, idEquipe, nome, codenome, ativo);
     }
 
     @Override
@@ -95,7 +95,19 @@ public class TbJogadorEquipeEntity implements IEntity  {
         return this.nome;
     }
 
-    public static List<TbJogadorEquipeEntity> getById(int id){
+//    public static List<TbJogadorEquipeEntity> getById(int id){
+//        abreConexao();
+//        CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
+//        CriteriaQuery cq = builder.createQuery(TbJogadorEquipeEntity.class);
+//        Root<IEntity> root = cq.from(TbJogadorEquipeEntity.class);
+//        cq.select(cq.from(TbJogadorEquipeEntity.class)).where(builder.equal( root.get("idEquipe"), id));
+//        Query q = DaoConecta.em.createQuery(cq);
+//        List<TbJogadorEquipeEntity> result = q.getResultList();
+//        fecharConexao();
+//        return result;
+//    }
+
+    public static List<TbJogadorEquipeEntity> getByTeamId(int id){
         abreConexao();
         CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
         CriteriaQuery cq = builder.createQuery(TbJogadorEquipeEntity.class);
@@ -104,6 +116,6 @@ public class TbJogadorEquipeEntity implements IEntity  {
         Query q = DaoConecta.em.createQuery(cq);
         List<TbJogadorEquipeEntity> result = q.getResultList();
         fecharConexao();
-        return (List<TbJogadorEquipeEntity>) result;
+        return result;
     }
 }

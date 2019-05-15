@@ -5,6 +5,7 @@ import MODEL.IEntity;
 import MODEL.TbJogadorEquipeEntity;
 
 import javax.persistence.Query;
+import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -20,30 +21,38 @@ public class TableViewEquipe {
     private String integrantes;
 
 
-    public TableViewEquipe(String nome, String origem, String integrantes) {
+    public TableViewEquipe(String nome, String origem, String lista_de_integrantes) {
         this.nome = nome;
         this.origem = origem;
-        this.integrantes = integrantes;
+        this.integrantes = lista_de_integrantes;
     }
 
     public static String getIntegrantesbyId(int id) {
         abreConexao();
         CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
-        CriteriaQuery cq = builder.createQuery( TbJogadorEquipeEntity.class);
-        Root<IEntity> root = cq.from(TbJogadorEquipeEntity.class);
-        cq.select(cq.from(TbJogadorEquipeEntity.class)).where(builder.equal( root.get("idEquipe"), id));
+        CriteriaQuery<Tuple> cq = builder.createTupleQuery();
+        Root<TbJogadorEquipeEntity> root = cq.from(TbJogadorEquipeEntity.class);
+        cq.multiselect(root.get("codenome")).where(builder.equal( root.get("idEquipe"), id));
         Query q = DaoConecta.em.createQuery(cq);
-        List<TbJogadorEquipeEntity> result = q.getResultList();
-        List<String> list_of_strings = new ArrayList<>(  );
-        for (TbJogadorEquipeEntity j: result
-        ) {
-            list_of_strings.add(j.getCondenome());
+        List<Tuple> tupleResult = q.getResultList();
+        List<String> listStrings = new ArrayList<>(  );
+        for (Tuple j: tupleResult
+             ) {
+            listStrings.add(j.get(0).toString());
         }
+
+        String lista_jogadores;
+
         fecharConexao();
-        String integrantes = String.join(", ", list_of_strings);
+        if(!listStrings.isEmpty()) {
+            lista_jogadores = String.join( ", ", listStrings );
+        } else{
+            lista_jogadores = " ";
+        }
 
 
-        return integrantes;
+
+        return lista_jogadores;
     }
 
     public void setIntegrantes(String j){
@@ -66,4 +75,7 @@ public class TableViewEquipe {
         this.origem = origem;
     }
 
+    public String getIntegrantes() {
+        return integrantes;
+    }
 }
