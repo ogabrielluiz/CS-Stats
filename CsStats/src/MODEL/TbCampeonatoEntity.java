@@ -42,7 +42,7 @@ public class TbCampeonatoEntity implements IEntity {
     }
 
     @Id
-    //@GeneratedValue(strategy=GenerationType.TABLE)
+    @GeneratedValue(strategy=GenerationType.TABLE)
     @Column(name = "id_campeonato", nullable = false)
     public int getIdCampeonato() {
         return idCampeonato;

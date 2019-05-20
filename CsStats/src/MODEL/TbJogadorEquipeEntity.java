@@ -20,7 +20,7 @@ public class TbJogadorEquipeEntity implements IEntity  {
     private int idEquipe;
     private String nome;
     private String codenome;
-    private Boolean ativo;
+    private Boolean ativo = true;
 
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE)
@@ -64,10 +64,11 @@ public class TbJogadorEquipeEntity implements IEntity  {
     }
 
     @Basic
-    @Column(name = "ativo", nullable = true)
+    @Column(name = "ativo", nullable = false)
     public Boolean getAtivo() {
         return ativo;
     }
+
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;

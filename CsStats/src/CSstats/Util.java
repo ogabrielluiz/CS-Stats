@@ -2,6 +2,7 @@ package CSstats;
 
 import MODEL.IEntity;
 import MODEL.TbCampeonatoEntity;
+import MODEL.TbEquipesEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -61,6 +62,12 @@ public class Util {
 
     public static ObservableList<TbCampeonatoEntity> add_camp_into_obsList(TbCampeonatoEntity obj){
         ObservableList<TbCampeonatoEntity> obList = FXCollections.observableArrayList();
+        obList.add(obj);
+        return obList;
+    }
+
+    public static ObservableList<TbEquipesEntity> add_equipe_into_obsList(TbEquipesEntity obj){
+        ObservableList<TbEquipesEntity> obList = FXCollections.observableArrayList();
         obList.add(obj);
         return obList;
     }

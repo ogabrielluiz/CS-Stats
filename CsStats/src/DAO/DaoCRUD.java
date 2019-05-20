@@ -43,14 +43,14 @@ public class DaoCRUD {
     }
 
 
-    public void remove(int id) {
-        IEntity entidade = getById(id);
-        if (entidade != null) {
-            abreConexao();
-            DaoConecta.em.remove(entidade);
-            fecharConexao();
-        }
-    }
+//    public static void  delete(IEntity entidade) {
+//
+//        if (entidade != null) {
+//            abreConexao();
+//            DaoConecta.em.remove(entidade);
+//            fecharConexao();
+//        }
+//    }
 
     public static List<IEntity> getAll(){
         abreConexao();

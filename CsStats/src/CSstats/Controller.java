@@ -240,6 +240,12 @@ public class Controller implements Initializable {
         jogadorSelecionado = tb_equipe_jogador.getSelectionModel().getSelectedItems();
 
         jogadorSelecionado.forEach(todosJogadores::remove);
+        for (TbJogadorEquipeEntity j: jogadorSelecionado
+             ) {
+            j.setAtivo(false);
+            update(j);
+
+        }
     }
 
     @FXML
@@ -450,12 +456,32 @@ public class Controller implements Initializable {
 
         for (TbJogadorEquipeEntity e: list_integrantes
         ) {
-            jogadorEquipeEntities.add(e);
+            if(e.getAtivo() == true){
+                jogadorEquipeEntities.add(e);
+            }
         }
        tb_equipe_jogador.setItems(jogadorEquipeEntities);
 
     }
 
+
+    @FXML void salvar_tudo_equipe(){
+            TbEquipesEntity equipe = TbEquipesEntity.getByNome(nm_equipe.getText());
+
+            TbJogadorEquipeEntity jogador = new TbJogadorEquipeEntity();
+
+            ObservableList<TbJogadorEquipeEntity> integrantes = tb_equipe_jogador.getItems();
+
+        for (TbJogadorEquipeEntity j: integrantes
+             ) {
+            j.setIdEquipe(equipe.getIdEquipe());
+             insert(j);
+        }
+
+
+
+
+    }
     // VISUALIZAÇÃO
 
     @FXML TableView<TbCampeonatoEntity> tableView_lista_campeonatos = new TableView<>();
@@ -579,8 +605,9 @@ public class Controller implements Initializable {
         for (TbJogadorEquipeEntity e: results
         ) {
             info_equipe.add(e);
+            if(info_equipe.size() == 5) break;
         }
-        vis_tb_info_integrantes.getItems().addAll(info_equipe);
+        tb_equipe_jogador.getItems().addAll(info_equipe);
 
         superior_tabPane.getSelectionModel().select( edicao_tab );
         edicao_tabPane.getSelectionModel().select(tab_edicao_equipe);
@@ -739,11 +766,13 @@ public class Controller implements Initializable {
                                     ) {
 
                                         info_equipe.add(e);
+                                        if(info_equipe.size() == 5) break;
                                     }
 
+                                    vis_tb_info_integrantes.getItems().clear();
                                     vis_tb_info_integrantes.getItems().addAll(info_equipe);
-                                    vis_tb_info_integrantes.refresh();
-                                    po
+
+                                    //popula_tb_equipe_jogador();
 
 
 

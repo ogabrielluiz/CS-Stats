@@ -32,13 +32,15 @@ public class TableViewEquipe {
         CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cq = builder.createTupleQuery();
         Root<TbJogadorEquipeEntity> root = cq.from(TbJogadorEquipeEntity.class);
-        cq.multiselect(root.get("codenome")).where(builder.equal( root.get("idEquipe"), id));
+        cq.multiselect(root.get("codenome"),root.get("ativo")).where(builder.equal( root.get("idEquipe"), id));
         Query q = DaoConecta.em.createQuery(cq);
         List<Tuple> tupleResult = q.getResultList();
         List<String> listStrings = new ArrayList<>(  );
         for (Tuple j: tupleResult
              ) {
-            listStrings.add(j.get(0).toString());
+            if((boolean) j.get(1)){
+                listStrings.add(j.get(0).toString());
+            }
         }
 
         String lista_jogadores;
