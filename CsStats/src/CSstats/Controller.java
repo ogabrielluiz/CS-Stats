@@ -67,6 +67,8 @@ public class Controller implements Initializable {
 
     @FXML Tab visualizacao_tab;
         @FXML Tab tab_lista_campeonatos;
+        @FXML Tab tab_lista_equipes;
+
     @FXML Tab tab_vis_campeonato;
         @FXML Label nm_campeonato_lb;
         @FXML Label valor_lb;
@@ -222,13 +224,22 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void btn_remover_de_tableView(){
+    private void btn_remover_de_tb_camp(){
         ObservableList<TbCampeonatoEquipesStatusEntity> equipeSelecionada, todasEquipes;
 
         todasEquipes = tb_info_equipe.getItems();
         equipeSelecionada = tb_info_equipe.getSelectionModel().getSelectedItems();
 
         equipeSelecionada.forEach(todasEquipes::remove);
+    }
+    @FXML
+    private void btn_remover_de_tb_equipe(){
+        ObservableList<TbJogadorEquipeEntity> jogadorSelecionado, todosJogadores;
+
+        todosJogadores = tb_equipe_jogador.getItems();
+        jogadorSelecionado = tb_equipe_jogador.getSelectionModel().getSelectedItems();
+
+        jogadorSelecionado.forEach(todosJogadores::remove);
     }
 
     @FXML
@@ -237,7 +248,37 @@ public class Controller implements Initializable {
         jogadorEquipeEntity.setNome( textField_nome_jogador.getText() );
         jogadorEquipeEntity.setCodenome( textField_codenome_jogador.getText() );
 
+        TbEquipesEntity equipe = new TbEquipesEntity();
+        jogadorEquipeEntity.setIdEquipe(equipe.getByNome(nm_equipe.getText()).getIdEquipe());
+
+        insert(jogadorEquipeEntity);
+
+        List<TbJogadorEquipeEntity> list_integrantes = new ArrayList<>();
+
+        try{
+            abreConexao();
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(TbJogadorEquipeEntity.class));
+            Query q = em.createQuery(cq);
+
+            list_integrantes = q.getResultList();
+
+            fecharConexao();
+
+        } catch(NullPointerException err){
+            System.out.println("TableView Camp: Retorno nulo.");
+        }
+        ObservableList<TbJogadorEquipeEntity> jogadorEquipeEntities = FXCollections.observableArrayList();
+
+        for (TbJogadorEquipeEntity e: list_integrantes
+        ) {
+            jogadorEquipeEntities.add(e);
+        }
+        //tb_equipe_jogador.setItems(jogadorEquipeEntities);
+
+
         tb_equipe_jogador.getItems().add(jogadorEquipeEntity);
+        ObservableList<TbJogadorEquipeEntity> en = tb_equipe_jogador.getItems();
     }
 
     @FXML
@@ -340,7 +381,7 @@ public class Controller implements Initializable {
 
 
 
-        Image image_equipe = new Image(selectedFile.getAbsoluteFile().toURI().toString(),imageView_camp.getFitWidth(),imageView_camp   .getFitHeight(),true,true);
+            Image image_equipe = new Image(selectedFile.getAbsoluteFile().toURI().toString(),imageView_camp.getFitWidth(),imageView_camp   .getFitHeight(),true,true);
         imageView_equipe.setImage(image_equipe);
         imageView_equipe.setCache(true);
         imageView_equipe.setPreserveRatio(true);
@@ -386,6 +427,32 @@ public class Controller implements Initializable {
         } catch(NullPointerException err){
             System.out.println("ComboBox Camp: Nenhuma equipe na lista");
         }
+
+    }
+
+    public void popula_tb_equipe_jogador(){
+        List<TbJogadorEquipeEntity> list_integrantes = new ArrayList<>();
+
+        try{
+            abreConexao();
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(TbJogadorEquipeEntity.class));
+            Query q = em.createQuery(cq);
+
+            list_integrantes = q.getResultList();
+
+            fecharConexao();
+
+        } catch(NullPointerException err){
+            System.out.println("TableView Camp: Retorno nulo.");
+        }
+        ObservableList<TbJogadorEquipeEntity> jogadorEquipeEntities = FXCollections.observableArrayList();
+
+        for (TbJogadorEquipeEntity e: list_integrantes
+        ) {
+            jogadorEquipeEntities.add(e);
+        }
+       tb_equipe_jogador.setItems(jogadorEquipeEntities);
 
     }
 
@@ -458,7 +525,7 @@ public class Controller implements Initializable {
         } catch(NullPointerException err){
             System.out.println("TableView Equipe: Retorno nulo.");
         }
-
+        tableView_lista_equipes.getItems().clear();
         //tableView_lista_equipes.setItems(equipeEntities);
         tableView_lista_equipes.getItems().addAll( equipeEntities );
     }
@@ -519,6 +586,25 @@ public class Controller implements Initializable {
         edicao_tabPane.getSelectionModel().select(tab_edicao_equipe);
     }
 
+    public void clear_edicao_camp(){
+        nm_campeonato.clear();
+        data_termino.setValue(null );
+        data_inicio.setValue( null );
+        localizacao.clear();
+        valor.clear();
+        imageView_camp.setImage( null );
+        tb_info_equipe.setItems( null );
+
+    }
+
+    public void clear_edicao_equipe(){
+        nm_equipe.clear();
+        origem_equipe.clear();
+        imageView_equipe.setImage( null );
+        tb_equipe_jogador.setItems( null );
+
+    }
+
     @FXML public void handle_btn_atualizar_camp() throws IOException {
         TbCampeonatoEntity campeonatoAtualizado = new TbCampeonatoEntity();
         campeonatoAtualizado.setNome( nm_campeonato.getText() );
@@ -530,7 +616,7 @@ public class Controller implements Initializable {
 
 
         // Cria um arquivo sem espaços no nome
-        File file = new File( "src/ImagensEquipes/" +
+        File file = new File( "src/ImagensCampeonatos/" +
                 campeonatoAtualizado.getNome().replaceAll( "\\s+","" ) ) ;
         try {
             ImageIO.write( SwingFXUtils.fromFXImage(imageView_camp.getImage(), null), "png", file);
@@ -549,15 +635,32 @@ public class Controller implements Initializable {
         clear_edicao_camp();
     }
 
-    public void clear_edicao_camp(){
-        nm_campeonato.clear();
-        data_termino.setValue(null );
-        data_inicio.setValue( null );
-        localizacao.clear();
-        valor.clear();
-        imageView_camp.setImage( null );
-        tb_info_equipe.setItems( null );
+    @FXML public void handle_btn_atualizar_equipe() throws IOException {
+        TbEquipesEntity equipeAtualizada = new TbEquipesEntity();
+        equipeAtualizada.setNome( nm_equipe.getText() );
+        equipeAtualizada.setOrigem( origem_equipe.getText() );
 
+
+
+        // Cria um arquivo sem espaços no nome
+        File file = new File( "src/ImagensEquipes/" +
+                equipeAtualizada.getNome().replaceAll( "\\s+","" ) + ".png" ) ;
+        try {
+            ImageIO.write( SwingFXUtils.fromFXImage(imageView_equipe.getImage(), null), "png", file);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        equipeAtualizada.setImagem( image_to_bytea(file) );
+
+        update(equipeAtualizada);
+        superior_tabPane.getSelectionModel().select( visualizacao_tab );
+//        ObservableList<equipeAtualizada > equipe_list = add_equipe_into_obsList( equipeAtualizada );
+//        tableView_lista_equipes.setItems(equipe_list );
+
+        popula_tableview_lista_equipes();
+        inferior_tabPane.getSelectionModel().select( tab_lista_equipes );
+        clear_edicao_equipe();
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -622,6 +725,8 @@ public class Controller implements Initializable {
 
                                     try {
                                         vis_imageView_equipe.setImage(bytea_to_image(byNome.getImagem()));
+                                    } catch (NullPointerException e) {
+                                        e.printStackTrace();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -638,6 +743,7 @@ public class Controller implements Initializable {
 
                                     vis_tb_info_integrantes.getItems().addAll(info_equipe);
                                     vis_tb_info_integrantes.refresh();
+                                    po
 
 
 
