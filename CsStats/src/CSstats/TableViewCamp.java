@@ -1,5 +1,7 @@
 package CSstats;
 
+import java.util.Objects;
+
 public class TableViewCamp {
 
     private String nome;
@@ -54,6 +56,20 @@ public class TableViewCamp {
 
     public void setDerrotas(Integer derrotas) {
         this.derrotas = derrotas;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TableViewCamp that = (TableViewCamp) o;
+        return getNome().equals(that.getNome()) &&
+                getClassificao().equals(that.getClassificao());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNome(), getClassificao());
     }
 }
 

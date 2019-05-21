@@ -29,6 +29,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 import javafx.embed.swing.SwingFXUtils;
 
@@ -76,6 +77,15 @@ public class Util {
         ObservableList<TbEquipesEntity> obList = FXCollections.observableArrayList();
         obList.add(obj);
         return obList;
+    }
+
+    public static boolean containsId(List<TableViewCamp> list, TableViewCamp obj) {
+        for (TableViewCamp object : list) {
+            if (object.getNome() == obj.getNome() && object.getClassificao() == obj.getClassificao()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

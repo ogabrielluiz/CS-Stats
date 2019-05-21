@@ -43,14 +43,15 @@ public class DaoCRUD {
     }
 
 
-//    public static void  delete(IEntity entidade) {
-//
-//        if (entidade != null) {
-//            abreConexao();
-//            DaoConecta.em.remove(entidade);
-//            fecharConexao();
-//        }
-//    }
+    public static void  delete(IEntity entidade) {
+
+        if (entidade != null) {
+            abreConexao();
+            IEntity ent =  DaoConecta.em.merge(entidade);
+            DaoConecta.em.remove(ent);
+            fecharConexao();
+        }
+    }
 
     public static List<IEntity> getAll(){
         abreConexao();
@@ -59,6 +60,13 @@ public class DaoCRUD {
         List<IEntity> result = query.getResultList();
         fecharConexao();
         return result;
+    }
+
+    public static boolean db_contains(IEntity e){
+        abreConexao();
+        Boolean ret = DaoConecta.em.contains(e);
+        fecharConexao();
+        return ret;
     }
 
 }

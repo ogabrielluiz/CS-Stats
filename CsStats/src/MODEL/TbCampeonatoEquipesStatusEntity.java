@@ -169,4 +169,24 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
         fecharConexao();
         return (List<TbCampeonatoEquipesStatusEntity>) result;
     }
+
+    public static TbCampeonatoEquipesStatusEntity getByIdEqCamp(int idcamp, int idequipe){
+        abreConexao();
+        CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
+        CriteriaQuery cq = builder.createQuery(TbCampeonatoEquipesStatusEntity.class);
+        Root<IEntity> root = cq.from(TbCampeonatoEquipesStatusEntity.class);
+        ParameterExpression<Integer> idC = builder.parameter(Integer.class);
+        ParameterExpression<Integer> idE = builder.parameter(Integer.class);
+        cq.select(cq.from(TbCampeonatoEquipesStatusEntity.class)).where(
+                builder.equal( root.get("idCampeonato"), idC),builder.equal(root.get("idEquipe"), idE));
+
+        Query q = DaoConecta.em.createQuery(cq);
+        q.setParameter(idC, idcamp);
+        q.setParameter(idE, idequipe);
+
+        List<TbCampeonatoEquipesStatusEntity> result = q.getResultList();
+        TbCampeonatoEquipesStatusEntity get = result.get(0);
+        fecharConexao();
+        return get;
+    }
 }

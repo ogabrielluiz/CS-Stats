@@ -116,27 +116,15 @@ public class TbJogadorEquipeEntity implements IEntity  {
         Root<TbJogadorEquipeEntity> root = cq.from(TbJogadorEquipeEntity.class);
         ParameterExpression<Integer> idE = builder.parameter(Integer.class);
 
-        cq.select(root).where(builder.equal( root.get("idEquipe"), idE));
+        cq.select(root).where(builder.equal( root.get("idEquipe"), idE),
+                builder.isTrue(root.get("ativo")));
         Query q = DaoConecta.em.createQuery(cq);
         q.setParameter(idE,id);
 
+
         List<TbJogadorEquipeEntity> result = q.getResultList();
 
-        int i = 0;
-        for (TbJogadorEquipeEntity j: result
-             ) {
-            if(i > (result.size()/2)) break;
-            if(j.check_teamId( id )){
-                System.out.println(j.getCodenome() +" é do time!");
-                System.out.println(i);
-                i++;
-
-            }
-
-
-        }
-        if (i > (result.size()/2)) return result;
-        else return null;
+        return result;
     }
 
     public boolean check_teamId(int id){

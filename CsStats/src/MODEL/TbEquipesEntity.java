@@ -134,6 +134,22 @@ public class TbEquipesEntity implements IEntity  {
         List<TbEquipesEntity> lista = query.getResultList();
         TbEquipesEntity equipesEntity = lista.get( 0 );
         return equipesEntity;
+
+    } public static TbEquipesEntity getById(int id) throws NonUniqueResultException{
+        abreConexao();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery q = cb.createQuery(TbEquipesEntity.class);
+
+        Root<TbEquipesEntity> c = q.from(TbEquipesEntity.class);
+        ParameterExpression<Integer> p = cb.parameter(Integer.class);
+        q.select(c).where(cb.equal(c.get("idEquipe"), p));
+
+        TypedQuery<TbEquipesEntity> query = DaoConecta.em.createQuery(q);
+        query.setParameter(p, id);
+
+        List<TbEquipesEntity> lista = query.getResultList();
+        TbEquipesEntity equipesEntity = lista.get( 0 );
+        return equipesEntity;
     }
 }
 

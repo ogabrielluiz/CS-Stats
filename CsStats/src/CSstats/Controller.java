@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 import javafx.scene.image.ImageView;
+import org.eclipse.persistence.jpa.config.Table;
 
 import javax.imageio.ImageIO;
 import javax.persistence.Query;
@@ -168,22 +169,22 @@ public class Controller implements Initializable {
     private ChoiceBox<Integer> derrotas_ChB;
 
     @FXML
-    private TableView<TbCampeonatoEquipesStatusEntity> tb_info_equipe;
+    private TableView<TableViewCamp> tb_info_equipe;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, String> coluna_equipe;
+    private TableColumn<TableViewCamp, String> coluna_equipe;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_classificacao;
+    private TableColumn<TableViewCamp, Number> coluna_classificacao;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_vitorias;
+    private TableColumn<TableViewCamp, Number> coluna_vitorias;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_empates;
+    private TableColumn<TableViewCamp, Number> coluna_empates;
 
     @FXML
-    private TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_derrotas;
+    private TableColumn<TableViewCamp, Number> coluna_derrotas;
 
 
 
@@ -236,32 +237,33 @@ public class Controller implements Initializable {
             } catch(NullPointerException err){
                 System.out.println("TableView Camp: Retorno nulo.");
             }
-            ObservableList<TbCampeonatoEquipesStatusEntity> tbCampeonatoEquipesStatusEntities = FXCollections.observableArrayList();
+            ObservableList<TableViewCamp> tbCampeonatoEquipesStatusEntities = FXCollections.observableArrayList();
 
             for (TbCampeonatoEquipesStatusEntity e: list_info_equipe
             ) {
-                tbCampeonatoEquipesStatusEntities.add(e);
+                TbEquipesEntity equipe = TbEquipesEntity.getById(e.getIdEquipe());
+                TableViewCamp info = new TableViewCamp(equipe.getNome(), e.getClassificacao(),
+                        e.getQtdVitorias(), e.getQtdEmpates(), e.getQtdDerrotas());
+                tbCampeonatoEquipesStatusEntities.add(info);
 
+                if (tb_info_equipe.getItems() == null) {
+                    tb_info_equipe.setItems(tbCampeonatoEquipesStatusEntities);
+                    comboBox_equipes.getSelectionModel().clearSelection();
+                    choiceBox_posicao.getSelectionModel().clearSelection();
+                    vitorias_ChB.getSelectionModel().clearSelection();
+                    empates_ChB.getSelectionModel().clearSelection();
+                    derrotas_ChB.getSelectionModel().clearSelection();
+                } else {
+
+                    tb_info_equipe.getItems().add(info);
+                    comboBox_equipes.getSelectionModel().clearSelection();
+                    choiceBox_posicao.getSelectionModel().clearSelection();
+                    vitorias_ChB.getSelectionModel().clearSelection();
+                    empates_ChB.getSelectionModel().clearSelection();
+                    derrotas_ChB.getSelectionModel().clearSelection();
+
+                }
             }
-            //tb_equipe_jogador.setItems(jogadorEquipeEntities);
-
-            if(tb_info_equipe.getItems() == null){
-                tb_info_equipe.setItems(tbCampeonatoEquipesStatusEntities);
-                comboBox_equipes.getSelectionModel().clearSelection();
-                choiceBox_posicao.getSelectionModel().clearSelection();
-                vitorias_ChB.getSelectionModel().clearSelection();
-                empates_ChB.getSelectionModel().clearSelection();
-                derrotas_ChB.getSelectionModel().clearSelection();
-            } else{
-                tb_info_equipe.getItems().add(dados_camp);
-                comboBox_equipes.getSelectionModel().clearSelection();
-                choiceBox_posicao.getSelectionModel().clearSelection();
-                vitorias_ChB.getSelectionModel().clearSelection();
-                empates_ChB.getSelectionModel().clearSelection();
-                derrotas_ChB.getSelectionModel().clearSelection();
-
-            }
-
 
 
         }
@@ -272,13 +274,29 @@ public class Controller implements Initializable {
 
     @FXML
     private void btn_remover_de_tb_camp(){
-        ObservableList<TbCampeonatoEquipesStatusEntity> equipeSelecionada, todasEquipes;
+        ObservableList<TableViewCamp> equipeSelecionada, todasEquipes;
 
         todasEquipes = tb_info_equipe.getItems();
         equipeSelecionada = tb_info_equipe.getSelectionModel().getSelectedItems();
+        Integer idcamp = TbCampeonatoEntity.getByNome(nm_campeonato.getText()).getIdCampeonato();
+        Integer idequipe;
 
         equipeSelecionada.forEach(todasEquipes::remove);
+        for (TableViewCamp j: equipeSelecionada
+        ) {
+            idequipe = TbEquipesEntity.getByNome(j.getNome()).getIdEquipe();
+            TbCampeonatoEquipesStatusEntity info = TbCampeonatoEquipesStatusEntity.getByIdEqCamp(idcamp,idequipe);
+
+
+            delete(info);
+
+            System.out.println(j.getNome() + " excluído.");
+
+            }
+
+
     }
+
     @FXML
     private void btn_remover_de_tb_equipe(){
         ObservableList<TbJogadorEquipeEntity> jogadorSelecionado, todosJogadores;
@@ -291,6 +309,7 @@ public class Controller implements Initializable {
              ) {
             j.setAtivo(false);
             update(j);
+            System.out.println(j.getNome() + " inativado.");
 
         }
     }
@@ -530,6 +549,7 @@ public class Controller implements Initializable {
         ) {
             if(e.getAtivo() == true){
                 jogadorEquipeEntities.add(e);
+
             }
         }
        tb_equipe_jogador.setItems(jogadorEquipeEntities);
@@ -645,12 +665,20 @@ public class Controller implements Initializable {
         imageView_camp.setImage( vis_imageView_camp.getImage() );
         List<TbCampeonatoEquipesStatusEntity> results = TbCampeonatoEquipesStatusEntity
                 .getById( campeonatoEntity.getIdCampeonato() );
-        ObservableList<TbCampeonatoEquipesStatusEntity> info_camp = FXCollections.observableArrayList();
+        ObservableList<TableViewCamp> info_camp = FXCollections.observableArrayList();
 
         for (TbCampeonatoEquipesStatusEntity e: results
         ) {
-            info_camp.add(e);
+            TbEquipesEntity equipe = TbEquipesEntity.getById(e.getIdEquipe());
+            TableViewCamp info = new TableViewCamp(equipe.getNome(), e.getClassificacao(),
+                    e.getQtdVitorias(), e.getQtdEmpates(), e.getQtdDerrotas());
+
+            System.out.println(info.getNome());
+            if(!containsId(info_camp,info)){
+                info_camp.add(info);
+            }
         }
+
         tb_info_equipe.setItems(info_camp);
 
         localizacao.setText( campeonatoEntity.getLocalizacao() );
@@ -789,14 +817,21 @@ public class Controller implements Initializable {
                                 e.printStackTrace();
                             }
                             tab_vis_campeonato.setText( rowData.getNome() );
-                            ObservableList<MODEL.TbCampeonatoEquipesStatusEntity> info_camp = FXCollections.observableArrayList();
+                            ObservableList<TableViewCamp> info_camp = FXCollections.observableArrayList();
 
-                            List<TableViewCamp> results = MODEL.TbCampeonatoEquipesStatusEntity
+                            List<TbCampeonatoEquipesStatusEntity> results = MODEL.TbCampeonatoEquipesStatusEntity
                                     .getById( rowData.getIdCampeonato() );
-                            for (TableViewCamp e: results
-                                 ) {
 
-                                info_camp.add(e);
+                            for (TbCampeonatoEquipesStatusEntity e: results
+                            ) {
+                                TbEquipesEntity equipe = TbEquipesEntity.getById(e.getIdEquipe());
+                                TableViewCamp info = new TableViewCamp(equipe.getNome(), e.getClassificacao(),
+                                        e.getQtdVitorias(), e.getQtdEmpates(), e.getQtdDerrotas());
+
+                                System.out.println(info.getNome());
+                                if(!containsId(info_camp,info)){
+                                    info_camp.add(info);
+                                }
                             }
 
                             vis_tb_info_equipe.setItems( info_camp );
@@ -845,11 +880,13 @@ public class Controller implements Initializable {
                                         ) {
                                             if(e.getIdEquipe() == byNome.getIdEquipe()){
                                                 info_equipe.add( e );
+                                                System.out.println("IDs batem.");
                                             }
                                             System.out.println(e.getCodenome()+ " id: " + e.getIdEquipe() + " é " + byNome.getIdEquipe());
-                                            if (info_equipe.size() == 5) break;
+
                                         }
                                     } catch (NullPointerException e){
+                                        System.out.println("NPE na vis_tb_info_integrantes");
 
                                     }
 
@@ -902,7 +939,11 @@ public class Controller implements Initializable {
 
     }
 
-    private void declara_colunas(TableColumn<TbCampeonatoEquipesStatusEntity, String> coluna_equipe, TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_classificacao, TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_vitorias, TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_empates, TableColumn<TbCampeonatoEquipesStatusEntity, Number> coluna_derrotas) {
+    private void declara_colunas(TableColumn<TableViewCamp, String> coluna_equipe,
+                                 TableColumn<TableViewCamp, Number> coluna_classificacao,
+                                 TableColumn<TableViewCamp, Number> coluna_vitorias,
+                                 TableColumn<TableViewCamp, Number> coluna_empates,
+                                 TableColumn<TableViewCamp, Number> coluna_derrotas) {
         coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
         coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));

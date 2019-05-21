@@ -6,9 +6,7 @@ import MODEL.TbJogadorEquipeEntity;
 
 import javax.persistence.Query;
 import javax.persistence.Tuple;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +30,15 @@ public class TableViewEquipe {
         CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
         CriteriaQuery<Tuple> cq = builder.createTupleQuery();
         Root<TbJogadorEquipeEntity> root = cq.from(TbJogadorEquipeEntity.class);
-        cq.multiselect(root.get("codenome"),root.get("ativo")).where(builder.equal( root.get("idEquipe"), id));
+        ParameterExpression<Integer> idE = builder.parameter(Integer.class);
+
+        cq.multiselect(root.get("codenome"),root.get("ativo")).
+                where(builder.equal( root.get("idEquipe"), idE),builder.isTrue(root.get("ativo"))
+        );
+
         Query q = DaoConecta.em.createQuery(cq);
+        q.setParameter(idE,id);
+
         List<Tuple> tupleResult = q.getResultList();
         List<String> listStrings = new ArrayList<>(  );
         for (Tuple j: tupleResult
