@@ -3,6 +3,7 @@ package CSstats;
 
 import MODEL.*;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -123,6 +124,8 @@ public class Controller implements Initializable {
     private Button btn_inserir_imagem_camp;
     @FXML
     private Button btn_inserir_camp;
+    @FXML
+    private Button btn_inserir_equipe;
 
     @FXML
     private TextField textField_vitorias;
@@ -256,41 +259,60 @@ public class Controller implements Initializable {
         jogadorEquipeEntity.setNome( textField_nome_jogador.getText() );
         jogadorEquipeEntity.setCodenome( textField_codenome_jogador.getText() );
 
+
         TbEquipesEntity equipe = new TbEquipesEntity();
         jogadorEquipeEntity.setIdEquipe(equipe.getByNome(nm_equipe.getText()).getIdEquipe());
 
-        if(jogadorEquipeEntity.exists()){
-            update( jogadorEquipeEntity );
-        } else{
+        if(!jogadorEquipeEntity.exists()){
             insert(jogadorEquipeEntity);
+
+            List<TbJogadorEquipeEntity> list_integrantes = new ArrayList<>();
+
+            try{
+                abreConexao();
+                CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+                cq.select(cq.from(TbJogadorEquipeEntity.class));
+                Query q = em.createQuery(cq);
+
+                list_integrantes = q.getResultList();
+
+                fecharConexao();
+
+            } catch(NullPointerException err){
+                System.out.println("TableView Camp: Retorno nulo.");
+            }
+            ObservableList<TbJogadorEquipeEntity> jogadorEquipeEntities = FXCollections.observableArrayList();
+
+            for (TbJogadorEquipeEntity e: list_integrantes
+            ) {
+                jogadorEquipeEntities.add(e);
+                System.out.println(e.getCodenome() + "Add na tv de vis.");
+            }
+            //tb_equipe_jogador.setItems(jogadorEquipeEntities);
+
+            if(tb_equipe_jogador.getItems() == null){
+                tb_equipe_jogador.setItems(jogadorEquipeEntities);
+                textField_nome_jogador.clear();
+                textField_codenome_jogador.clear();
+            } else{
+                tb_equipe_jogador.getItems().add(jogadorEquipeEntity);
+                textField_nome_jogador.clear();
+                textField_codenome_jogador.clear();
+
+            }
+
+
+
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Jogador " + jogadorEquipeEntity.getCodenome() +
+                    " já existe no banco de dados.", ButtonType.OK);
+            alert.showAndWait();
+            textField_nome_jogador.clear();
+            textField_codenome_jogador.clear();
+
         }
 
 
-        List<TbJogadorEquipeEntity> list_integrantes = new ArrayList<>();
-
-        try{
-            abreConexao();
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(TbJogadorEquipeEntity.class));
-            Query q = em.createQuery(cq);
-
-            list_integrantes = q.getResultList();
-
-            fecharConexao();
-
-        } catch(NullPointerException err){
-            System.out.println("TableView Camp: Retorno nulo.");
-        }
-        ObservableList<TbJogadorEquipeEntity> jogadorEquipeEntities = FXCollections.observableArrayList();
-
-        for (TbJogadorEquipeEntity e: list_integrantes
-        ) {
-            jogadorEquipeEntities.add(e);
-        }
-        //tb_equipe_jogador.setItems(jogadorEquipeEntities);
-
-
-        tb_equipe_jogador.getItems().add(jogadorEquipeEntity);
 
     }
 
@@ -321,6 +343,7 @@ public class Controller implements Initializable {
         camp.setLocalizacao(local);
 
         insert(camp);
+
 
     }
 
@@ -589,7 +612,7 @@ public class Controller implements Initializable {
         tb_info_equipe.setItems(info_camp);
 
         localizacao.setText( campeonatoEntity.getLocalizacao() );
-
+        btn_inserir_camp.setDisable(true);
         superior_tabPane.getSelectionModel().select( edicao_tab );
         edicao_tabPane.getSelectionModel().select(edicao_campeonato_tab);
     }
@@ -617,8 +640,9 @@ public class Controller implements Initializable {
 
             tb_equipe_jogador.getItems().addAll( info_equipe );
         } catch (NullPointerException e) {
-
+            System.out.println("NPE na tb_equipe_jogador.");
         }
+        btn_inserir_equipe.setDisable(true);
         superior_tabPane.getSelectionModel().select( edicao_tab );
         edicao_tabPane.getSelectionModel().select(tab_edicao_equipe);
     }
@@ -670,6 +694,7 @@ public class Controller implements Initializable {
         popula_tableview_lista_campeonatos();
         inferior_tabPane.getSelectionModel().select( tab_lista_campeonatos );
         clear_edicao_camp();
+        btn_inserir_camp.setDisable(false);
     }
 
     @FXML public void handle_btn_atualizar_equipe() throws IOException {
@@ -699,6 +724,7 @@ public class Controller implements Initializable {
         popula_tableview_lista_equipes();
         inferior_tabPane.getSelectionModel().select( tab_lista_equipes );
         clear_edicao_equipe();
+        btn_inserir_equipe.setDisable(false);
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -778,16 +804,17 @@ public class Controller implements Initializable {
                                             if(e.getIdEquipe() == byNome.getIdEquipe()){
                                                 info_equipe.add( e );
                                             }
-                                            System.out.println(e.getCodenome()+ "id: " + e.getIdEquipe() + " é " + byNome.getIdEquipe());
+                                            System.out.println(e.getCodenome()+ " id: " + e.getIdEquipe() + " é " + byNome.getIdEquipe());
                                             if (info_equipe.size() == 5) break;
                                         }
                                     } catch (NullPointerException e){
 
                                     }
 
-                                    vis_tb_info_integrantes.setItems( null );
-                                    vis_tb_info_integrantes.setItems(info_equipe);
+
+
                                     tab_vis_equipe.setDisable( false );
+                                    vis_tb_info_integrantes.setItems(info_equipe);
                                     inferior_tabPane.getSelectionModel().select(tab_vis_equipe);
 
                                     //popula_tb_equipe_jogador();

@@ -5,6 +5,7 @@ import DAO.DaoConecta;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,9 +82,7 @@ public class TbJogadorEquipeEntity implements IEntity  {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TbJogadorEquipeEntity that = (TbJogadorEquipeEntity) o;
-        return idJogador == that.idJogador &&
-                idEquipe == that.idEquipe &&
-                Objects.equals(nome, that.nome) &&
+        return Objects.equals(nome, that.nome) &&
                 Objects.equals( codenome, that.codenome );
 
     }
@@ -115,14 +114,18 @@ public class TbJogadorEquipeEntity implements IEntity  {
         CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
         CriteriaQuery cq = builder.createQuery(TbJogadorEquipeEntity.class);
         Root<TbJogadorEquipeEntity> root = cq.from(TbJogadorEquipeEntity.class);
-        cq.select(cq.from(TbJogadorEquipeEntity.class)).where(builder.equal( root.get("idEquipe"), id));
+        ParameterExpression<Integer> idE = builder.parameter(Integer.class);
+
+        cq.select(root).where(builder.equal( root.get("idEquipe"), idE));
         Query q = DaoConecta.em.createQuery(cq);
+        q.setParameter(idE,id);
+
         List<TbJogadorEquipeEntity> result = q.getResultList();
 
         int i = 0;
         for (TbJogadorEquipeEntity j: result
              ) {
-            if(i > 4) break;
+            if(i > (result.size()/2)) break;
             if(j.check_teamId( id )){
                 System.out.println(j.getCodenome() +" é do time!");
                 System.out.println(i);
@@ -132,7 +135,7 @@ public class TbJogadorEquipeEntity implements IEntity  {
 
 
         }
-        if(i > 4) return result;
+        if (i > (result.size()/2)) return result;
         else return null;
     }
 
@@ -154,8 +157,12 @@ public class TbJogadorEquipeEntity implements IEntity  {
                 builder.equal( root.get( "codenome" ),this.getCodenome() ) );
         Query q = DaoConecta.em.createQuery( cq );
         List<TbJogadorEquipeEntity> list_jogador = q.getResultList();
+        if(list_jogador.size() > 0){
 
-        return list_jogador.size() > 0;
+            return true;
+        } else{
+            return false;
+        }
     }
 
 

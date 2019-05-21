@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
-          <factory-entry name="CsStatsPU" value="ba4dcf81-9bc8-42a9-bcab-6176aeb3bf8a" />
+          <factory-entry name="CsStatsPU" value="cc05e9e1-42d9-42fb-96de-fb11c716fe2d" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />
