@@ -673,9 +673,10 @@ public class Controller implements Initializable {
     }
 
     @FXML public void handle_btn_atualizar_equipe() throws IOException {
-        TbEquipesEntity equipeAtualizada = new TbEquipesEntity();
+        TbEquipesEntity equipeAtualizada = TbEquipesEntity.getByNome( nm_equipe.getText() );
         equipeAtualizada.setNome( nm_equipe.getText() );
         equipeAtualizada.setOrigem( origem_equipe.getText() );
+
 
 
 
@@ -774,8 +775,9 @@ public class Controller implements Initializable {
                                         List<TbJogadorEquipeEntity> results = getByTeamId( byNome.getIdEquipe() );
                                         for (TbJogadorEquipeEntity e : results
                                         ) {
-
-                                            info_equipe.add( e );
+                                            if(e.getIdEquipe() == byNome.getIdEquipe()){
+                                                info_equipe.add( e );
+                                            }
                                             System.out.println(e.getCodenome()+ "id: " + e.getIdEquipe() + " é " + byNome.getIdEquipe());
                                             if (info_equipe.size() == 5) break;
                                         }
