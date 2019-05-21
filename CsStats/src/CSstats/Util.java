@@ -1,5 +1,6 @@
 package CSstats;
 
+import DAO.DaoConecta;
 import MODEL.IEntity;
 import MODEL.TbCampeonatoEntity;
 import MODEL.TbEquipesEntity;
@@ -13,6 +14,11 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -71,5 +77,7 @@ public class Util {
         obList.add(obj);
         return obList;
     }
+
+
 
 }

@@ -39,7 +39,7 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
 
     public TbCampeonatoEquipesStatusEntity(String nome, Integer classificacao, Integer vitorias, Integer empates, Integer derrotas) {
 
-        TbEquipesEntity equipesEntity = getByNome(nome);
+        TbEquipesEntity equipesEntity = (TbEquipesEntity) getByNome(nome);
         this.idEquipe = equipesEntity.getIdEquipe();
         this.nome = nome;
         this.classificacao = classificacao;

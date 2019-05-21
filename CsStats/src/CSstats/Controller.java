@@ -29,6 +29,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static CSstats.TableViewEquipe.getIntegrantesbyId;
@@ -36,6 +37,7 @@ import static CSstats.Util.*;
 import static DAO.DaoCRUD.*;
 import static DAO.DaoConecta.*;
 import static DAO.DaoConecta.fecharConexao;
+import static MODEL.TbJogadorEquipeEntity.getByTeamId;
 
 
 public class Controller implements Initializable {
@@ -257,7 +259,12 @@ public class Controller implements Initializable {
         TbEquipesEntity equipe = new TbEquipesEntity();
         jogadorEquipeEntity.setIdEquipe(equipe.getByNome(nm_equipe.getText()).getIdEquipe());
 
-        insert(jogadorEquipeEntity);
+        if(jogadorEquipeEntity.exists()){
+            update( jogadorEquipeEntity );
+        } else{
+            insert(jogadorEquipeEntity);
+        }
+
 
         List<TbJogadorEquipeEntity> list_integrantes = new ArrayList<>();
 
@@ -284,7 +291,7 @@ public class Controller implements Initializable {
 
 
         tb_equipe_jogador.getItems().add(jogadorEquipeEntity);
-        ObservableList<TbJogadorEquipeEntity> en = tb_equipe_jogador.getItems();
+
     }
 
     @FXML
@@ -475,6 +482,7 @@ public class Controller implements Initializable {
         for (TbJogadorEquipeEntity j: integrantes
              ) {
             j.setIdEquipe(equipe.getIdEquipe());
+
              insert(j);
         }
 
@@ -598,17 +606,19 @@ public class Controller implements Initializable {
         imageView_equipe.setImage( vis_imageView_equipe.getImage() );
 
         Integer id_equipe = equipeEntity.getIdEquipe();
-        List<TbJogadorEquipeEntity> results = TbJogadorEquipeEntity
-                .getByTeamId( id_equipe );
+        List<TbJogadorEquipeEntity> results = getByTeamId( id_equipe );
         ObservableList<TbJogadorEquipeEntity> info_equipe = FXCollections.observableArrayList();
+        try {
+            for (TbJogadorEquipeEntity e : results
+            ) {
+                info_equipe.add( e );
+                if (info_equipe.size() == 5) break;
+            }
 
-        for (TbJogadorEquipeEntity e: results
-        ) {
-            info_equipe.add(e);
-            if(info_equipe.size() == 5) break;
+            tb_equipe_jogador.getItems().addAll( info_equipe );
+        } catch (NullPointerException e) {
+
         }
-        tb_equipe_jogador.getItems().addAll(info_equipe);
-
         superior_tabPane.getSelectionModel().select( edicao_tab );
         edicao_tabPane.getSelectionModel().select(tab_edicao_equipe);
     }
@@ -737,9 +747,9 @@ public class Controller implements Initializable {
                     TableRow<TableViewEquipe> row = new TableRow<>();
                     row.setOnMouseClicked(event -> {
                                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                                    tab_vis_equipe.setDisable(false);
 
-                                    inferior_tabPane.getSelectionModel().select(tab_vis_equipe);
+
+
 
                                     TableViewEquipe rowData = row.getItem();
                                     vis_nm_equipe.setText(rowData.getNome());
@@ -760,17 +770,23 @@ public class Controller implements Initializable {
                                     tab_vis_equipe.setText( byNome.getNome() );
                                     ObservableList<TbJogadorEquipeEntity> info_equipe = FXCollections.observableArrayList();
 
-                                    List<TbJogadorEquipeEntity> results = TbJogadorEquipeEntity
-                                            .getByTeamId( byNome.getIdEquipe() );
-                                    for (TbJogadorEquipeEntity e: results
-                                    ) {
+                                    try {
+                                        List<TbJogadorEquipeEntity> results = getByTeamId( byNome.getIdEquipe() );
+                                        for (TbJogadorEquipeEntity e : results
+                                        ) {
 
-                                        info_equipe.add(e);
-                                        if(info_equipe.size() == 5) break;
+                                            info_equipe.add( e );
+                                            System.out.println(e.getCodenome()+ "id: " + e.getIdEquipe() + " é " + byNome.getIdEquipe());
+                                            if (info_equipe.size() == 5) break;
+                                        }
+                                    } catch (NullPointerException e){
+
                                     }
 
-                                    vis_tb_info_integrantes.getItems().clear();
-                                    vis_tb_info_integrantes.getItems().addAll(info_equipe);
+                                    vis_tb_info_integrantes.setItems( null );
+                                    vis_tb_info_integrantes.setItems(info_equipe);
+                                    tab_vis_equipe.setDisable( false );
+                                    inferior_tabPane.getSelectionModel().select(tab_vis_equipe);
 
                                     //popula_tb_equipe_jogador();
 

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd209e2f-4780-46c8-b869-2178c69be6e6" name="Usual" comment="Visualização quase pronta. Falta tableviews internas.">
+    <list default="true" id="bd209e2f-4780-46c8-b869-2178c69be6e6" name="Usual" comment="Quase tudo funcionando">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06019a38-60b4-4b50-9cce-d499b2893b10.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06019a38-60b4-4b50-9cce-d499b2893b10.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CSstats/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSstats/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CSstats/EdicaoCamp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSstats/EdicaoCamp.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CSstats/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSstats/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DAO/DaoCRUD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DAO/DaoCRUD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MODEL/TbCampeonatoEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MODEL/TbCampeonatoEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ImagensEquipes/Astralis.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/ImagensEquipes/Astralis.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/persistence.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MODEL/TbEquipesEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MODEL/TbEquipesEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MODEL/TbJogadorEquipeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MODEL/TbJogadorEquipeEntity.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -138,34 +139,20 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DAO/DaoCRUD.java">
+        <entry file="file://$PROJECT_DIR$/src/CSstats/EdicaoCamp.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#27#1" expanded="true" />
-              </folding>
+            <state relative-caret-position="17">
+              <caret line="118" column="121" selection-start-line="118" selection-start-column="121" selection-end-line="118" selection-end-column="121" />
             </state>
           </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/CSstats/Controller.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/META-INF/persistence.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="499" column="54" selection-start-line="499" selection-start-column="54" selection-end-line="499" selection-end-column="54" />
-              <folding>
-                <element signature="e#1066#1067#0" expanded="true" />
-                <element signature="e#1107#1108#0" expanded="true" />
-                <element signature="e#1175#1176#0" expanded="true" />
-                <element signature="e#1235#1236#0" expanded="true" />
-                <element signature="e#1282#1283#0" expanded="true" />
-                <element signature="e#1324#1325#0" expanded="true" />
-                <element signature="e#1395#1396#0" expanded="true" />
-                <element signature="e#1457#1458#0" expanded="true" />
-                <element signature="e#10531#10532#0" expanded="true" />
-                <element signature="e#10559#10560#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="238">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
@@ -182,52 +169,27 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEntity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1129">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+        <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_campeonato_equipes_status">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true">
+                <filter text="" />
+              </filtering>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/CSstats/Util.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/CSstats/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
-              <caret line="64" column="22" lean-forward="true" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="22" />
+            <state relative-caret-position="201">
+              <caret line="786" column="69" selection-start-line="786" selection-start-column="69" selection-end-line="786" selection-end-column="69" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#1395#1396#0" expanded="true" />
+                <element signature="e#1437#1438#0" expanded="true" />
+                <element signature="e#13043#13044#0" expanded="true" />
+                <element signature="e#13071#13072#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/CSstats/TableViewEquipe.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="22" column="76" lean-forward="true" selection-start-line="22" selection-start-column="76" selection-end-line="22" selection-end-column="76" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MODEL/TbJogadorEquipeEntity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1224">
-              <caret line="106" column="42" selection-start-line="106" selection-start-column="42" selection-end-line="106" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="15" lean-forward="true" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -235,8 +197,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MODEL/TbEquipesEntity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
+            <state relative-caret-position="534">
+              <caret line="134" column="8" selection-start-line="134" selection-start-column="8" selection-end-line="134" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#0#39#1" expanded="true" />
@@ -247,7 +209,39 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_campeonato_equipes_status">
+        <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_equipes">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true">
+                <filter text="" />
+              </filtering>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MODEL/TbJogadorEquipeEntity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="117" column="91" lean-forward="true" selection-start-line="117" selection-start-column="91" selection-end-line="117" selection-end-column="91" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="191">
+              <caret line="41" column="61" selection-start-line="41" selection-start-column="61" selection-end-line="41" selection-end-column="61" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_jogador_equipe">
           <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
             <state>
               <filtering enabled="true">
@@ -269,35 +263,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sample</find>
-      <find>choi</find>
-      <find>botao</find>
-      <find>inserir</find>
-      <find>TbCampeonatoEquipesStatusEntity</find>
-      <find>excep</find>
-      <find>btn_inser</find>
-      <find>comb</find>
-      <find>except_e</find>
-      <find>tablev</find>
-      <find>choice</find>
-      <find>observa</find>
-      <find>tableview</find>
-      <find>coluna</find>
-      <find>remover</find>
-      <find>Campeonato</find>
-      <find>edição - e</find>
-      <find>tab</find>
       <find>edição</find>
       <find>tab_vis_campeonato</find>
       <find>tabpane</find>
       <find>tab_vis</find>
-      <find>tableView_lista_campeonatos</find>
-      <find>tableView_lista_equipes</find>
-      <find>vis_tb_info_integrantes</find>
       <find>tb_info</find>
       <find>tableviewcamp</find>
       <find>image_to</find>
       <find>imagefile_camp</find>
+      <find>tableView_lista_campeonatos</find>
+      <find>coluna_derrotas</find>
+      <find>TableView</find>
+      <find>popula</find>
+      <find>coluna_equipe</find>
+      <find>tb_info_equipe</find>
+      <find>textFi</find>
+      <find>tb_equipe_jogador</find>
+      <find>integrantes</find>
+      <find>tableView_lista_equipes</find>
+      <find>btn_edi</find>
+      <find>setDi</find>
+      <find>coluna_v</find>
+      <find>getItems().ad</find>
+      <find>setCo</find>
+      <find>insert</find>
+      <find>adicionar</find>
+      <find>salvar</find>
+      <find>popula_tb</find>
+      <find>popula_</find>
+      <find>salva</find>
+      <find>vis_tb_info_integrantes</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -342,17 +337,17 @@
         <option value="$PROJECT_DIR$/src/DAO/DaoConecta.java" />
         <option value="$PROJECT_DIR$/src/MODEL/IEntity.java" />
         <option value="$PROJECT_DIR$/src/CSstats/TableViewCamp.java" />
-        <option value="$PROJECT_DIR$/src/META-INF/persistence.xml" />
-        <option value="$PROJECT_DIR$/src/CSstats/EdicaoCamp.fxml" />
         <option value="$PROJECT_DIR$/src/MODEL/TbCampeonatoEntity.java" />
+        <option value="$PROJECT_DIR$/src/DAO/DaoCRUD.java" />
         <option value="$PROJECT_DIR$/src/CSstats/TableViewEquipe.java" />
+        <option value="$PROJECT_DIR$/src/CSstats/EdicaoCamp.fxml" />
+        <option value="$PROJECT_DIR$/src/CSstats/Util.java" />
+        <option value="$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java" />
+        <option value="$PROJECT_DIR$/src/MODEL/TbEquipesEntity.java" />
+        <option value="$PROJECT_DIR$/src/META-INF/persistence.xml" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/src/MODEL/TbJogadorEquipeEntity.java" />
-        <option value="$PROJECT_DIR$/src/MODEL/TbEquipesEntity.java" />
-        <option value="$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java" />
-        <option value="$PROJECT_DIR$/src/DAO/DaoCRUD.java" />
         <option value="$PROJECT_DIR$/src/CSstats/Controller.java" />
-        <option value="$PROJECT_DIR$/src/CSstats/Util.java" />
       </list>
     </option>
   </component>
@@ -375,7 +370,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -417,6 +411,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -588,7 +583,9 @@
       <workItem from="1557450898463" duration="7651000" />
       <workItem from="1557665894799" duration="29436000" />
       <workItem from="1557774987391" duration="18318000" />
-      <workItem from="1557863245733" duration="6634000" />
+      <workItem from="1557863245733" duration="19521000" />
+      <workItem from="1557944969163" duration="4750000" />
+      <workItem from="1558396763206" duration="7297000" />
     </task>
     <task id="LOCAL-00001" summary="Adição de abas edição e visualização">
       <created>1556661298664</created>
@@ -653,11 +650,25 @@
       <option name="project" value="LOCAL" />
       <updated>1557793670533</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Update de campeonato funcional">
+      <created>1557869969253</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1557869969253</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Quase tudo funcionando">
+      <created>1557887581291</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1557887581291</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76244000" />
+    <option name="totallyTimeSpent" value="101178000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -672,23 +683,23 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5218094" visible="true" weight="0.12260128" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.51754385" visible="true" weight="0.12473348" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="Image Layers" order="4" />
       <window_info id="UI Designer" order="5" />
       <window_info id="Capture Tool" order="6" />
-      <window_info id="Persistence" order="7" sideWeight="0.47819063" side_tool="true" visible="true" weight="0.12260128" />
+      <window_info id="Persistence" order="7" sideWeight="0.48245615" side_tool="true" weight="0.12473348" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25893825" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25893825" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39869988" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
       <window_info anchor="bottom" id="Application Servers" order="7" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32736155" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32719395" />
       <window_info anchor="bottom" id="Problems" order="9" />
       <window_info anchor="bottom" id="Changes" order="10" />
       <window_info anchor="bottom" id="Profiler" order="11" />
@@ -713,6 +724,48 @@
       <window_info anchor="right" id="Theme Preview" order="10" />
       <window_info anchor="right" id="Coverage" order="11" side_tool="true" weight="0.32928678" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.51754385" visible="true" weight="0.12473348" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Favorites" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="Image Layers" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Persistence" order="7" sideWeight="0.48245615" side_tool="true" visible="true" weight="0.12473348" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.25893825" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39869988" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
+      <window_info anchor="bottom" id="Application Servers" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32719395" />
+      <window_info anchor="bottom" id="Problems" order="9" />
+      <window_info anchor="bottom" id="Changes" order="10" />
+      <window_info anchor="bottom" id="Profiler" order="11" />
+      <window_info anchor="bottom" id="Event Log" order="12" weight="0.32899022" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32719395" />
+      <window_info anchor="bottom" id="Terminal" order="14" weight="0.32899022" />
+      <window_info anchor="bottom" id="Java Enterprise" order="15" />
+      <window_info anchor="bottom" id="Docker" order="16" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="17" />
+      <window_info anchor="bottom" id="Database Console" order="18" weight="0.32936078" />
+      <window_info anchor="bottom" id="JPA Console" order="19" weight="0.32936078" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="JetGradle" order="3" />
+      <window_info active="true" anchor="right" id="Database" order="4" visible="true" weight="0.18070363" />
+      <window_info anchor="right" id="Palette" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" />
+      <window_info anchor="right" id="Maven" order="7" weight="0.32995737" />
+      <window_info anchor="right" id="Capture Analysis" order="8" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
+      <window_info anchor="right" id="Theme Preview" order="10" />
+      <window_info anchor="right" id="Coverage" order="11" side_tool="true" weight="0.32928678" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -772,7 +825,9 @@
     <MESSAGE value="Lógica de select funcionando." />
     <MESSAGE value="Tab de visualização praticamente funcional." />
     <MESSAGE value="Visualização quase pronta. Falta tableviews internas." />
-    <option name="LAST_COMMIT_MESSAGE" value="Visualização quase pronta. Falta tableviews internas." />
+    <MESSAGE value="Update de campeonato funcional" />
+    <MESSAGE value="Quase tudo funcionando" />
+    <option name="LAST_COMMIT_MESSAGE" value="Quase tudo funcionando" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -1045,21 +1100,6 @@ derrotas_ChB.getItems().clear();
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DAO/IDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="42" column="15" selection-start-line="42" selection-start-column="15" selection-end-line="42" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#441#442#0" expanded="true" />
-            <element signature="e#501#502#0" expanded="true" />
-            <element signature="e#546#547#0" expanded="true" />
-            <element signature="e#608#609#0" expanded="true" />
-            <element signature="e#0#28#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://E:/Program Files/Java/jdk1.8.0_202/javafx-src.zip!/javafx/util/Callback.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -1099,9 +1139,37 @@ derrotas_ChB.getItems().clear();
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/CSstats/TableViewCamp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="32" lean-forward="true" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="28" column="30" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DAO/IDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" column="15" selection-start-line="42" selection-start-column="15" selection-end-line="42" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#441#442#0" expanded="true" />
+            <element signature="e#501#502#0" expanded="true" />
+            <element signature="e#546#547#0" expanded="true" />
+            <element signature="e#608#609#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/DAO/DaoConecta.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="255">
           <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1109,22 +1177,78 @@ derrotas_ChB.getItems().clear();
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/META-INF/persistence.xml">
+    <entry file="file://$PROJECT_DIR$/src/CSstats/Util.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+        <state relative-caret-position="483">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CSstats/TableViewEquipe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="43" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1781#1782#0" expanded="true" />
+            <element signature="e#1808#1809#0" expanded="true" />
+            <element signature="e#1848#1849#0" expanded="true" />
+            <element signature="e#1880#1881#0" expanded="true" />
+            <element signature="e#1913#1914#0" expanded="true" />
+            <element signature="e#1942#1943#0" expanded="true" />
+            <element signature="e#1986#1987#0" expanded="true" />
+            <element signature="e#2022#2023#0" expanded="true" />
+            <element signature="e#2060#2061#0" expanded="true" />
+            <element signature="e#2094#2095#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DAO/DaoCRUD.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#27#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="41" column="61" selection-start-line="41" selection-start-column="61" selection-end-line="41" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CSstats/EdicaoCamp.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="17" column="25" lean-forward="true" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+        <state relative-caret-position="17">
+          <caret line="118" column="121" selection-start-line="118" selection-start-column="121" selection-end-line="118" selection-end-column="121" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/META-INF/persistence.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>
-    <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_equipes">
+    <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_campeonato_equipes_status">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true">
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_campeonato">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true">
@@ -1142,26 +1266,17 @@ derrotas_ChB.getItems().clear();
         </state>
       </provider>
     </entry>
-    <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_campeonato_equipes_status">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true">
-            <filter text="" />
-          </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CSstats/TableViewCamp.java">
+    <entry file="file://$PROJECT_DIR$/src/MODEL/TbJogadorEquipeEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="32" lean-forward="true" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+        <state relative-caret-position="178">
+          <caret line="117" column="91" lean-forward="true" selection-start-line="117" selection-start-column="91" selection-end-line="117" selection-end-column="91" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MODEL/TbEquipesEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
+        <state relative-caret-position="534">
+          <caret line="134" column="8" selection-start-line="134" selection-start-column="8" selection-end-line="134" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#0#39#1" expanded="true" />
@@ -1170,31 +1285,7 @@ derrotas_ChB.getItems().clear();
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEquipesStatusEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="15" lean-forward="true" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MODEL/TbJogadorEquipeEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="106" column="42" selection-start-line="106" selection-start-column="42" selection-end-line="106" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CSstats/TableViewEquipe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="22" column="76" lean-forward="true" selection-start-line="22" selection-start-column="76" selection-end-line="22" selection-end-column="76" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_campeonato">
+    <entry file="das://06019a38-60b4-4b50-9cce-d499b2893b10/database/aps/schema/public/table/tb_equipes">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true">
@@ -1203,48 +1294,15 @@ derrotas_ChB.getItems().clear();
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DAO/DaoCRUD.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#27#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MODEL/TbCampeonatoEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1129">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CSstats/Util.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="64" column="22" lean-forward="true" selection-start-line="64" selection-start-column="22" selection-end-line="64" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/CSstats/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="499" column="54" selection-start-line="499" selection-start-column="54" selection-end-line="499" selection-end-column="54" />
+        <state relative-caret-position="201">
+          <caret line="786" column="69" selection-start-line="786" selection-start-column="69" selection-end-line="786" selection-end-column="69" />
           <folding>
-            <element signature="e#1066#1067#0" expanded="true" />
-            <element signature="e#1107#1108#0" expanded="true" />
-            <element signature="e#1175#1176#0" expanded="true" />
-            <element signature="e#1235#1236#0" expanded="true" />
-            <element signature="e#1282#1283#0" expanded="true" />
-            <element signature="e#1324#1325#0" expanded="true" />
             <element signature="e#1395#1396#0" expanded="true" />
-            <element signature="e#1457#1458#0" expanded="true" />
-            <element signature="e#10531#10532#0" expanded="true" />
-            <element signature="e#10559#10560#0" expanded="true" />
+            <element signature="e#1437#1438#0" expanded="true" />
+            <element signature="e#13043#13044#0" expanded="true" />
+            <element signature="e#13071#13072#0" expanded="true" />
           </folding>
         </state>
       </provider>

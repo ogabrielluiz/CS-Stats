@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,6 +57,7 @@ public class TbJogadorEquipeEntity implements IEntity  {
     @Basic
     @Column(name = "codenome", nullable = true, length = 60)
     public String getCodenome() {
+
         return codenome;
     }
 
@@ -82,8 +84,8 @@ public class TbJogadorEquipeEntity implements IEntity  {
         return idJogador == that.idJogador &&
                 idEquipe == that.idEquipe &&
                 Objects.equals(nome, that.nome) &&
-                Objects.equals( codenome, that.codenome ) &&
-                Objects.equals(ativo, that.ativo);
+                Objects.equals( codenome, that.codenome );
+
     }
 
     @Override
@@ -112,11 +114,50 @@ public class TbJogadorEquipeEntity implements IEntity  {
         abreConexao();
         CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
         CriteriaQuery cq = builder.createQuery(TbJogadorEquipeEntity.class);
-        Root<IEntity> root = cq.from(TbJogadorEquipeEntity.class);
+        Root<TbJogadorEquipeEntity> root = cq.from(TbJogadorEquipeEntity.class);
         cq.select(cq.from(TbJogadorEquipeEntity.class)).where(builder.equal( root.get("idEquipe"), id));
         Query q = DaoConecta.em.createQuery(cq);
         List<TbJogadorEquipeEntity> result = q.getResultList();
-        fecharConexao();
-        return result;
+
+        int i = 0;
+        for (TbJogadorEquipeEntity j: result
+             ) {
+            if(i > 4) break;
+            if(j.check_teamId( id )){
+                System.out.println(j.getCodenome() +" é do time!");
+                System.out.println(i);
+                i++;
+
+            }
+
+
+        }
+        if(i > 4) return result;
+        else return null;
     }
+
+    public boolean check_teamId(int id){
+        if(this.idEquipe == id){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean exists() {
+        abreConexao();
+        CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
+        CriteriaQuery<Tuple> cq = builder.createTupleQuery();
+        Root<TbJogadorEquipeEntity> root = cq.from( TbJogadorEquipeEntity.class );
+        cq.multiselect( root.get( "codenome" ), root.get( "ativo" ) ).where(
+                builder.equal( root.get( "nome" ), this.getNome() ),
+                builder.equal( root.get( "codenome" ),this.getCodenome() ) );
+        Query q = DaoConecta.em.createQuery( cq );
+        List<TbJogadorEquipeEntity> list_jogador = q.getResultList();
+
+        return list_jogador.size() > 0;
+    }
+
+
+
 }
