@@ -419,7 +419,7 @@
                               </TextField>
                               <Button fx:id="btn_atualizar_camp1" minWidth="-Infinity" mnemonicParsing="false" prefWidth="200.0" text="Remover Campeonato" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                  <GridPane.margin>
-                                    <Insets left="5.0" top="10.0" />
+                                    <Insets left="5.0" top="25.0" />
                                  </GridPane.margin>
                               </Button>
                               <ChoiceBox fx:id="derrotas_ChB" maxWidth="30.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">

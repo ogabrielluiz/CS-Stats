@@ -5,6 +5,7 @@ import DAO.DaoConecta;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Objects;
@@ -37,15 +38,46 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
         this.qtdDerrotas = qtdDerrotas;
     }
 
-    public TbCampeonatoEquipesStatusEntity(String nome, Integer classificacao, Integer vitorias, Integer empates, Integer derrotas) {
+    public TbCampeonatoEquipesStatusEntity(String nome_camp, String nome, Integer classificacao, Integer vitorias, Integer empates, Integer derrotas) {
 
+        TbCampeonatoEntity tbCampeonatoEntity = TbCampeonatoEntity.getByNome(nome_camp);
         TbEquipesEntity equipesEntity = (TbEquipesEntity) getByNome(nome);
+        this.idCampeonato = tbCampeonatoEntity.getIdCampeonato();
         this.idEquipe = equipesEntity.getIdEquipe();
         this.nome = nome;
         this.classificacao = classificacao;
         this.qtdVitorias = vitorias;
         this.qtdEmpates = empates;
         this.qtdDerrotas = derrotas;
+    }
+
+    public boolean exists() {
+        abreConexao();
+        CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
+        CriteriaQuery<Tuple> cq = builder.createTupleQuery();
+        Root<TbCampeonatoEquipesStatusEntity> root = cq.from( TbCampeonatoEquipesStatusEntity.class );
+
+        ParameterExpression<Integer> idE = builder.parameter(Integer.class);
+        ParameterExpression<Integer> idC = builder.parameter(Integer.class);
+        ParameterExpression<Integer> classi = builder.parameter(Integer.class);
+        cq.multiselect( root.get( "idEquipe" ), root.get( "idCampeonato" ), root.get("classificacao") ).where(
+                builder.equal( root.get( "idEquipe" ), idE),
+                builder.equal( root.get( "idCampeonato" ),idC),
+                builder.equal( root.get( "classificacao" ),classi) );
+        Query q = DaoConecta.em.createQuery( cq );
+        q.setParameter(idC,this.getIdCampeonato());
+        q.setParameter(idE,this.getIdEquipe());
+        q.setParameter(classi,this.getClassificacao());
+
+
+        List<TbJogadorEquipeEntity> list_equipe= q.getResultList();
+        if(list_equipe.size() > 0){
+
+            return true;
+        } else{
+            return false;
+        }
+
     }
 
     @Id
