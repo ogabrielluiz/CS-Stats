@@ -3,7 +3,6 @@ package CSstats;
 
 import MODEL.*;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -16,10 +15,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 import javafx.scene.image.ImageView;
-import org.eclipse.persistence.jpa.config.Table;
 
 import javax.imageio.ImageIO;
 import javax.persistence.Query;
+import javax.persistence.RollbackException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -31,7 +30,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static CSstats.TableViewEquipe.getIntegrantesbyId;
@@ -213,14 +211,18 @@ public class Controller implements Initializable {
                 vitorias,empates,derrotas);
 
         if (dados_camp.exists()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Equipe já inserida", ButtonType.OK);
-            alert.showAndWait();
+            alertaErro("Equipe já inserida.").showAndWait();
             comboBox_equipes.getSelectionModel().clearSelection();
             choiceBox_posicao.getSelectionModel().clearSelection();
 
 
         } else {
-            insert(dados_camp);
+            try {
+                insert( dados_camp );
+                comboBox_equipes.getItems().remove( comboBox_equipes.getSelectionModel().getSelectedItem() );
+            }catch (RollbackException e){
+                alertaErro( "Equipe já inserida" ).showAndWait();
+            }
 
             List<TbCampeonatoEquipesStatusEntity> list_info_equipe = new ArrayList<>();
 
@@ -238,9 +240,10 @@ public class Controller implements Initializable {
                 System.out.println("TableView Camp: Retorno nulo.");
             }
             ObservableList<TableViewCamp> tbCampeonatoEquipesStatusEntities = FXCollections.observableArrayList();
-
+            tb_info_equipe.getItems().clear();
             for (TbCampeonatoEquipesStatusEntity e: list_info_equipe
             ) {
+
                 TbEquipesEntity equipe = TbEquipesEntity.getById(e.getIdEquipe());
                 TableViewCamp info = new TableViewCamp(equipe.getNome(), e.getClassificacao(),
                         e.getQtdVitorias(), e.getQtdEmpates(), e.getQtdDerrotas());
@@ -248,6 +251,7 @@ public class Controller implements Initializable {
 
                 if (tb_info_equipe.getItems() == null) {
                     tb_info_equipe.setItems(tbCampeonatoEquipesStatusEntities);
+
                     comboBox_equipes.getSelectionModel().clearSelection();
                     choiceBox_posicao.getSelectionModel().clearSelection();
                     vitorias_ChB.getSelectionModel().clearSelection();
@@ -256,6 +260,7 @@ public class Controller implements Initializable {
                 } else {
 
                     tb_info_equipe.getItems().add(info);
+
                     comboBox_equipes.getSelectionModel().clearSelection();
                     choiceBox_posicao.getSelectionModel().clearSelection();
                     vitorias_ChB.getSelectionModel().clearSelection();
@@ -276,12 +281,14 @@ public class Controller implements Initializable {
     private void btn_remover_de_tb_camp(){
         ObservableList<TableViewCamp> equipeSelecionada, todasEquipes;
 
+
         todasEquipes = tb_info_equipe.getItems();
+
         equipeSelecionada = tb_info_equipe.getSelectionModel().getSelectedItems();
         Integer idcamp = TbCampeonatoEntity.getByNome(nm_campeonato.getText()).getIdCampeonato();
         Integer idequipe;
 
-        equipeSelecionada.forEach(todasEquipes::remove);
+
         for (TableViewCamp j: equipeSelecionada
         ) {
             idequipe = TbEquipesEntity.getByNome(j.getNome()).getIdEquipe();
@@ -289,8 +296,9 @@ public class Controller implements Initializable {
 
 
             delete(info);
+            todasEquipes.remove(j);
 
-            System.out.println(j.getNome() + " excluído.");
+            alertaAviso( "Equipe excluída" ).showAndWait();
 
             }
 
@@ -309,7 +317,7 @@ public class Controller implements Initializable {
              ) {
             j.setAtivo(false);
             update(j);
-            System.out.println(j.getNome() + " inativado.");
+            alertaAviso( j.getCodenome() + " inativado." );
 
         }
     }
@@ -347,7 +355,7 @@ public class Controller implements Initializable {
             for (TbJogadorEquipeEntity e: list_integrantes
             ) {
                 jogadorEquipeEntities.add(e);
-                System.out.println(e.getCodenome() + "Add na tv de vis.");
+
             }
             //tb_equipe_jogador.setItems(jogadorEquipeEntities);
 
@@ -544,13 +552,16 @@ public class Controller implements Initializable {
             System.out.println("TableView Camp: Retorno nulo.");
         }
         ObservableList<TbJogadorEquipeEntity> jogadorEquipeEntities = FXCollections.observableArrayList();
+        TbEquipesEntity byNome = TbEquipesEntity.getByNome( vis_nm_equipe.getText() );
 
+            List<TbJogadorEquipeEntity> results = getByTeamId( byNome.getIdEquipe() );
         for (TbJogadorEquipeEntity e: list_integrantes
         ) {
-            if(e.getAtivo() == true){
-                jogadorEquipeEntities.add(e);
 
-            }
+                if(e.getIdEquipe() == byNome.getIdEquipe() && e.getAtivo() == true) {
+                    jogadorEquipeEntities.add( e );
+                }
+
         }
        tb_equipe_jogador.setItems(jogadorEquipeEntities);
 
@@ -653,6 +664,7 @@ public class Controller implements Initializable {
     @FXML public void handle_btn_editar_camp(){
 
         TbCampeonatoEntity campeonatoEntity;
+        btn_inserir_camp.setDisable( true );
 
         campeonatoEntity = TbCampeonatoEntity.getByNome( nm_campeonato_lb.getText() );
 
@@ -673,7 +685,7 @@ public class Controller implements Initializable {
             TableViewCamp info = new TableViewCamp(equipe.getNome(), e.getClassificacao(),
                     e.getQtdVitorias(), e.getQtdEmpates(), e.getQtdDerrotas());
 
-            System.out.println(info.getNome());
+
             if(!containsId(info_camp,info)){
                 info_camp.add(info);
             }
@@ -712,6 +724,7 @@ public class Controller implements Initializable {
         } catch (NullPointerException e) {
             System.out.println("NPE na tb_equipe_jogador.");
         }
+        popula_tb_equipe_jogador();
         btn_inserir_equipe.setDisable(true);
         superior_tabPane.getSelectionModel().select( edicao_tab );
         edicao_tabPane.getSelectionModel().select(tab_edicao_equipe);
@@ -738,7 +751,9 @@ public class Controller implements Initializable {
 
     @FXML public void handle_btn_atualizar_camp() throws IOException {
         TbCampeonatoEntity campeonatoAtualizado = new TbCampeonatoEntity();
+
         campeonatoAtualizado.setNome( nm_campeonato.getText() );
+        campeonatoAtualizado.setIdCampeonato( TbCampeonatoEntity.getByNome( campeonatoAtualizado.getNome() ).getIdCampeonato() );
         campeonatoAtualizado.setValor(BigInteger.valueOf(Long.parseLong( valor.getText() )));
         campeonatoAtualizado.setDtInicio( localDate_to_SQLdate( data_inicio.getValue() ) );
         campeonatoAtualizado.setDtFim( localDate_to_SQLdate( data_termino.getValue() ) );
@@ -828,7 +843,7 @@ public class Controller implements Initializable {
                                 TableViewCamp info = new TableViewCamp(equipe.getNome(), e.getClassificacao(),
                                         e.getQtdVitorias(), e.getQtdEmpates(), e.getQtdDerrotas());
 
-                                System.out.println(info.getNome());
+
                                 if(!containsId(info_camp,info)){
                                     info_camp.add(info);
                                 }
@@ -880,9 +895,9 @@ public class Controller implements Initializable {
                                         ) {
                                             if(e.getIdEquipe() == byNome.getIdEquipe()){
                                                 info_equipe.add( e );
-                                                System.out.println("IDs batem.");
+
                                             }
-                                            System.out.println(e.getCodenome()+ " id: " + e.getIdEquipe() + " é " + byNome.getIdEquipe());
+
 
                                         }
                                     } catch (NullPointerException e){
@@ -944,8 +959,8 @@ public class Controller implements Initializable {
                                  TableColumn<TableViewCamp, Number> coluna_vitorias,
                                  TableColumn<TableViewCamp, Number> coluna_empates,
                                  TableColumn<TableViewCamp, Number> coluna_derrotas) {
-        coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
+        coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
         coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
         coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
         coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));

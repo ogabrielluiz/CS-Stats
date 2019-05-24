@@ -6,6 +6,8 @@ import MODEL.TbCampeonatoEntity;
 import MODEL.TbEquipesEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import org.postgresql.util.Base64;
@@ -88,6 +90,17 @@ public class Util {
         return false;
     }
 
+    public static Alert alertaErro(String texto) {
+        Alert alert = new Alert( Alert.AlertType.ERROR, texto, ButtonType.OK );
+
+        return alert;
+    }
+
+    public static Alert alertaAviso(String texto) {
+        Alert alert = new Alert( Alert.AlertType.INFORMATION, texto, ButtonType.OK );
+
+        return alert;
+    }
 
 
 }

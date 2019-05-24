@@ -8,7 +8,7 @@
       <ObjectId>16394</ObjectId>
       <StateNumber>715</StateNumber>
       <Owner>aps</Owner>
-      <IntrospectionStateNumber>817</IntrospectionStateNumber>
+      <IntrospectionStateNumber>865</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
       <Relations>sequence|table|17246|17248|1
@@ -120,7 +120,7 @@ sequence|table|17270|17272|1
       <ObjectId>16506</ObjectId>
       <StateNumber>592</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>818</IntrospectionStateNumber>
+      <IntrospectionStateNumber>866</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -314,52 +314,58 @@ sequence|table|17270|17272|1
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="49" parent="32" name="pk_tb_campeonato_id_campeonato">
+    <index id="49" parent="32" name="tb_campeonato_nome_uindex">
+      <ObjectId>17324</ObjectId>
+      <StateNumber>864</StateNumber>
+      <ColNames>nome</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="50" parent="32" name="pk_tb_campeonato_id_campeonato">
       <ObjectId>17281</ObjectId>
       <StateNumber>698</StateNumber>
       <ColNames>id_campeonato</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>pk_tb_campeonato_id_campeonato</UnderlyingIndexName>
     </key>
-    <column id="50" parent="33" name="id_campeonato">
+    <column id="51" parent="33" name="id_campeonato">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="51" parent="33" name="id_equipe">
+    <column id="52" parent="33" name="id_equipe">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="52" parent="33" name="classificacao">
+    <column id="53" parent="33" name="classificacao">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="53" parent="33" name="qtd_vitorias">
+    <column id="54" parent="33" name="qtd_vitorias">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="54" parent="33" name="qtd_empates">
+    <column id="55" parent="33" name="qtd_empates">
       <Position>5</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="55" parent="33" name="qtd_derrotas">
+    <column id="56" parent="33" name="qtd_derrotas">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="56" parent="33" name="pk_tb_campeonato_equipes_status_id_campeonato_id_equipe">
+    <index id="57" parent="33" name="pk_tb_campeonato_equipes_status_id_campeonato_id_equipe">
       <ObjectId>17285</ObjectId>
       <StateNumber>699</StateNumber>
       <ColNames>id_campeonato
@@ -367,7 +373,7 @@ id_equipe</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="57" parent="33" name="pk_tb_campeonato_equipes_status_id_campeonato_id_equipe">
+    <key id="58" parent="33" name="pk_tb_campeonato_equipes_status_id_campeonato_id_equipe">
       <ObjectId>17286</ObjectId>
       <StateNumber>699</StateNumber>
       <ColNames>id_campeonato
@@ -375,7 +381,7 @@ id_equipe</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>pk_tb_campeonato_equipes_status_id_campeonato_id_equipe</UnderlyingIndexName>
     </key>
-    <foreign-key id="58" parent="33" name="fk_tb_campeonato_id_campeonato">
+    <foreign-key id="59" parent="33" name="fk_tb_campeonato_id_campeonato">
       <ObjectId>17287</ObjectId>
       <StateNumber>699</StateNumber>
       <ColNames>id_campeonato</ColNames>
@@ -385,7 +391,7 @@ id_equipe</ColNames>
       <RefKeyName>pk_tb_campeonato_id_campeonato</RefKeyName>
       <RefColNames>id_campeonato</RefColNames>
     </foreign-key>
-    <foreign-key id="59" parent="33" name="fk_tb_equipes_id_equipe">
+    <foreign-key id="60" parent="33" name="fk_tb_equipes_id_equipe">
       <ObjectId>17292</ObjectId>
       <StateNumber>699</StateNumber>
       <ColNames>id_equipe</ColNames>
@@ -395,7 +401,7 @@ id_equipe</ColNames>
       <RefKeyName>pk_tb_equipes_id_equipe</RefKeyName>
       <RefColNames>id_equipe</RefColNames>
     </foreign-key>
-    <column id="60" parent="34" name="id_equipe">
+    <column id="61" parent="34" name="id_equipe">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -403,46 +409,52 @@ id_equipe</ColNames>
       <DefaultExpression>nextval(&apos;tb_equipes_id_equipe_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="61" parent="34" name="nome">
+    <column id="62" parent="34" name="nome">
       <Position>2</Position>
       <DataType>varchar(60)|0s</DataType>
       <StateNumber>696</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="62" parent="34" name="imagem">
+    <column id="63" parent="34" name="imagem">
       <Position>3</Position>
       <DataType>bytea|0s</DataType>
       <StateNumber>696</StateNumber>
       <TypeId>17</TypeId>
     </column>
-    <column id="63" parent="34" name="origem">
+    <column id="64" parent="34" name="origem">
       <Position>4</Position>
       <DataType>varchar(60)|0s</DataType>
       <StateNumber>696</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="64" parent="34" name="ativo">
+    <column id="65" parent="34" name="ativo">
       <Position>5</Position>
       <DataType>boolean|0s</DataType>
       <StateNumber>696</StateNumber>
       <DefaultExpression>true</DefaultExpression>
       <TypeId>16</TypeId>
     </column>
-    <index id="65" parent="34" name="pk_tb_equipes_id_equipe">
+    <index id="66" parent="34" name="pk_tb_equipes_id_equipe">
       <ObjectId>17256</ObjectId>
       <StateNumber>696</StateNumber>
       <ColNames>id_equipe</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="66" parent="34" name="pk_tb_equipes_id_equipe">
+    <index id="67" parent="34" name="tb_equipes_nome_uindex">
+      <ObjectId>17318</ObjectId>
+      <StateNumber>838</StateNumber>
+      <ColNames>nome</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="68" parent="34" name="pk_tb_equipes_id_equipe">
       <ObjectId>17257</ObjectId>
       <StateNumber>696</StateNumber>
       <ColNames>id_equipe</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>pk_tb_equipes_id_equipe</UnderlyingIndexName>
     </key>
-    <column id="67" parent="35" name="id_jogador">
+    <column id="69" parent="35" name="id_jogador">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -450,53 +462,53 @@ id_equipe</ColNames>
       <DefaultExpression>nextval(&apos;tb_jogador_equipe_id_jogador_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="68" parent="35" name="id_equipe">
+    <column id="70" parent="35" name="id_equipe">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>697</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="69" parent="35" name="nome">
+    <column id="71" parent="35" name="nome">
       <Position>3</Position>
       <DataType>varchar(60)|0s</DataType>
       <StateNumber>697</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="70" parent="35" name="codenome">
+    <column id="72" parent="35" name="codenome">
       <Position>4</Position>
       <DataType>varchar(60)|0s</DataType>
       <StateNumber>800</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="71" parent="35" name="ativo">
+    <column id="73" parent="35" name="ativo">
       <Position>5</Position>
       <DataType>boolean|0s</DataType>
       <StateNumber>697</StateNumber>
       <DefaultExpression>true</DefaultExpression>
       <TypeId>16</TypeId>
     </column>
-    <index id="72" parent="35" name="tb_jogador_equipe_id_jogador_uindex">
+    <index id="74" parent="35" name="tb_jogador_equipe_id_jogador_uindex">
       <ObjectId>17313</ObjectId>
       <StateNumber>815</StateNumber>
       <ColNames>id_jogador</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="73" parent="35" name="tb_jogador_equipe_pk">
+    <index id="75" parent="35" name="tb_jogador_equipe_pk">
       <ObjectId>17314</ObjectId>
       <StateNumber>816</StateNumber>
       <ColNames>id_jogador</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="74" parent="35" name="tb_jogador_equipe_pk">
+    <key id="76" parent="35" name="tb_jogador_equipe_pk">
       <ObjectId>17315</ObjectId>
       <StateNumber>816</StateNumber>
       <ColNames>id_jogador</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>tb_jogador_equipe_pk</UnderlyingIndexName>
     </key>
-    <foreign-key id="75" parent="35" name="fk_tb_equipes_id_equipe">
+    <foreign-key id="77" parent="35" name="fk_tb_equipes_id_equipe">
       <ObjectId>17265</ObjectId>
       <StateNumber>697</StateNumber>
       <ColNames>id_equipe</ColNames>

@@ -185,8 +185,11 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
         q.setParameter(idE, idequipe);
 
         List<TbCampeonatoEquipesStatusEntity> result = q.getResultList();
+
         TbCampeonatoEquipesStatusEntity get = result.get(0);
+
         fecharConexao();
+
         return get;
     }
 }
