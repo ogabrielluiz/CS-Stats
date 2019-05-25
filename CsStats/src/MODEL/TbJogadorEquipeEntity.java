@@ -153,6 +153,26 @@ public class TbJogadorEquipeEntity implements IEntity  {
         }
     }
 
+    public static TbJogadorEquipeEntity getByCodenome(String codenome){
+        abreConexao();
+        CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
+        CriteriaQuery cq = builder.createQuery(TbJogadorEquipeEntity.class);
+        Root<TbJogadorEquipeEntity> root = cq.from(TbJogadorEquipeEntity.class);
+        ParameterExpression<String> cdn = builder.parameter(String.class);
+
+        cq.select(root).where(builder.equal( root.get("codenome"), codenome),
+                builder.isFalse(root.get("ativo")));
+        Query q = DaoConecta.em.createQuery(cq);
+        q.setParameter(cdn,codenome);
+
+
+        List<TbJogadorEquipeEntity> result = q.getResultList();
+
+        TbJogadorEquipeEntity entidade = result.get(0);
+
+        return entidade;
+    }
+
 
 
 }

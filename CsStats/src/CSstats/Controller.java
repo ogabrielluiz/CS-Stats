@@ -30,6 +30,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static CSstats.TableViewEquipe.getIntegrantesbyId;
@@ -37,7 +38,9 @@ import static CSstats.Util.*;
 import static DAO.DaoCRUD.*;
 import static DAO.DaoConecta.*;
 import static DAO.DaoConecta.fecharConexao;
+import static MODEL.TbJogadorEquipeEntity.getByCodenome;
 import static MODEL.TbJogadorEquipeEntity.getByTeamId;
+import static javafx.scene.control.ButtonType.YES;
 
 
 public class Controller implements Initializable {
@@ -298,7 +301,7 @@ public class Controller implements Initializable {
             delete(info);
             todasEquipes.remove(j);
 
-            alertaAviso( "Equipe excluída" ).showAndWait();
+            alertaAviso( "Equipe " + j.getNome() +" excluída" ).showAndWait();
 
             }
 
@@ -312,11 +315,12 @@ public class Controller implements Initializable {
         todosJogadores = tb_equipe_jogador.getItems();
         jogadorSelecionado = tb_equipe_jogador.getSelectionModel().getSelectedItems();
 
-        jogadorSelecionado.forEach(todosJogadores::remove);
+
         for (TbJogadorEquipeEntity j: jogadorSelecionado
              ) {
             j.setAtivo(false);
             update(j);
+            todosJogadores.remove(j);
             alertaAviso( j.getCodenome() + " inativado." );
 
         }
@@ -327,6 +331,7 @@ public class Controller implements Initializable {
         TbJogadorEquipeEntity jogadorEquipeEntity = new TbJogadorEquipeEntity();
         jogadorEquipeEntity.setNome( textField_nome_jogador.getText() );
         jogadorEquipeEntity.setCodenome( textField_codenome_jogador.getText() );
+
 
 
         TbEquipesEntity equipe = new TbEquipesEntity();
@@ -373,9 +378,29 @@ public class Controller implements Initializable {
 
 
         } else{
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Jogador " + jogadorEquipeEntity.getCodenome() +
-                    " já existe no banco de dados.", ButtonType.OK);
-            alert.showAndWait();
+            if(!(jogadorEquipeEntity.getNome() == null)) {
+                Alert alert = new Alert( Alert.AlertType.CONFIRMATION, "Jogador " + jogadorEquipeEntity.getCodenome() +
+                        " já existe no banco de dados. \n Deseja reativá-lo?", ButtonType.YES, ButtonType.NO );
+//            ButtonType confirma = new ButtonType("Sim", ButtonBar.ButtonData.YES);
+//            ButtonType recusa = new ButtonType( "Não", ButtonBar.ButtonData.NO );
+//            alert.getButtonTypes().setAll( confirma,recusa );
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.get() == ButtonType.YES) {
+                    jogadorEquipeEntity.setIdJogador( getByCodenome( jogadorEquipeEntity.getCodenome() ).getIdJogador() );
+                    jogadorEquipeEntity.setAtivo( true );
+                    System.out.println( jogadorEquipeEntity.getAtivo() );
+                    update( jogadorEquipeEntity );
+                    tb_equipe_jogador.getItems().add( jogadorEquipeEntity );
+                    tb_equipe_jogador.refresh();
+
+                    alertaAviso( "Jogador " + jogadorEquipeEntity.getCodenome() + " reativado" );
+                } else {
+                    alertaAviso( "Jogador " + jogadorEquipeEntity.getCodenome() + " não adicionado." );
+                }
+            }
+
             textField_nome_jogador.clear();
             textField_codenome_jogador.clear();
 
@@ -498,18 +523,6 @@ public class Controller implements Initializable {
     }
 
 
-    @FXML
-    private String handleComboBoxAction(){
-        //equipe_selecionada = comboBox_equipes.getSelectionModel().getSelectedItem();
-        return equipe_selecionada;
-    }
-    @FXML
-    private Integer handleChoiceBoxAction(){
-            return 0;
-    }
-
-    public void insert_campeonato_equipes_status(){
-    }
 
     @FXML
     public void popula_box_edicao_camp(){
@@ -895,6 +908,7 @@ public class Controller implements Initializable {
                                         ) {
                                             if(e.getIdEquipe() == byNome.getIdEquipe()){
                                                 info_equipe.add( e );
+
 
                                             }
 

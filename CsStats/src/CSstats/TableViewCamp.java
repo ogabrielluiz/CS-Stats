@@ -5,12 +5,12 @@ import java.util.Objects;
 public class TableViewCamp {
 
     private String nome;
-    private Integer classificacao;
+    private Number classificacao;
     private Integer vitorias;
     private Integer empates;
     private Integer derrotas;
 
-    public TableViewCamp(String nome, Integer classificacao, Integer vitorias, Integer empates, Integer derrotas) {
+    public TableViewCamp(String nome, Number classificacao, Integer vitorias, Integer empates, Integer derrotas) {
         this.nome = nome;
         this.classificacao = classificacao;
         this.vitorias = vitorias;
@@ -26,7 +26,7 @@ public class TableViewCamp {
         this.nome = nome;
     }
 
-    public Integer getClassificao() {
+    public Number getClassificao() {
         return classificacao;
     }
 

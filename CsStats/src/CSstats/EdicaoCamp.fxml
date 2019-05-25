@@ -132,12 +132,12 @@
                                     </Label>
                                     <Label text="Localização" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                        <GridPane.margin>
-                                          <Insets top="225.0" />
+                                          <Insets left="5.0" top="225.0" />
                                        </GridPane.margin>
                                     </Label>
                                     <Label fx:id="localizacao_lb" text="Local do camp" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                        <GridPane.margin>
-                                          <Insets top="245.0" />
+                                          <Insets left="5.0" top="245.0" />
                                        </GridPane.margin>
                                     </Label>
                                  </children>
@@ -335,7 +335,7 @@
                                     <Insets left="5.0" />
                                  </opaqueInsets>
                               </Label>
-                              <ChoiceBox fx:id="choiceBox_posicao" maxWidth="50.0" onDragDetected="#handleChoiceBoxAction" prefWidth="50.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                              <ChoiceBox fx:id="choiceBox_posicao" maxWidth="50.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="30.0" left="5.0" />
                                  </GridPane.margin>
@@ -343,7 +343,7 @@
                                     <Insets left="5.0" />
                                  </opaqueInsets>
                               </ChoiceBox>
-                              <ComboBox fx:id="comboBox_equipes" onAction="#handleComboBoxAction" onShowing="#popula_box_edicao_camp" prefWidth="150.0" promptText="Escolha a equipe" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                              <ComboBox fx:id="comboBox_equipes" onShowing="#popula_box_edicao_camp" prefWidth="150.0" promptText="Escolha a equipe" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                                  <GridPane.margin>
                                     <Insets bottom="80.0" left="5.0" />
                                  </GridPane.margin>
@@ -379,11 +379,6 @@
                                     <Insets bottom="65.0" left="220.0" right="220.0" />
                                  </GridPane.margin>
                               </Text>
-                              <Button fx:id="btn_salvar_tudo_camp" mnemonicParsing="false" prefHeight="68.0" prefWidth="114.0" text="Salvar tudo" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets left="25.0" />
-                                 </GridPane.margin>
-                              </Button>
                               <ScrollPane prefHeight="174.0" prefWidth="490.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                  <content>
                                     <TableView fx:id="tb_info_equipe" prefHeight="173.0" prefWidth="544.0" snapToPixel="false">
