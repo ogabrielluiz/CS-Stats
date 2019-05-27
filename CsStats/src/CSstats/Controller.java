@@ -380,30 +380,32 @@ public class Controller implements Initializable {
         } else{
             if(!(jogadorEquipeEntity.getNome() == null)) {
                 Alert alert = new Alert( Alert.AlertType.CONFIRMATION, "Jogador " + jogadorEquipeEntity.getCodenome() +
-                        " já existe no banco de dados. \n Deseja reativá-lo?", ButtonType.YES, ButtonType.NO );
-//            ButtonType confirma = new ButtonType("Sim", ButtonBar.ButtonData.YES);
-//            ButtonType recusa = new ButtonType( "Não", ButtonBar.ButtonData.NO );
-//            alert.getButtonTypes().setAll( confirma,recusa );
+                        " já existe no banco de dados. \n Deseja reativá-lo?");
+            ButtonType confirma = new ButtonType("Sim");
+            ButtonType recusa = new ButtonType( "Não");
+            alert.getButtonTypes().setAll( confirma,recusa );
+            alert.showAndWait().ifPresent( b -> {
+                    if (b == confirma) {
+                        jogadorEquipeEntity.setIdJogador( getByCodenome( jogadorEquipeEntity.getCodenome() ).getIdJogador() );
+                        jogadorEquipeEntity.setAtivo( true );
+                        System.out.println( jogadorEquipeEntity.getAtivo() );
+                        update( jogadorEquipeEntity );
+                        System.out.println(jogadorEquipeEntity.getCodenome()+ " ativado.");
+                        tb_equipe_jogador.getItems().add( jogadorEquipeEntity );
+                        tb_equipe_jogador.refresh();
+                        alertaAviso( "Jogador " + jogadorEquipeEntity.getCodenome() + " reativado" ).showAndWait();
+                    } else if (b == recusa)
+                        alertaAviso( "Jogador " + jogadorEquipeEntity.getCodenome() + " não adicionado." ).showAndWait();
+                } );
 
-                Optional<ButtonType> result = alert.showAndWait();
 
-                if (result.get() == ButtonType.YES) {
-                    jogadorEquipeEntity.setIdJogador( getByCodenome( jogadorEquipeEntity.getCodenome() ).getIdJogador() );
-                    jogadorEquipeEntity.setAtivo( true );
-                    System.out.println( jogadorEquipeEntity.getAtivo() );
-                    update( jogadorEquipeEntity );
-                    tb_equipe_jogador.getItems().add( jogadorEquipeEntity );
-                    tb_equipe_jogador.refresh();
-
-                    alertaAviso( "Jogador " + jogadorEquipeEntity.getCodenome() + " reativado" );
-                } else {
-                    alertaAviso( "Jogador " + jogadorEquipeEntity.getCodenome() + " não adicionado." );
-                }
-            }
 
             textField_nome_jogador.clear();
             textField_codenome_jogador.clear();
 
+        } else{
+                alertaAviso( "Insira o nome do jogador." );
+            }
         }
 
 

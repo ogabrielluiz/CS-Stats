@@ -160,7 +160,7 @@ public class TbJogadorEquipeEntity implements IEntity  {
         Root<TbJogadorEquipeEntity> root = cq.from(TbJogadorEquipeEntity.class);
         ParameterExpression<String> cdn = builder.parameter(String.class);
 
-        cq.select(root).where(builder.equal( root.get("codenome"), codenome),
+        cq.select(root).where(builder.equal( root.get("codenome"), cdn),
                 builder.isFalse(root.get("ativo")));
         Query q = DaoConecta.em.createQuery(cq);
         q.setParameter(cdn,codenome);
