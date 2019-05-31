@@ -148,6 +148,7 @@ public class TbEquipesEntity implements IEntity  {
         query.setParameter(p, id);
 
         List<TbEquipesEntity> lista = query.getResultList();
+
         TbEquipesEntity equipesEntity = lista.get( 0 );
         return equipesEntity;
     }

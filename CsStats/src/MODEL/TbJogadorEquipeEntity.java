@@ -97,17 +97,7 @@ public class TbJogadorEquipeEntity implements IEntity  {
         return this.nome;
     }
 
-//    public static List<TbJogadorEquipeEntity> getById(int id){
-//        abreConexao();
-//        CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
-//        CriteriaQuery cq = builder.createQuery(TbJogadorEquipeEntity.class);
-//        Root<IEntity> root = cq.from(TbJogadorEquipeEntity.class);
-//        cq.select(cq.from(TbJogadorEquipeEntity.class)).where(builder.equal( root.get("idEquipe"), id));
-//        Query q = DaoConecta.em.createQuery(cq);
-//        List<TbJogadorEquipeEntity> result = q.getResultList();
-//        fecharConexao();
-//        return result;
-//    }
+
 
     public static List<TbJogadorEquipeEntity> getByTeamId(int id){
         abreConexao();

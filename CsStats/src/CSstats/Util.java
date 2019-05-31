@@ -85,7 +85,7 @@ public class Util {
 
     public static boolean containsId(List<TableViewCamp> list, TableViewCamp obj) {
         for (TableViewCamp object : list) {
-            if (object.getNome() == obj.getNome() && object.getClassificao() == obj.getClassificao()) {
+            if (object.getNome() == obj.getNome() && object.getClassificacao() == obj.getClassificacao()) {
                 return true;
             }
         }

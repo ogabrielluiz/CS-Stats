@@ -38,14 +38,14 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
         this.qtdDerrotas = qtdDerrotas;
     }
 
-    public TbCampeonatoEquipesStatusEntity(String nome_camp, String nome, Integer classificacao, Integer vitorias, Integer empates, Integer derrotas) {
+    public TbCampeonatoEquipesStatusEntity(String nome_camp, String nome, Integer classif, Integer vitorias, Integer empates, Integer derrotas) {
 
         TbCampeonatoEntity tbCampeonatoEntity = TbCampeonatoEntity.getByNome(nome_camp);
-        TbEquipesEntity equipesEntity = (TbEquipesEntity) getByNome(nome);
+        TbEquipesEntity equipesEntity = getByNome(nome);
         this.idCampeonato = tbCampeonatoEntity.getIdCampeonato();
         this.idEquipe = equipesEntity.getIdEquipe();
         this.nome = nome;
-        this.classificacao = classificacao;
+        this.classificacao = classif;
         this.qtdVitorias = vitorias;
         this.qtdEmpates = empates;
         this.qtdDerrotas = derrotas;
@@ -170,25 +170,31 @@ public class TbCampeonatoEquipesStatusEntity implements IEntity {
         return (List<TbCampeonatoEquipesStatusEntity>) result;
     }
 
-    public static TbCampeonatoEquipesStatusEntity getByIdEqCamp(int idcamp, int idequipe){
+    public static TbCampeonatoEquipesStatusEntity getByIdEqCamp(Integer idcamp, Integer idequipe){
         abreConexao();
         CriteriaBuilder builder = DaoConecta.em.getCriteriaBuilder();
         CriteriaQuery cq = builder.createQuery(TbCampeonatoEquipesStatusEntity.class);
         Root<IEntity> root = cq.from(TbCampeonatoEquipesStatusEntity.class);
         ParameterExpression<Integer> idC = builder.parameter(Integer.class);
         ParameterExpression<Integer> idE = builder.parameter(Integer.class);
-        cq.select(cq.from(TbCampeonatoEquipesStatusEntity.class)).where(
-                builder.equal( root.get("idCampeonato"), idC),builder.equal(root.get("idEquipe"), idE));
+        ;
 
-        Query q = DaoConecta.em.createQuery(cq);
+        Query q = DaoConecta.em.createQuery(cq.select(cq.from(TbCampeonatoEquipesStatusEntity.class)).where(
+                builder.equal( root.get("idCampeonato"), idC),builder.equal(root.get("idEquipe"), idE)));
         q.setParameter(idC, idcamp);
         q.setParameter(idE, idequipe);
 
         List<TbCampeonatoEquipesStatusEntity> result = q.getResultList();
 
+        for(TbCampeonatoEquipesStatusEntity i: result){
+            if (i.idEquipe == idequipe){
+                fecharConexao();
+                return i;
+            }
+        }
         TbCampeonatoEquipesStatusEntity get = result.get(0);
 
-        fecharConexao();
+
 
         return get;
     }

@@ -210,7 +210,7 @@ public class Controller implements Initializable {
         Integer vitorias = vitorias_ChB.getValue();
         Integer empates = empates_ChB.getValue();
         Integer derrotas = derrotas_ChB.getValue();
-        TbCampeonatoEquipesStatusEntity dados_camp = new TbCampeonatoEquipesStatusEntity(nome_camp,nome,classificacao,
+        TbCampeonatoEquipesStatusEntity dados_camp = new TbCampeonatoEquipesStatusEntity(nome_camp, nome, classificacao,
                 vitorias,empates,derrotas);
 
         if (dados_camp.exists()) {
@@ -248,6 +248,7 @@ public class Controller implements Initializable {
             ) {
 
                 TbEquipesEntity equipe = TbEquipesEntity.getById(e.getIdEquipe());
+
                 TableViewCamp info = new TableViewCamp(equipe.getNome(), e.getClassificacao(),
                         e.getQtdVitorias(), e.getQtdEmpates(), e.getQtdDerrotas());
                 tbCampeonatoEquipesStatusEntities.add(info);
@@ -294,8 +295,11 @@ public class Controller implements Initializable {
 
         for (TableViewCamp j: equipeSelecionada
         ) {
+            System.out.println(j.getNome()+"    ");
             idequipe = TbEquipesEntity.getByNome(j.getNome()).getIdEquipe();
+            System.out.println(idequipe);
             TbCampeonatoEquipesStatusEntity info = TbCampeonatoEquipesStatusEntity.getByIdEqCamp(idcamp,idequipe);
+
 
 
             delete(info);
@@ -321,23 +325,37 @@ public class Controller implements Initializable {
             j.setAtivo(false);
             update(j);
             todosJogadores.remove(j);
-            alertaAviso( j.getCodenome() + " inativado." );
+            alertaAviso( j.getCodenome() + " inativado." ).showAndWait();
 
         }
     }
 
     @FXML
     private void btn_adicionar_jogador_tableView(){
+        TbEquipesEntity equipe = new TbEquipesEntity();
+        Integer idEquipe = 0;
+        try {
+           idEquipe = equipe.getByNome( nm_equipe.getText() ).getIdEquipe();
+        } catch (ArrayIndexOutOfBoundsException e){
+            alertaAviso(
+                    "É necessário editar uma equipe " +
+                            "ou adicionar uma equipe antes de adicionar um jogador." ).showAndWait();
+            textField_nome_jogador.clear();
+            textField_codenome_jogador.clear();
+        }
+
+
+
         TbJogadorEquipeEntity jogadorEquipeEntity = new TbJogadorEquipeEntity();
         jogadorEquipeEntity.setNome( textField_nome_jogador.getText() );
         jogadorEquipeEntity.setCodenome( textField_codenome_jogador.getText() );
+        jogadorEquipeEntity.setIdEquipe( idEquipe );
 
 
 
-        TbEquipesEntity equipe = new TbEquipesEntity();
-        jogadorEquipeEntity.setIdEquipe(equipe.getByNome(nm_equipe.getText()).getIdEquipe());
 
-        if(!jogadorEquipeEntity.exists()){
+
+        if(!jogadorEquipeEntity.exists() && jogadorEquipeEntity.getIdEquipe() >= 1){
             insert(jogadorEquipeEntity);
 
             List<TbJogadorEquipeEntity> list_integrantes = new ArrayList<>();
@@ -378,7 +396,7 @@ public class Controller implements Initializable {
 
 
         } else{
-            if(!(jogadorEquipeEntity.getNome() == null)) {
+            if(jogadorEquipeEntity.getNome() != null && jogadorEquipeEntity.getIdEquipe() > 0) {
                 Alert alert = new Alert( Alert.AlertType.CONFIRMATION, "Jogador " + jogadorEquipeEntity.getCodenome() +
                         " já existe no banco de dados. \n Deseja reativá-lo?");
             ButtonType confirma = new ButtonType("Sim");
@@ -583,24 +601,7 @@ public class Controller implements Initializable {
     }
 
 
-    @FXML void salvar_tudo_equipe(){
-            TbEquipesEntity equipe = TbEquipesEntity.getByNome(nm_equipe.getText());
 
-            TbJogadorEquipeEntity jogador = new TbJogadorEquipeEntity();
-
-            ObservableList<TbJogadorEquipeEntity> integrantes = tb_equipe_jogador.getItems();
-
-        for (TbJogadorEquipeEntity j: integrantes
-             ) {
-            j.setIdEquipe(equipe.getIdEquipe());
-
-             insert(j);
-        }
-
-
-
-
-    }
     // VISUALIZAÇÃO
 
     @FXML TableView<TbCampeonatoEntity> tableView_lista_campeonatos = new TableView<>();
@@ -778,7 +779,7 @@ public class Controller implements Initializable {
 
         // Cria um arquivo sem espaços no nome
         File file = new File( "src/ImagensCampeonatos/" +
-                campeonatoAtualizado.getNome().replaceAll( "\\s+","" ) ) ;
+                campeonatoAtualizado.getNome().replaceAll( "\\s+","" )+".png" ) ;
         try {
             ImageIO.write( SwingFXUtils.fromFXImage(imageView_camp.getImage(), null), "png", file);
 
@@ -859,6 +860,7 @@ public class Controller implements Initializable {
                                         e.getQtdVitorias(), e.getQtdEmpates(), e.getQtdDerrotas());
 
 
+
                                 if(!containsId(info_camp,info)){
                                     info_camp.add(info);
                                 }
@@ -866,6 +868,7 @@ public class Controller implements Initializable {
 
                             vis_tb_info_equipe.setItems( info_camp );
 
+                            ObservableList<TableViewCamp> test =  vis_tb_info_equipe.getItems();
                             localizacao_lb.setText(rowData.getLocalizacao());
 
 
@@ -970,16 +973,16 @@ public class Controller implements Initializable {
 
     }
 
-    private void declara_colunas(TableColumn<TableViewCamp, String> coluna_equipe,
-                                 TableColumn<TableViewCamp, Number> coluna_classificacao,
-                                 TableColumn<TableViewCamp, Number> coluna_vitorias,
-                                 TableColumn<TableViewCamp, Number> coluna_empates,
-                                 TableColumn<TableViewCamp, Number> coluna_derrotas) {
+    private void declara_colunas(TableColumn<TableViewCamp, String> equipe,
+                                 TableColumn<TableViewCamp, Number> classificacao,
+                                 TableColumn<TableViewCamp, Number> vitorias,
+                                 TableColumn<TableViewCamp, Number> empates,
+                                 TableColumn<TableViewCamp, Number> derrotas) {
 
-        coluna_equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        coluna_classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
-        coluna_vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
-        coluna_empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
-        coluna_derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
+        equipe.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        classificacao.setCellValueFactory(new PropertyValueFactory<>("classificacao"));
+        vitorias.setCellValueFactory(new PropertyValueFactory<>("vitorias"));
+        empates.setCellValueFactory(new PropertyValueFactory<>("empates"));
+        derrotas.setCellValueFactory(new PropertyValueFactory<>("derrotas"));
     }
 }

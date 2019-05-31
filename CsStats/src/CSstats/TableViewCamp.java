@@ -5,14 +5,14 @@ import java.util.Objects;
 public class TableViewCamp {
 
     private String nome;
-    private Number classificacao;
+    private Integer Classificacao;
     private Integer vitorias;
     private Integer empates;
     private Integer derrotas;
 
-    public TableViewCamp(String nome, Number classificacao, Integer vitorias, Integer empates, Integer derrotas) {
+    public TableViewCamp(String nome, Integer classificacao, Integer vitorias, Integer empates, Integer derrotas) {
         this.nome = nome;
-        this.classificacao = classificacao;
+        this.Classificacao = classificacao;
         this.vitorias = vitorias;
         this.empates = empates;
         this.derrotas = derrotas;
@@ -26,12 +26,12 @@ public class TableViewCamp {
         this.nome = nome;
     }
 
-    public Number getClassificao() {
-        return classificacao;
+    public Integer getClassificacao() {
+        return Classificacao;
     }
 
-    public void setClassificao(Integer classificacao) {
-        this.classificacao = classificacao;
+    public void setClassificacao(Integer classificacao) {
+        this.Classificacao = classificacao;
     }
 
     public Integer getVitorias() {
@@ -64,12 +64,12 @@ public class TableViewCamp {
         if (o == null || getClass() != o.getClass()) return false;
         TableViewCamp that = (TableViewCamp) o;
         return getNome().equals(that.getNome()) &&
-                getClassificao().equals(that.getClassificao());
+                getClassificacao().equals(that.getClassificacao());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNome(), getClassificao());
+        return Objects.hash(getNome(), getClassificacao());
     }
 }
 
