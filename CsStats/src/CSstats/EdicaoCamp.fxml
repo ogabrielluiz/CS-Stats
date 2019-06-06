@@ -12,7 +12,7 @@
 
 <TabPane fx:id="superior_tabPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CSstats.Controller">
    <tabs>
-      <Tab fx:id="visualizacao_tab" text="Visualização">
+      <Tab fx:id="visualizacao_tab" closable="false" text="Visualização">
         <content>
           <AnchorPane fx:id="visualizacao_aPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -57,7 +57,7 @@
                               </AnchorPane>
                            </content>
                         </Tab>
-                        <Tab fx:id="tab_vis_campeonato" disable="true" text="Campeonato">
+                        <Tab fx:id="tab_vis_campeonato" closable="false" disable="true" text="Campeonato">
                            <content>
                               <GridPane alignment="TOP_CENTER" prefHeight="683.0">
                                  <children>
@@ -163,7 +163,7 @@
                               </GridPane>
                            </content>
                         </Tab>
-                        <Tab fx:id="tab_vis_equipe" disable="true" text="Equipe">
+                        <Tab fx:id="tab_vis_equipe" closable="false" disable="true" text="Equipe">
                            <content>
                               <GridPane alignment="TOP_CENTER" prefHeight="683.0" prefWidth="1113.0">
                                  <children>
@@ -237,11 +237,11 @@
             </AnchorPane>
         </content>
       </Tab>
-      <Tab fx:id="edicao_tab" text="Edição">
+      <Tab fx:id="edicao_tab" closable="false" text="Edição">
          <content>
             <TabPane fx:id="edicao_tabPane">
                <tabs>
-                  <Tab fx:id="edicao_campeonato_tab" text="Edição - Campeonato">
+                  <Tab fx:id="edicao_campeonato_tab" closable="false" text="Edição - Campeonato">
                      <content>
                         <GridPane alignment="TOP_CENTER" prefHeight="683.0">
                           <columnConstraints>
@@ -442,7 +442,7 @@
                         </GridPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="tab_edicao_equipe" text="Edição - Equipe">
+                  <Tab fx:id="tab_edicao_equipe" closable="false" text="Edição - Equipe">
                      <content>
                         <GridPane alignment="TOP_CENTER" prefHeight="683.0" prefWidth="1113.0">
                            <children>
